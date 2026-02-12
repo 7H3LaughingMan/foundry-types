@@ -7,6 +7,7 @@ import { ResolvedUUID } from "./_types.mjs";
  * @param iterations The number of iterations to test
  * @param args Additional arguments passed to the benchmarked function
  */
+
 export function benchmark<T extends (...args: any) => any>(func: T, iterations: number, ...args: Parameters<T>): Promise<void>;
 
 /**

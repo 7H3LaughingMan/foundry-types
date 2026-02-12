@@ -119,6 +119,7 @@ export namespace Hooks {
     function on(...args: HookParamsUpdate<Scene, "Scene">): number;
     function on(...args: HookParamsUpdateWorldTime): number;
     function on(...args: HookParamsGetProseMirrorMenuDropDowns): number;
+
     function on(...args: HookParameters<string, any[]>): number;
 
     /**
@@ -160,6 +161,7 @@ export namespace Hooks {
     function once(...args: HookParamsUpdate<Scene, "Scene">): number;
     function once(...args: HookParamsUpdateWorldTime): number;
     function once(...args: HookParamsI18nInit): number;
+
     function once(...args: HookParameters<string, any[]>): number;
 
     /**
@@ -168,6 +170,7 @@ export namespace Hooks {
      * @param hook  The unique name of the hooked event
      * @param fn    The function that should be removed from the set of hooked callbacks
      */
+
     function off(hook: string, fn: (...args: any[]) => boolean | void | Promise<boolean | void>): void;
     function off(hook: string, fn: number): void;
 

@@ -1,7 +1,6 @@
 import { TokenShape } from "./../client/canvas/placeables/token.mjs";
 import { DataModelConstructionContext } from "./abstract/_types.mjs";
 import Document from "./abstract/document.mjs";
-import * as CONST from "./constants.mjs";
 import { GridOffset2D } from "./grid/_types.mjs";
 import Color from "./utils/color.mjs";
 

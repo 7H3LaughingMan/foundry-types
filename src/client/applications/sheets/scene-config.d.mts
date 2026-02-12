@@ -7,6 +7,7 @@ import Scene from "./../../documents/scene.mjs";
 /**
  * The Application responsible for configuring a single Scene document.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class SceneConfig<TDocument extends Scene> extends HandlebarsApplicationMixin(DocumentSheetV2) {
     static override DEFAULT_OPTIONS: DeepPartial<DocumentSheetConfiguration>;
 

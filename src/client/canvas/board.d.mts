@@ -37,6 +37,7 @@ export default class Canvas<
     TToken extends Token<TokenDocument<TScene>> = Token<TokenDocument<TScene>>,
     TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup,
     TRegion extends Region<RegionDocument<TScene>> = Region<RegionDocument<TScene>>,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     TRuler extends Ruler = Ruler,
 > {
     /** A flag to indicate whether a new Scene is currently being drawn. */

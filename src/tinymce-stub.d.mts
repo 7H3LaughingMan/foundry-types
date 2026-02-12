@@ -26,6 +26,7 @@ export namespace TinyMCE {
 
     interface NestedFormatting {
         title: string;
+
         items: Array<FormatReference | StyleFormat>;
     }
 

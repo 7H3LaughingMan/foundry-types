@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { TextureData } from "./../../../common/data/data.mjs";
 import type * as fields from "./../../../common/data/fields.mjs";
 
@@ -33,15 +34,13 @@ export interface PrimaryCanvasObjectData {
  * @returns A DisplayObject subclass mixed with PrimaryCanvasObject features
  * @mixin
  */
-/* eslint-disable @typescript-eslint/no-unused-expressions, no-unused-expressions */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export default function PrimaryCanvasObjectMixin<TBase extends ConstructorOf<PIXI.DisplayObject>>(DisplayObject: TBase) {
     /**
      * A display object rendered in the PrimaryCanvasGroup.
      * @param args The arguments passed to the base class constructor
      */
     abstract class PrimaryCanvasObject extends CanvasTransformMixin(DisplayObject) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args: any[]) {
             super();
             args;
@@ -152,7 +151,6 @@ export default function PrimaryCanvasObjectMixin<TBase extends ConstructorOf<PIX
  */
 export function CanvasTransformMixin<TBase extends ConstructorOf<PIXI.DisplayObject>>(DisplayObject: TBase) {
     abstract class CanvasTransformObject extends DisplayObject {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args: any[]) {
             super();
             args;

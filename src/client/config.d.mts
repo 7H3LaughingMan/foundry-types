@@ -127,7 +127,6 @@ export interface PartialTokenMovementActionConfig
     extends Pick<TokenMovementActionConfig, "label" | "icon" | "order">, Partial<Omit<TokenMovementActionConfig, "label" | "icon" | "order">> {}
 
 export interface RollFunction {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (...args: any[]): boolean | number | string | null | Promise<boolean | number | string | null>;
 }
 

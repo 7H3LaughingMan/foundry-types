@@ -93,7 +93,9 @@ type ServerSettingsSchema = {
 declare class ReleaseData extends DataModel {
     static override defineSchema(): {
         generation: fields.NumberField<number, number, true, false, true>;
+
         maxGeneration: fields.NumberField<any, any, false, false, true>;
+
         maxStableGeneration: fields.NumberField<any, any, false, false, true>;
         channel: fields.StringField<
             "stable" | "testing" | "development" | "prototype",

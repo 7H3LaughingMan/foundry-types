@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import Collection from "./../../common/utils/collection.mjs";
 import { BasePackage, Module, RelatedPackage, System } from "./_module.mjs";
 import { PackageCompatibilityBadge, PackageManifestData } from "./_types.mjs";
@@ -5,6 +6,7 @@ import { PackageCompatibilityBadge, PackageManifestData } from "./_types.mjs";
 /**
  * A client-side mixin used for all Package types.
  */
+
 export default function ClientPackageMixin<TBase extends ConstructorOf<BasePackage>>(BasePackage: TBase) {
     class ClientPackage extends BasePackage {
         /**

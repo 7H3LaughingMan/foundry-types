@@ -7,7 +7,6 @@ import { IterableWeakMap, IterableWeakSet } from "./../../common/utils/_module.m
 import Token from "./../canvas/placeables/token.mjs";
 import { ActiveEffect, ActorSource, ActorUUID, BaseActor, Combat, Item, Scene, TokenDocument } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
-import Actors from "./collections/actors.mjs";
 
 interface ClientBaseActorStatic extends Omit<typeof BaseActor, "new">, ClientDocumentStatic {}
 

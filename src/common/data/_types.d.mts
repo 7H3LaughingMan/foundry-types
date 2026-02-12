@@ -251,6 +251,7 @@ interface StringFieldOptions<
 
 interface ChoiceInputConfig {
     options: FormSelectOption[];
+
     choices: Record<string | number, any> | any[] | (() => Record<string | number, any> | any[]);
     labelAttr?: string;
     valueAttr?: string;

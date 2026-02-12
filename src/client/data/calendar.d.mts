@@ -51,6 +51,7 @@ export default class CalendarData<TComponents extends TimeComponents = TimeCompo
     timeToComponents(time?: number): TComponents;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default interface CalendarData<TComponents extends TimeComponents = TimeComponents>
     extends DataModel<null, CalendarDataSchema>, fields.ModelPropsFromSchema<CalendarDataSchema> {}
 

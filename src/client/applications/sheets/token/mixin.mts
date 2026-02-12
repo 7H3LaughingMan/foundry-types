@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
 import { DataSchema } from "./../../../../common/abstract/_types.mjs";
 import { PrototypeToken } from "./../../../../common/data/_module.mjs";
