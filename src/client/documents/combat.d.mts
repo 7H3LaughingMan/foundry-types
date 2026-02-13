@@ -11,7 +11,7 @@ import EmbeddedCollection from "./../../common/abstract/embedded-collection.mjs"
 import { ChatMessageCreateOperation } from "./../../common/documents/chat-message.mjs";
 import BaseCombat from "./../../common/documents/combat.mjs";
 import { Combatant, TokenDocument, User } from "./_module.mjs";
-import { CombatTurnEventContext } from "./_types.mjs";
+import { CombatHistoryData, CombatTurnEventContext } from "./_types.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
 type BaseCombatStatic = typeof BaseCombat;
@@ -360,13 +360,6 @@ export default class Combat extends ClientBaseCombat {
 
 export default interface Combat extends ClientBaseCombat {
     readonly combatants: EmbeddedCollection<Combatant<this>>;
-}
-
-export interface CombatHistoryData {
-    round: number | null;
-    turn: number | null;
-    tokenId: string | null;
-    combatantId: string | null;
 }
 
 export interface RollInitiativeOptions {

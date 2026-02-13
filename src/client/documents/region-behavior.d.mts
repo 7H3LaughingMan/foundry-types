@@ -1,8 +1,9 @@
 import { DocumentConstructionContext } from "./../../common/_types.mjs";
 import type { RegionBehaviorSource } from "./../../common/documents/region-behavior.mjs";
 import BaseRegionBehavior from "./../../common/documents/region-behavior.mjs";
+import { RegionEvent } from "./_types.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
-import RegionDocument, { RegionEvent } from "./region.mjs";
+import RegionDocument from "./region.mjs";
 
 interface CanvasBaseRegionBehaviorStatic extends Omit<typeof BaseRegionBehavior, "new">, ClientDocumentStatic {}
 

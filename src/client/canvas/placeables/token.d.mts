@@ -14,7 +14,7 @@ import { ReticuleOptions, TokenAnimationContext, TokenAnimationData, TokenAnimat
 import { TokenDocument, User } from "./../../documents/_module.mjs";
 import { TokenUpdateCallbackOptions } from "./../../documents/token.mjs";
 import PlaceableObject, { PlaceableShape } from "./placeable-object.mjs";
-import Region, { RegionMovementSegment, RegionMovementWaypoint } from "./region.mjs";
+import Region from "./region.mjs";
 import BaseTokenRuler from "./tokens/base-ruler.mjs";
 import TokenRing from "./tokens/ring.mjs";
 
@@ -540,30 +540,6 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
      * @returns Is the Token inside the Region?
      */
     testInsideRegion(region: Region, position: Point | (Point & { elevation: number }) | { elevation: number }): boolean;
-
-    /**
-     * Split the Token movement through the waypoints into its segments.
-     *
-     * Implementations of this function are restricted in the following ways:
-     *   - The segments must go through the waypoints.
-     *   - The *from* position matches the *to* position of the succeeding segment.
-     *   - The Token must be contained (w.r.t. {@link Token#testInsideRegion}) within the Region
-     *     at the *from* and *to* of MOVE segments.
-     *   - The Token must be contained (w.r.t. {@link Token#testInsideRegion}) within the Region
-     *     at the *to* position of ENTER segments.
-     *   - The Token must be contained (w.r.t. {@link Token#testInsideRegion}) within the Region
-     *     at the *from* position of EXIT segments.
-     *   - The Token must not be contained (w.r.t. {@link Token#testInsideRegion}) within the Region
-     *     at the *from* position of ENTER segments.
-     *   - The Token must not be contained (w.r.t. {@link Token#testInsideRegion}) within the Region
-     *     at the *to* position of EXIT segments.
-     * @param region    The region.
-     * @param waypoints The waypoints of movement.
-     * @param [options] Additional options
-     * @param [options.teleport=false] Is it teleportation?
-     * @returns The movement split into its segments.
-     */
-    segmentizeRegionMovement(region: Region, waypoints: RegionMovementWaypoint[], options?: { teleport?: boolean }): RegionMovementSegment[];
 
     /**
      * Set this Token as an active target for the current game User.

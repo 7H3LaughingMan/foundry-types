@@ -1,3 +1,4 @@
+import { ReleaseData } from "#common/config.mjs";
 import * as fields from "../data/fields.mjs";
 import { PackageAvailabilityCode } from "./../constants.mjs";
 import * as packages from "./_module.mjs";
@@ -13,7 +14,7 @@ export default class BaseWorld extends packages.BasePackage<WorldSchema> {
 
     static override migrateData(source: Record<string, unknown>): Record<string, unknown>;
 
-    static override testAvailability(data?: Partial<PackageManifestData>, release?: packages.ReleaseData): PackageAvailabilityCode;
+    static override testAvailability(data?: Partial<PackageManifestData>, release?: ReleaseData): PackageAvailabilityCode;
 }
 
 export default interface BaseWorld extends packages.BasePackage<WorldSchema>, fields.ModelPropsFromSchema<WorldSchema> {}

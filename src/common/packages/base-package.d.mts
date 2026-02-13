@@ -1,3 +1,4 @@
+import { ReleaseData } from "#common/config.mjs";
 import type DataModel from "../abstract/data.mjs";
 import type * as fields from "../data/fields.mjs";
 import { CompendiumDocumentType } from "./../../client/utils/helpers.mjs";
@@ -294,4 +295,3 @@ type PackageLanguageSchema = {
     module: fields.StringField<string, string, false, false, false>;
     flags: fields.ObjectField<Record<string, JSONValue | undefined>, Record<string, unknown>>;
 };
-export type ReleaseData = object;

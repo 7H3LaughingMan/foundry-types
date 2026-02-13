@@ -1,6 +1,6 @@
 import ApplicationV2 from "./../applications/api/application.mjs";
 import AdventureImporter from "./../appv1/sheets/adventure-importer.mjs";
-import { AdventureSource, BaseAdventure } from "./_module.mjs";
+import { AdventureImportData, AdventureImportResult, AdventureSource, BaseAdventure } from "./_module.mjs";
 import ClientDocumentMixin from "./abstract/client-document.mjs";
 
 /**
@@ -35,20 +35,4 @@ export default interface Adventure {
     readonly _source: AdventureSource;
 
     get sheet(): AdventureImporter<this> | ApplicationV2;
-}
-
-export interface AdventureImportData {
-    /** Arrays of document data to create, organized by document name */
-    toCreate: Record<string, object[]>;
-    /** Arrays of document data to update, organized by document name */
-    toUpdate: Record<string, object[]>;
-    /** The total count of documents to import */
-    documentCount: number;
-}
-
-export interface AdventureImportResult {
-    /** Documents created as a result of the import, organized by document name */
-    created: foundry.abstract.Document[];
-    /** Documents updated as a result of the import, organized by document name */
-    updated: foundry.abstract.Document[];
 }

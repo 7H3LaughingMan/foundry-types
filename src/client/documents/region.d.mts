@@ -1,8 +1,8 @@
-import Region, { RegionMovementSegment, RegionMovementWaypoint } from "../canvas/placeables/region.mjs";
+import Region from "../canvas/placeables/region.mjs";
 import EmbeddedCollection from "./../../common/abstract/embedded-collection.mjs";
 import { RegionPolygonTree } from "./../data/region-shapes/polygon-tree.mjs";
 import { RegionShape } from "./../data/region-shapes/shape.mjs";
-import { BaseRegion, RegionBehavior, Scene, User } from "./_module.mjs";
+import { BaseRegion, RegionBehavior, Scene } from "./_module.mjs";
 import { CanvasDocument, CanvasDocumentStatic } from "./abstract/canvas-document.mjs";
 
 interface CanvasBaseRegionStatic extends Omit<typeof BaseRegion, "new">, CanvasDocumentStatic {}
@@ -81,72 +81,6 @@ export default interface RegionDocument<TParent extends Scene | null = Scene | n
 
     readonly behaviors: EmbeddedCollection<RegionBehavior<this>>;
 }
-
-export interface BaseRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> {
-    /** The name of the event */
-    name: string;
-    /** The data of the event */
-    data: object;
-    /** The Region the event was triggered on */
-    region: TDocument;
-    /** The User that triggered the event */
-    user: TUser;
-}
-
-export interface BehaviorStatusRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> extends BaseRegionEvent<
-    TDocument,
-    TUser
-> {
-    name: "behaviorStatus";
-    data: {
-        active: boolean;
-        viewed: boolean;
-    };
-}
-
-export interface CombatRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> extends BaseRegionEvent<TDocument, TUser> {
-    name: "tokenRoundStart" | "tokenRoundEnd" | "tokenTurnStart" | "tokenTurnEnd";
-    data: {
-        token: SetElement<TDocument["tokens"]>;
-        combatant: SetElement<TDocument["tokens"]>["combatant"];
-    };
-}
-
-export interface TokenBasicMoveRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> extends BaseRegionEvent<
-    TDocument,
-    TUser
-> {
-    name: "tokenEnter" | "tokenExit";
-    data: {
-        token: SetElement<TDocument["tokens"]>;
-    };
-}
-
-export interface TokenMoveRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> extends BaseRegionEvent<TDocument, TUser> {
-    name: "tokenPreMove" | "tokenMove" | "tokenMoveIn" | "tokenMoveOut";
-    data: {
-        destination: RegionMovementWaypoint;
-        forced: boolean;
-        origin: RegionMovementWaypoint;
-        segments: RegionMovementSegment[];
-        teleport: boolean;
-        token: SetElement<TDocument["tokens"]>;
-    };
-}
-
-export interface RegionBoundaryRegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> extends BaseRegionEvent<
-    TDocument,
-    TUser
-> {
-    name: "regionBoundary";
-    data: object;
-}
-
-export type RegionEvent<TDocument extends RegionDocument = RegionDocument, TUser extends User = User> =
-    | BehaviorStatusRegionEvent<TDocument, TUser>
-    | CombatRegionEvent<TDocument, TUser>
-    | TokenMoveRegionEvent<TDocument, TUser>
-    | TokenBasicMoveRegionEvent<TDocument, TUser>;
 
 export interface SocketRegionEvent<TData extends object = object> {
     /** The UUID of the Region the event was triggered on */

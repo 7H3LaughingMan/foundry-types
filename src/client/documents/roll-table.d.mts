@@ -5,7 +5,7 @@ import EmbeddedCollection from "./../../common/abstract/embedded-collection.mjs"
 import { RollMode } from "./../../common/constants.mjs";
 import { ChatMessageCreateOperation } from "./../../common/documents/chat-message.mjs";
 import DocumentSheetV2 from "./../applications/api/document-sheet.mjs";
-import { BaseRollTable, ChatMessage, Folder, RollTableSource, TableResult } from "./_module.mjs";
+import { BaseRollTable, ChatMessage, Folder, RollTableDraw, RollTableSource, TableResult } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 import CompendiumCollection from "./collections/compendium-collection.mjs";
 
@@ -167,16 +167,6 @@ export default interface RollTable extends ClientBaseRollTable {
     readonly results: EmbeddedCollection<TableResult<this>>;
 
     get sheet(): DocumentSheetV2;
-}
-
-/**
- * @typedef RollTableDraw An object containing the executed Roll and the produced results
- * @property roll    The Dice roll which generated the draw
- * @property results An array of drawn TableResult documents
- */
-export interface RollTableDraw<TParent extends RollTable> {
-    roll: Roll;
-    results: TableResult<TParent>[];
 }
 
 export {};

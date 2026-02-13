@@ -85,7 +85,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     protected _element: JQuery;
 
     /** Track the current position and dimensions of the Application UI */
-    position: ApplicationPosition;
+    position: ApplicationV1Position;
 
     /** DragDrop workflow handlers which are active for this Application */
     protected _dragDrop: DragDrop[];
@@ -363,7 +363,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     bringToTop(): void;
 
     /** Set the application position and store it's new location */
-    setPosition(options?: ApplicationPosition): ApplicationPosition | void;
+    setPosition(options?: ApplicationV1Position): ApplicationV1Position | void;
 
     /**
      * Handle application minimization behavior - collapsing content and reducing the size of the header
@@ -376,7 +376,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     protected _onResize(event: Event | JQuery.Event): void;
 }
 
-interface ApplicationPosition {
+interface ApplicationV1Position {
     width?: Maybe<number>;
     height?: Maybe<string | number>;
     left?: Maybe<number>;

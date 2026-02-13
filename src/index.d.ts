@@ -2,6 +2,8 @@ import Config from "#client/config.mjs";
 import { FoundryUI } from "#client/ui.mjs";
 import "./global-external.mjs";
 
+export type * from "./global-exports.d.ts";
+
 declare global {
     namespace globalThis {
         const CONFIG: Config<

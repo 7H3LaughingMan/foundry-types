@@ -118,18 +118,6 @@ export default class Region<TDocument extends RegionDocument<Scene | null> = Reg
      * @returns               Is the point (at the given elevation) inside this Region?
      */
     testPoint(point: Point, elevation?: number): boolean;
-
-    /**
-     * Split the movement into its segments.
-     * @param   waypoints                  The waypoints of movement.
-     * @param   samples                    The points relative to the waypoints that are tested.
-     *                                     Whenever one of them is inside the region, the moved object
-     *                                     is considered to be inside the region.
-     * @param   [options]                  Additional options
-     * @param   [options.teleport=false]   Is it teleportation?
-     * @returns                            The movement split into its segments.
-     */
-    segmentizeMovement(waypoints: RegionMovementWaypoint[], samples: Point[], options?: { teleport?: boolean }): RegionMovementSegment[];
 }
 
 export interface RegionMovementWaypoint {
@@ -139,13 +127,4 @@ export interface RegionMovementWaypoint {
     y: number;
     /** The elevation in grid units. */
     elevation: number;
-}
-
-export interface RegionMovementSegment {
-    /** The type of this segment (see {@link Region.MOVEMENT_SEGMENT_TYPES}). */
-    type: (typeof Region.MOVEMENT_SEGMENT_TYPES)[keyof typeof Region.MOVEMENT_SEGMENT_TYPES];
-    /** The waypoint that this segment starts from. */
-    from: RegionMovementWaypoint;
-    /** The waypoint that this segment goes to. */
-    to: RegionMovementWaypoint;
 }

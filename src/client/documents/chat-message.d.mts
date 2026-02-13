@@ -1,13 +1,8 @@
 import { DocumentConstructionContext } from "./../../common/_types.mjs";
-import {
-    DatabaseCreateCallbackOptions,
-    DatabaseCreateOperation,
-    DatabaseDeleteCallbackOptions,
-    DatabaseUpdateCallbackOptions,
-} from "./../../common/abstract/_types.mjs";
+import { DatabaseCreateCallbackOptions, DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
 import Document from "./../../common/abstract/document.mjs";
 import { RollMode } from "./../../common/constants.mjs";
-import BaseChatMessage, { ChatMessageSource, ChatSpeakerData } from "./../../common/documents/chat-message.mjs";
+import BaseChatMessage, { ChatMessageCreateOperation, ChatMessageSource, ChatSpeakerData } from "./../../common/documents/chat-message.mjs";
 import Roll, { Rolled, RollJSON } from "./../dice/roll.mjs";
 import { Actor, BaseUser, ChatMessageUUID, Scene, TokenDocument, User } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
@@ -177,10 +172,6 @@ declare namespace ChatMessage {
 export default ChatMessage;
 
 export interface MessageConstructionContext extends DocumentConstructionContext<null> {
-    rollMode?: RollMode | "roll";
-}
-
-export interface ChatMessageCreateOperation extends DatabaseCreateOperation<null> {
     rollMode?: RollMode | "roll";
 }
 

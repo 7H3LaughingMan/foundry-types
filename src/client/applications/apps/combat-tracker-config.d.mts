@@ -1,6 +1,7 @@
+import { TrackedAttributesDescription } from "#client/documents/_types.mjs";
 import { ApplicationConfiguration, ApplicationRenderContext, FormFooterButton } from "../_types.mjs";
 import { ApplicationV2, HandlebarsApplicationMixin, HandlebarsRenderOptions, HandlebarsTemplatePart } from "../api/_module.mjs";
-import { SettingConfig, TrackedAttributesDescription } from "./../../_types.mjs";
+import { SettingConfig } from "./../../_types.mjs";
 import { TurnMarkerData } from "./../../canvas/placeables/tokens/_module.mjs";
 import CombatConfiguration from "./../../data/combat-config.mjs";
 

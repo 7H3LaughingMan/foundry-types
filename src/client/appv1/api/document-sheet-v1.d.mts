@@ -1,4 +1,4 @@
-import HTMLSecret from "../../applications/html-secret.mjs";
+import HTMLSecret from "#client/applications/ux/html-secret.mjs";
 import Document from "./../../../common/abstract/document.mjs";
 import ProseMirrorEditor, { EditorCreateOptions } from "./../../applications/ux/prosemirror-editor.mjs";
 import User from "./../../documents/user.mjs";

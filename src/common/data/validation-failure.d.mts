@@ -1,3 +1,5 @@
+import { ElementValidationFailure } from "./_types.mjs";
+
 /** A class responsible for recording information about a validation failure. */
 export class DataModelValidationFailure {
     /**
@@ -65,15 +67,6 @@ export class DataModelValidationFailure {
 
     /** Represent the DataModelValidationFailure as a string. */
     toString(): string;
-}
-
-interface ElementValidationFailure {
-    /** Either the element's index or some other identifier for it. */
-    id: string | number;
-    /** Optionally a user-friendly name for the element. */
-    name?: string;
-    /** The element's validation failure. */
-    failure: DataModelValidationFailure;
 }
 
 /** A specialised Error to indicate a model validation failure. */

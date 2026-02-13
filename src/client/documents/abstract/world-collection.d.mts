@@ -1,3 +1,4 @@
+import { FromCompendiumOptions } from "#client/_types.mjs";
 import DocumentSheetV2 from "../../applications/api/document-sheet.mjs";
 import { Folder, Setting, WorldDocument } from "../_module.mjs";
 import CompendiumCollection from "../collections/compendium-collection.mjs";
@@ -153,17 +154,4 @@ export default abstract class WorldCollection<TDocument extends WorldDocument | 
     static unregisterSheet(...args: DropFirst<Parameters<(typeof DocumentSheetConfig)["unregisterSheet"]>>): void;
 
     static get registeredSheets(): (DocumentSheetV2 | DocumentSheet)[];
-}
-
-export interface FromCompendiumOptions {
-    /** Clear the currently assigned folder. */
-    clearFolder?: boolean;
-    /** Clear fields which store Document state. */
-    clearState?: boolean;
-    /** Clear the current sort order. */
-    clearSort?: boolean;
-    /** Clear Document ownership (recursive). */
-    clearOwnership?: boolean;
-    /** Retain the Document ID from the source Compendium. */
-    keepId?: boolean;
 }

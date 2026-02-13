@@ -75,10 +75,10 @@ interface RayIntersection {
     t1: number;
 }
 
-interface QuadtreeObject {
+interface QuadtreeObject<TObject extends object = object, TQuadtree extends Quadtree<TObject> = Quadtree<TObject>> {
     r: PIXI.Rectangle;
-    t: unknown;
-    n?: Set<Quadtree<object>>;
+    t: TObject;
+    n: Set<TQuadtree>;
 }
 
 type VertexMap = Map<number, PolygonVertex>;

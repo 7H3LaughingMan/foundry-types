@@ -1,8 +1,7 @@
 import { AmbientLightDocument, MeasuredTemplateDocument, RegionDocument, Scene, TokenDocument, User } from "../documents/_module.mjs";
 import { Point } from "./../../common/_types.mjs";
-import { CanvasPerformanceMode } from "./../../common/constants.mjs";
 import { GridlessGrid, HexagonalGrid, SquareGrid } from "./../../common/grid/_module.mjs";
-import { CanvasDimensions } from "./../_types.mjs";
+import { CanvasDimensions, CanvasPerformanceSettings, CanvasSupportedComponents } from "./../_types.mjs";
 import { CanvasEdges } from "./geometry/edges/edges.mjs";
 import {
     CanvasVisibility,
@@ -411,32 +410,4 @@ export default class Canvas<
      * @param event The originating mouse movement event
      */
     _onDragCanvasPan(event: PointerEvent): void;
-}
-
-export interface CanvasPerformanceSettings {
-    mode: CanvasPerformanceMode;
-    blur: {
-        enabled: boolean;
-        illumination: boolean;
-    };
-    mipmap: "ON" | "OFF";
-    msaa: boolean;
-    fps: number;
-    tokenAnimation: boolean;
-    lightAnimation: boolean;
-    textures: {
-        enabled: boolean;
-        maxSize: number;
-        p2Steps: number;
-        p2StepsMax: number;
-    };
-}
-
-export interface CanvasSupportedComponents {
-    /** Is WebGL2 supported? */
-    webGL2: boolean;
-    /** Is reading pixels in RED format supported? */
-    readPixelsRED: boolean;
-    /** Is the OffscreenCanvas supported? */
-    offscreenCanvas: boolean;
 }

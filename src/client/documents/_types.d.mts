@@ -15,10 +15,8 @@ import { Combat, Combatant, RegionDocument, TableResult, TokenDocument, User } f
 export interface AdventureImportData {
     /** Arrays of document data to create, organized by document name */
     toCreate: Record<string, object[]>;
-
     /** Arrays of document data to update, organized by document name */
     toUpdate: Record<string, object[]>;
-
     /** The total count of documents to import */
     documentCount: number;
 }
@@ -36,13 +34,10 @@ export type AdventurePreImportCallback = (data: AdventureImportData, options: Ad
 export interface AdventureImportOptions {
     /** Display a warning dialog if existing documents would be overwritten */
     dialog?: boolean;
-
     /** A subset of adventure fields to import */
     importFields?: string[];
-
     /** An array of awaited pre-import callbacks */
     preImport?: AdventurePreImportCallback[];
-
     /** An array of awaited post-import callbacks */
     postImport?: AdventurePostImportCallback[];
 }
@@ -53,7 +48,6 @@ export interface AdventureImportOptions {
 export interface AdventureImportResult {
     /** Documents created as a result of the import, grouped by document name */
     created: Record<string, Document[]>;
-
     /** Documents updated as a result of the import, grouped by document name*/
     updated: Record<string, Document[]>;
 }
@@ -108,18 +102,15 @@ export interface CombatTurnEventContext {
 
 export type CombatRoundEventContext = Omit<CombatTurnEventContext, "turn">;
 
-export interface RegionEvent<TData extends object = object> {
+export interface RegionEvent<TData extends object = object, TDocument extends RegionDocument = RegionDocument, TUser extends User = User> {
     /** The name of the event */
     name: string;
-
     /** The data of the event */
     data: TData;
-
     /** The Region the event was triggered on */
-    region: RegionDocument;
-
+    region: TDocument;
     /** The User that triggered the event */
-    user: User;
+    user: TUser;
 }
 
 export type RegionRegionBoundaryEvent = RegionEvent;
@@ -256,15 +247,11 @@ export interface RegionSegmentizeMovementPathWaypoint {
 /**
  * An object containing the executed Roll and the produced results
  */
-export interface RollTableDraw {
-    /**
-     * The Dice roll which generated the draw
-     */
+export interface RollTableDraw<TParent extends RollTable = RollTable> {
+    /** The Dice roll which generated the draw */
     roll: Roll;
-    /**
-     * An array of drawn TableResult documents
-     */
-    results: TableResult[];
+    /** An array of drawn TableResult documents */
+    results: TableResult<TParent>[];
 }
 
 export interface SceneDimensions {

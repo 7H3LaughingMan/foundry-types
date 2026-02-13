@@ -1,3 +1,4 @@
+import { ColorSource } from "#common/_types.mjs";
 import Color from "./../../../common/utils/color.mjs";
 import CanvasGroupMixin from "./canvas-group-mixin.mjs";
 
@@ -66,8 +67,6 @@ export default class EnvironmentCanvasGroup extends CanvasGroupMixin(PIXI.Contai
      */
     initialize(config?: EnvironmentInitializeConfig): void;
 }
-
-type ColorSource = string | number | [number, number, number];
 
 interface EnvironmentInitializeConfig {
     backgroundColor?: Maybe<ColorSource>;
