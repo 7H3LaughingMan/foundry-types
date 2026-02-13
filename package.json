@@ -10,7 +10,10 @@
     },
     "exports": {
         ".": "./src/index.d.ts",
-        "./*": "./src/*"
+        "./client/*": "./src/client/*",
+        "./common/*": "./src/client/*",
+        "./global-exports": "./src/global-exports.d.ts",
+        "./global-external": "./src/global-external.d.ts"
     },
     "imports": {
         "#client/*": "./src/client/*",
