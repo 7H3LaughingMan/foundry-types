@@ -4,7 +4,7 @@ import { glob } from "glob";
 let files = await glob(["./client/**/*.{mts,ts}", "./common/**/*.{mts,ts}"], {
     cwd: "./src",
     dotRelative: true,
-    ignore: ["./client/applications/handlebars.d.mts", "./common/primitives/**", "./common/prosemirror/**", "./common/utils/**"],
+    ignore: ["./client/applications/handlebars.d.mts", "./common/primitives/**", "./common/prosemirror/schema/**", "./common/utils/**"],
     posix: true,
 });
 
