@@ -52,10 +52,6 @@ declare global {
 
     type WithPartial<T extends Record<string, unknown>, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-    type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
-
-    type ExpandRecursively<T> = T extends object ? (T extends infer O ? { [K in keyof O]: ExpandRecursively<O[K]> } : never) : T;
-
     type PartialRecord<K extends PropertyKey, V> = Partial<Record<K, V>>;
 
     /** A JSON-compatible value, plus `undefined` */
