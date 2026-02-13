@@ -11,7 +11,7 @@
     "exports": {
         ".": "./src/index.d.ts",
         "./client/*": "./src/client/*",
-        "./common/*": "./src/client/*",
+        "./common/*": "./src/common/*",
         "./global-exports": "./src/global-exports.d.ts",
         "./global-external": "./src/global-external.d.ts"
     },
