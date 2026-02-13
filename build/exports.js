@@ -37,6 +37,39 @@ files.forEach((value, index, array) => {
     array[index] = `export type * from "${value}";`;
 });
 
+files.unshift(
+    "export type {",
+    "    ActorUUID,",
+    "    CardsUUID,",
+    "    ChatMessageUUID,",
+    "    CombatUUID,",
+    "    CompendiumActorUUID,",
+    "    CompendiumAdventureUUID,",
+    "    CompendiumCardsUUID,",
+    "    CompendiumItemUUID,",
+    "    CompendiumJournalEntryUUID,",
+    "    CompendiumMacroUUID,",
+    "    CompendiumPlaylistUUID,",
+    "    CompendiumRollTableUUID,",
+    "    CompendiumSceneUUID,",
+    "    EmbeddedItemUUID,",
+    "    FogExplorationUUID,",
+    "    FolderUUID,",
+    "    ItemUUID,",
+    "    JournalEntryUUID,",
+    "    MacroUUID,",
+    "    PlaylistUUID,",
+    "    RollTableUUID,",
+    "    SceneUUID,",
+    "    SettingUUID,",
+    "    TokenDocumentUUID,",
+    "    UserUUID,",
+    "    WorldDocumentUUID,",
+    "    WorldItemUUID,",
+    '} from "./common/documents/_module.d.mts";',
+    "",
+);
+
 files.push("");
 
 fs.writeFileSync("./src/global-exports.d.ts", files.join("\n"));

@@ -1,3 +1,33 @@
+export type {
+    ActorUUID,
+    CardsUUID,
+    ChatMessageUUID,
+    CombatUUID,
+    CompendiumActorUUID,
+    CompendiumAdventureUUID,
+    CompendiumCardsUUID,
+    CompendiumItemUUID,
+    CompendiumJournalEntryUUID,
+    CompendiumMacroUUID,
+    CompendiumPlaylistUUID,
+    CompendiumRollTableUUID,
+    CompendiumSceneUUID,
+    EmbeddedItemUUID,
+    FogExplorationUUID,
+    FolderUUID,
+    ItemUUID,
+    JournalEntryUUID,
+    MacroUUID,
+    PlaylistUUID,
+    RollTableUUID,
+    SceneUUID,
+    SettingUUID,
+    TokenDocumentUUID,
+    UserUUID,
+    WorldDocumentUUID,
+    WorldItemUUID,
+} from "./common/documents/_module.d.mts";
+
 export type * from "./client/_types.d.mts";
 export type * from "./client/applications/_types.d.mts";
 export type * from "./client/applications/api/application.d.mts";
