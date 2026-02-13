@@ -13,7 +13,7 @@
         "./client/*": "./src/client/*",
         "./common/*": "./src/common/*",
         "./global-exports": "./src/global-exports.d.ts",
-        "./global-external": "./src/global-external.d.ts"
+        "./global-external": "./src/global-external.d.mts"
     },
     "imports": {
         "#client/*": "./src/client/*",
