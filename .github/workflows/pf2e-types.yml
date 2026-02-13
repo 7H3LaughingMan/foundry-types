@@ -1,0 +1,15 @@
+name: Update PF2e Types
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.PAT }}
+          repository: 7H3LaughingMan/pf2e-types
+          event-type: foundry-types
