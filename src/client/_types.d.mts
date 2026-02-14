@@ -777,6 +777,8 @@ export interface SettingConfig<TChoices extends Record<string, unknown> | undefi
     default?: number | string | boolean | object | (() => number | string | boolean | object);
     /** Executes when the value of this Setting changes */
     onChange?: (choice: TChoices extends object ? keyof TChoices : unknown) => void | Promise<void>;
+    /** The combination of `{namespace}.{key}` */
+    id?: string
 }
 
 export interface SettingSubmenuConfig {
