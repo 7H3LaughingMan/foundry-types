@@ -185,7 +185,23 @@ interface ClientSettingsMap extends Map<string, SettingConfig> {
 export class WorldSettings extends Collection<string, Setting> {
     constructor(settings: object);
 
-    getItem(key: string): string | null;
+    /* -------------------------------------------- */
+    /* World Settings Methods                       */
+    /* -------------------------------------------- */
 
-    setItem(key: string, value: unknown): void;
+    /**
+     * Return the Setting document with the given key.
+     * @param {string} key        The setting key
+     * @param {string} [user]     For user-scoped settings, the user ID.
+     * @returns {Setting}         The Setting
+     */
+    getSetting(key: string, user?: string): Setting
+
+    /**
+     * Return the serialized value of the world setting as a string
+     * @param {string} key     The setting key
+     * @param {string} [user]  For user-scoped settings, the user ID.
+     * @returns {string|null}  The serialized setting string
+     */
+    getItem(key: string, user?: string):string | null
 }
