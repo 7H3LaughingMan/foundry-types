@@ -1,4 +1,3 @@
-import * as ClipperLib from "js-angusj-clipper";
 import { Point } from "../../../common/_types.mjs";
 import { DatabaseUpdateCallbackOptions } from "./../../../common/abstract/_types.mjs";
 import { RegionPolygonTree } from "./../../data/region-shapes/polygon-tree.mjs";
