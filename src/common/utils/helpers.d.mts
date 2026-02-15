@@ -121,7 +121,7 @@ export function isDeletionKey(key: string): key is "-=";
  * @param parent Some other class which may be a parent
  * @returns Is the class a subclass of the parent?
  */
-export function isSubclass(cls: ConstructorOf<Object>, parent: ConstructorOf<Object>): boolean;
+export function isSubclass<TParent extends AnyConstructor>(cls: unknown, parent: TParent): cls is TParent;
 
 /**
  * Search up the prototype chain and return the class that defines the given property.
