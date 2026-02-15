@@ -1,5 +1,6 @@
 import * as PixiGraphicsSmooth from "@pixi/graphics-smooth";
 import * as PixiParticles from "@pixi/particle-emitter";
+import "gsap";
 import "handlebars";
 import "jquery";
 import PixiJS from "pixi.js";
