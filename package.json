@@ -30,7 +30,14 @@
     "scripts": {
         "tsc": "tsc",
         "eslint": "eslint src",
-        "eslint:fix": "eslint src --fix && prettier src --write"
+        "eslint:fix": "eslint src --fix && prettier src --write",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "*.{ts,mts,cts,tsc,js,mjs,cjs,jsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
     },
     "dependencies": {
         "@codemirror/lang-html": "^6.4.9",
@@ -72,6 +79,8 @@
         "eslint": "^9.39.2",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.5",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
         "prettier-plugin-organize-imports": "^4.3.0",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.55.0"
