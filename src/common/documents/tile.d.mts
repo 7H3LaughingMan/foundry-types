@@ -59,7 +59,7 @@ type TileSchema = {
     /** Is the tile currently locked? */
     locked: fields.BooleanField;
     /** The tile's restrictions settings */
-    restrictions: fields.SchemaField<TileRestrictionsSchema>
+    restrictions: fields.SchemaField<TileRestrictionsSchema>;
     /** The tile's occlusion settings */
     occlusion: fields.SchemaField<TileOcclusionSchema>;
     /** The tile's video settings */
@@ -73,7 +73,7 @@ type TileRestrictionsSchema = {
     light: fields.BooleanField;
     /** Should we restricts weather? */
     weather: fields.BooleanField;
-}
+};
 
 type TileOcclusionSchema = {
     /** The occlusion mode from CONST.TILE_OCCLUSION_MODES */
