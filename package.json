@@ -20,10 +20,7 @@
     },
     "types": "./src/index.d.ts",
     "exports": {
-        ".": {
-            "types": "./src/index.d.ts",
-            "default": "./src/index.d.ts"
-        },
+        ".": "./src/index.d.ts",
         "./client/*": "./src/client/*",
         "./common/*": "./src/common/*",
         "./global-external": "./src/global-external.d.mts"
