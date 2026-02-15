@@ -778,7 +778,7 @@ export interface SettingConfig<TChoices extends Record<string, unknown> | undefi
     /** Executes when the value of this Setting changes */
     onChange?: (choice: TChoices extends object ? keyof TChoices : unknown) => void | Promise<void>;
     /** The combination of `{namespace}.{key}` */
-    id?: string
+    id?: string;
 }
 
 export interface SettingSubmenuConfig {
