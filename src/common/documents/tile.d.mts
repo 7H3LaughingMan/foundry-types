@@ -46,8 +46,10 @@ type TileSchema = {
     x: fields.NumberField<number, number, true, false, true>;
     /** The y-coordinate position of the top-left corner of the tile */
     y: fields.NumberField<number, number, true, false, true>;
+    /** The elevation of the tile */
+    elevation: fields.NumberField<number, number, true, false, true>;
     /** The z-index ordering of this tile relative to its siblings */
-    z: fields.NumberField<number, number, true, false, true>;
+    sort: fields.NumberField<number, number, true, false, true>;
     /** The angle of rotation for the tile between 0 and 360 */
     rotation: fields.AngleField;
     /** The tile opacity */
@@ -56,15 +58,21 @@ type TileSchema = {
     hidden: fields.BooleanField;
     /** Is the tile currently locked? */
     locked: fields.BooleanField;
-    /** Is the tile an overhead tile? */
-    overhead: fields.BooleanField;
-    roof: fields.BooleanField;
+    /** The tile's restrictions settings */
+    restrictions: fields.SchemaField<TileRestrictionsSchema>;
     /** The tile's occlusion settings */
     occlusion: fields.SchemaField<TileOcclusionSchema>;
     /** The tile's video settings */
     video: fields.SchemaField<TileVideoSchema>;
     /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
+};
+
+type TileRestrictionsSchema = {
+    /** Should we restricts light? */
+    light: fields.BooleanField;
+    /** Should we restricts weather? */
+    weather: fields.BooleanField;
 };
 
 type TileOcclusionSchema = {
