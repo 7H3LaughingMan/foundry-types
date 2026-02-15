@@ -25,6 +25,10 @@ declare global {
 
     type CollectionValue<T> = T extends Collection<string, infer U> ? U : never;
 
+    type AnyConstructor = abstract new (...args: never) => unknown;
+
+    type AnyConcreteConstructor = new (...args: never) => unknown;
+
     type AbstractConstructorOf<T> = abstract new (...args: any[]) => T;
 
     type ConstructorOf<T> = new (...args: any[]) => T;
