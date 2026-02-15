@@ -191,17 +191,17 @@ export class WorldSettings extends Collection<string, Setting> {
 
     /**
      * Return the Setting document with the given key.
-     * @param {string} key        The setting key
-     * @param {string} [user]     For user-scoped settings, the user ID.
-     * @returns {Setting}         The Setting
+     * @param key The setting key
+     * @param user For user-scoped settings, the user ID.
+     * @returns The Setting
      */
-    getSetting(key: string, user?: string): Setting
+    getSetting(key: string, user?: string): Setting;
 
     /**
      * Return the serialized value of the world setting as a string
-     * @param {string} key     The setting key
-     * @param {string} [user]  For user-scoped settings, the user ID.
-     * @returns {string|null}  The serialized setting string
+     * @param key The setting key
+     * @param user For user-scoped settings, the user ID.
+     * @returns The serialized setting string
      */
-    getItem(key: string, user?: string):string | null
+    getItem(key: string, user?: string): string | null;
 }
