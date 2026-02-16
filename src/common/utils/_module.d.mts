@@ -13,7 +13,7 @@ export { default as Semaphore } from "./semaphore.mjs";
 export { default as StringTree } from "./string-tree.mjs";
 export { default as WordTree } from "./word-tree.mjs";
 
-/**
- * The constructor of an async function.
- */
-export const AsyncFunction: Function;
+/** The constructor of an async function. */
+export const AsyncFunction: {
+    new <T>(...args: any[]): (...args: any[]) => Promise<T>;
+};
