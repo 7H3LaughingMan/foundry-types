@@ -27,10 +27,10 @@ declare global {
         /** Does this editor instance support collaborative editing? */
         collaborate: boolean;
         /**  Should the editor be presented in compact mode? */
-        compact: boolean
+        compact: boolean;
         /** A Document UUID. Required for collaborative editing */
         documentUUID?: DocumentUUID;
         /** The height of the editor in pixels */
-        height?: number
+        height?: number;
     }
 }
