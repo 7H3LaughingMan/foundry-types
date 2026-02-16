@@ -1,3 +1,4 @@
+import { ActivityData } from "#client/_module.mjs";
 import Token from "../canvas/placeables/token.mjs";
 import UserTargets from "../canvas/placeables/tokens/targets.mjs";
 import { DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
@@ -98,7 +99,7 @@ export default class User extends ClientBaseUser {
      * @param activityData.sceneId The id of the Scene currently being viewed by the User
      * @param activityData.targets An id of Token ids which are targeted by the User
      */
-    broadcastActivity(activityData?: UserActivity): void;
+    broadcastActivity(activityData?: ActivityData): void;
 
     /**
      * Get an Array of Macro Entities on this User's Hotbar by page
