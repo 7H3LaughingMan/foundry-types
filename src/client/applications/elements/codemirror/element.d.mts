@@ -1,6 +1,6 @@
 import AbstractFormInputElement from "../form-element.mjs";
 import { Point } from "./../../../../common/_types.mjs";
-import { CodeMirrorInputConfig, CodeMirrorLanguage } from "./../../../../common/data/_types.mjs";
+import { CodeMirrorInputConfig, CodeMirrorLanguage, FormInputConfig } from "./../../../../common/data/_types.mjs";
 
 interface HTMLCodeMirrorOptions {
     /** The initial editor contents. */
@@ -69,5 +69,5 @@ export default class HTMLCodeMirrorElement extends AbstractFormInputElement<stri
     /**
      * Create an HTMLCodeMirrorElement element for a StringField (typically a JSONField or JavascriptField).
      */
-    static create(config: CodeMirrorInputConfig): HTMLCodeMirrorElement;
+    static create(config: FormInputConfig<string> & CodeMirrorInputConfig): HTMLCodeMirrorElement;
 }
