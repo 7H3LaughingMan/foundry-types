@@ -15,11 +15,11 @@ export default abstract class RegionBehaviorType<
 > extends TypeDataModel<TParent, TSchema> {
     /**
      * Create the events field.
-     * @param options Options which configure how the events field is declared
-     * @param options.events The event names to restrict to.
-     * @param options.initial The initial set of events that should be default for the field
+     * @param [options] Options which configure how the events field is declared
+     * @param [options.events] The event names to restrict to.
+     * @param [options.initial] The initial set of events that should be default for the field
      */
-    protected static _createEventsField({ events, initial }?: { events: string[]; initial: string[] }): EventsField;
+    protected static _createEventsField({ events, initial }?: { events?: string[]; initial?: string[] }): EventsField;
 
     /**
      * A RegionBehaviorType may register to always receive certain events by providing a record of handler functions.
