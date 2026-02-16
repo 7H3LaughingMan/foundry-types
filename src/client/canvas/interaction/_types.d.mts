@@ -28,7 +28,7 @@ export interface PingData {
     /**
      * The ID of the scene that was pinged.
      */
-    scene?: string;
+    scene: string;
     /**
      * The zoom level at which the ping was made.
      */
