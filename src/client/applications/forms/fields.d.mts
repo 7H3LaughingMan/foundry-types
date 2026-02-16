@@ -122,8 +122,8 @@ export type MultiSelectInputConfig = Omit<SelectInputConfig, "blank"> & {
 };
 
 export interface NumberInputConfig extends FormInputConfig<number> {
-    min: number;
-    max: number;
+    min?: number;
+    max?: number;
     step: number | "any";
 }
 
