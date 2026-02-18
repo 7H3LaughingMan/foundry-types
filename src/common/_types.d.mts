@@ -34,33 +34,25 @@ type DeepReadonly<T> = {
               : DeepReadonly<T[K]>;
 };
 
-/**
- * A 2D point, expressed as an array [x, y].
- */
+/**A 2D point, expressed as {x, y}. */
 export interface Point {
-    /** The x-coordinate in pixels */
+    /** The x-coordinate */
     x: number;
-    /** The y-coordinate of the top-left corner */
+    /** The y-coordinate */
     y: number;
 }
 
-/**
- * A single point, expressed as an array [x,y]
- */
+/** A 2D point, expressed as an array [x, y]. */
 export type PointArray = [x: number, y: number];
 
-/**
- * A 3D point, expessed as {x, y, elevation}.
- */
+/** A 3D point, expessed as {x, y, elevation}. */
 export interface ElevatedPoint extends Point {
     /** The elevation in grid units */
     elevation: number;
 }
 
-/**
- * A standard rectangle interface.
- */
-interface Rectangle {
+/** A standard rectangle interface. */
+export interface Rectangle {
     /** The x-coordinate of the top-left corner */
     x: number;
     /** The y-coordinate of the top-left corner */
@@ -71,9 +63,9 @@ interface Rectangle {
     height: number;
 }
 
-type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor;
+export type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor | ObjectConstructor;
 
-type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
+export type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
 
 /* ----------------------------------------- */
 /*  Socket Requests and Responses            */

@@ -60,6 +60,14 @@ declare global {
 
     /** A JSON-compatible value, plus `undefined` */
     type JSONValue = string | number | boolean | object | null | undefined;
+
+    type Point = { x: number; y: number };
+
+    type PointArray = [x: number, y: number];
+
+    type ElevatedPoint = Point & { elevation: number };
+
+    type Rectangle = { x: number; y: number; width: number; height: number };
 }
 
 type ExtractObjects<T> = T extends infer U ? (U extends object ? U : never) : never;

@@ -1,5 +1,3 @@
-import * as PixiGraphicsSmooth from "@pixi/graphics-smooth";
-import * as PixiParticles from "@pixi/particle-emitter";
 import "gsap";
 import "handlebars";
 import "jquery";
@@ -10,12 +8,6 @@ import "../public/scripts/clipper.mjs";
 import * as constants from "./../common/constants.mjs";
 import { TinyMCE as tinymce } from "./../tinymce-stub.mjs";
 import * as globalFoundry from "./client.mjs";
-
-declare module "pixi.js" {
-    export import LegacyGraphics = PixiJS.Graphics;
-    export import smooth = PixiGraphicsSmooth;
-    export import particles = PixiParticles;
-}
 
 declare global {
     namespace globalThis {
