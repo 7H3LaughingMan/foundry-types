@@ -48,40 +48,43 @@ declare global {
             foundry.applications.ui.Hotbar<foundry.documents.Macro>
         >;
 
-        function getDocumentClass(name: "ActiveEffect"): typeof foundry.documents.ActiveEffect;
-        function getDocumentClass(name: "Actor"): typeof foundry.documents.Actor;
-        function getDocumentClass(name: "ActorDelta"): typeof foundry.documents.ActorDelta;
-        function getDocumentClass(name: "Adventure"): typeof foundry.documents.Adventure;
-        function getDocumentClass(name: "AmbientLight"): typeof foundry.documents.AmbientLightDocument;
-        function getDocumentClass(name: "AmbientSound"): typeof foundry.documents.AmbientSoundDocument;
-        function getDocumentClass(name: "Card"): typeof foundry.documents.Card;
-        function getDocumentClass(name: "Cards"): typeof foundry.documents.Cards;
-        function getDocumentClass(name: "ChatMessage"): typeof foundry.documents.ChatMessage;
-        function getDocumentClass(name: "Combat"): typeof foundry.documents.Combat;
-        function getDocumentClass(name: "Combatant"): typeof foundry.documents.Combatant;
-        function getDocumentClass(name: "CombatantGroup"): typeof foundry.documents.CombatantGroup;
-        function getDocumentClass(name: "Drawing"): typeof foundry.documents.DrawingDocument;
-        function getDocumentClass(name: "FogExploration"): typeof foundry.documents.FogExploration;
-        function getDocumentClass(name: "Folder"): typeof foundry.documents.Folder;
-        function getDocumentClass(name: "Item"): typeof foundry.documents.Item;
-        function getDocumentClass(name: "JournalEntry"): typeof foundry.documents.JournalEntry;
-        function getDocumentClass(name: "JournalEntryCategory"): typeof foundry.documents.JournalEntryCategory;
-        function getDocumentClass(name: "JournalEntryPage"): typeof foundry.documents.JournalEntryPage;
-        function getDocumentClass(name: "Macro"): typeof foundry.documents.Macro;
-        function getDocumentClass(name: "MeasuredTemplate"): typeof foundry.documents.MeasuredTemplateDocument;
-        function getDocumentClass(name: "Note"): typeof foundry.documents.NoteDocument;
-        function getDocumentClass(name: "Playlist"): typeof foundry.documents.Playlist;
-        function getDocumentClass(name: "PlaylistSound"): typeof foundry.documents.PlaylistSound;
-        function getDocumentClass(name: "Region"): typeof foundry.documents.RegionDocument;
-        function getDocumentClass(name: "RegionBehavior"): typeof foundry.documents.RegionBehavior;
-        function getDocumentClass(name: "RollTable"): typeof foundry.documents.RollTable;
-        function getDocumentClass(name: "Scene"): typeof foundry.documents.Scene;
-        function getDocumentClass(name: "Setting"): typeof foundry.documents.Setting;
-        function getDocumentClass(name: "TableResult"): typeof foundry.documents.TableResult;
-        function getDocumentClass(name: "Tile"): typeof foundry.documents.TileDocument;
-        function getDocumentClass(name: "Token"): typeof foundry.documents.TokenDocument;
-        function getDocumentClass(name: "User"): typeof foundry.documents.User;
-        function getDocumentClass(name: "Wall"): typeof foundry.documents.WallDocument;
-        function getDocumentClass<T extends foundry.abstract.Document>(name: DocumentType): ConstructorOf<T>;
+        type DocumentTypeMap = {
+            ActiveEffect: typeof foundry.documents.ActiveEffect;
+            Actor: typeof foundry.documents.Actor;
+            ActorDelta: typeof foundry.documents.ActorDelta;
+            Adventure: typeof foundry.documents.Adventure;
+            AmbientLight: typeof foundry.documents.AmbientLightDocument;
+            AmbientSound: typeof foundry.documents.AmbientSoundDocument;
+            Card: typeof foundry.documents.Card;
+            Cards: typeof foundry.documents.Cards;
+            ChatMessage: typeof foundry.documents.ChatMessage;
+            Combat: typeof foundry.documents.Combat;
+            Combatant: typeof foundry.documents.Combatant;
+            CombatantGroup: typeof foundry.documents.CombatantGroup;
+            Drawing: typeof foundry.documents.DrawingDocument;
+            FogExploration: typeof foundry.documents.FogExploration;
+            Folder: typeof foundry.documents.Folder;
+            Item: typeof foundry.documents.Item;
+            JournalEntry: typeof foundry.documents.JournalEntry;
+            JournalEntryCategory: typeof foundry.documents.JournalEntryCategory;
+            JournalEntryPage: typeof foundry.documents.JournalEntryPage;
+            Macro: typeof foundry.documents.Macro;
+            MeasuredTemplate: typeof foundry.documents.MeasuredTemplateDocument;
+            Note: typeof foundry.documents.NoteDocument;
+            Playlist: typeof foundry.documents.Playlist;
+            PlaylistSound: typeof foundry.documents.PlaylistSound;
+            Region: typeof foundry.documents.RegionDocument;
+            RegionBehavior: typeof foundry.documents.RegionBehavior;
+            RollTable: typeof foundry.documents.RollTable;
+            Scene: typeof foundry.documents.Scene;
+            Setting: typeof foundry.documents.Setting;
+            TableResult: typeof foundry.documents.TableResult;
+            Tile: typeof foundry.documents.TileDocument;
+            Token: typeof foundry.documents.TokenDocument;
+            User: typeof foundry.documents.User;
+            Wall: typeof foundry.documents.WallDocument;
+        };
+
+        function getDocumentClass<K extends keyof DocumentTypeMap>(name: K): DocumentTypeMap[K];
     }
 }
