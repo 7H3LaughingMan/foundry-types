@@ -12,7 +12,7 @@ declare const CanvasBaseAmbientLight: {
 
 interface CanvasBaseAmbientLight<TParent extends Scene | null> extends InstanceType<typeof CanvasBaseAmbientLight<TParent>> {}
 
-export default class AmbientLightDocument<TParent extends Scene | null> extends CanvasBaseAmbientLight<TParent> {
+export default class AmbientLightDocument<TParent extends Scene | null = Scene | null> extends CanvasBaseAmbientLight<TParent> {
     /* -------------------------------------------- */
     /*  Model Properties                            */
     /* -------------------------------------------- */
@@ -27,7 +27,7 @@ export default class AmbientLightDocument<TParent extends Scene | null> extends 
     protected override _onUpdate(changed: DeepPartial<this["_source"]>, options: DatabaseUpdateCallbackOptions, userId: string): void;
 }
 
-export default interface AmbientLightDocument<TParent extends Scene | null> extends CanvasBaseAmbientLight<TParent> {
+export default interface AmbientLightDocument<TParent extends Scene | null = Scene | null> extends CanvasBaseAmbientLight<TParent> {
     get object(): AmbientLight<this> | null;
 }
 

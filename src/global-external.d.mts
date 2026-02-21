@@ -16,6 +16,8 @@ declare global {
         export import ChatMessage = foundry.documents.ChatMessage;
         export import Combat = foundry.documents.Combat;
         export import Combatant = foundry.documents.Combatant;
+        export import CombatantGroup = foundry.documents.CombatantGroup;
+        export import DrawingDocument = foundry.documents.DrawingDocument;
         export import FogExploration = foundry.documents.FogExploration;
         export import Folder = foundry.documents.Folder;
         export import Item = foundry.documents.Item;
@@ -36,6 +38,7 @@ declare global {
         export import TileDocument = foundry.documents.TileDocument;
         export import TokenDocument = foundry.documents.TokenDocument;
         export import User = foundry.documents.User;
+        export import WallDocument = foundry.documents.WallDocument;
 
         export import Color = foundry.utils.Color;
         export import Collection = foundry.utils.Collection;

@@ -11,11 +11,11 @@ declare const CanvasBaseTile: {
 
 interface CanvasBaseTile<TParent extends Scene | null> extends InstanceType<typeof CanvasBaseTile<TParent>> {}
 
-export default class TileDocument<TParent extends Scene | null> extends CanvasBaseTile<TParent> {
+export default class TileDocument<TParent extends Scene | null = Scene | null> extends CanvasBaseTile<TParent> {
     override prepareDerivedData(): void;
 }
 
-export default interface TileDocument<TParent extends Scene | null> extends CanvasBaseTile<TParent> {
+export default interface TileDocument<TParent extends Scene | null = Scene | null> extends CanvasBaseTile<TParent> {
     readonly _object: Tile<this> | null;
 }
 
