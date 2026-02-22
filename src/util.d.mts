@@ -1,5 +1,6 @@
+import { abstract } from "#client/_module.mjs";
 import { DocumentConstructionContext } from "#common/_types.mjs";
-import { DataField } from "#common/data/fields.mjs";
+import { EmbeddedCollectionField, EmbeddedDocumentField } from "#common/data/fields.mjs";
 import { DataSchema, DatabaseBackend, DatabaseUpdateOperation, Document, DocumentMetadata } from "./common/abstract/_module.mjs";
 import type DataModel from "./common/abstract/data.mjs";
 import Collection from "./common/utils/collection.mjs";
@@ -41,7 +42,7 @@ declare global {
         readonly database: DatabaseBackend;
         readonly documentName: string;
         readonly hasTypeData: boolean;
-        readonly hierarchy: Record<string, DataField>;
+        readonly hierarchy: Record<string, EmbeddedCollectionField<abstract.Document<abstract.Document>> | EmbeddedDocumentField<abstract.Document>>;
         readonly metadata: DocumentMetadata;
         readonly schema: foundry.data.fields.SchemaField<DataSchema>;
         readonly TYPES: string[];
