@@ -1,4 +1,3 @@
-import { DocumentConstructionContext } from "../common/_types.mjs";
 import { ActiveEffectSource } from "../common/documents/active-effect.mjs";
 import { DataSchema, Document, TypeDataModel } from "./../common/abstract/_module.mjs";
 import { AudioFilePath, ImageFilePath, RollMode } from "./../common/constants.mjs";
@@ -195,9 +194,7 @@ export default interface Config<
 
     /** Configuration for the Actor document */
     Actor: {
-        documentClass: {
-            new (data: PreCreate<TActor["_source"]>, context?: DocumentConstructionContext<TActor["parent"]>): TActor;
-        };
+        documentClass: DocumentClassOf<TActor>;
         collection: ConstructorOf<collections.Actors<documents.Actor<null>>>;
         compendiumIndexFields: string[];
         compendiumBanner: ImageFilePath;
@@ -212,7 +209,7 @@ export default interface Config<
 
     /** Configuration for the Adventure document. */
     Adventure: {
-        documentClass: ConstructorOf<documents.Adventure>;
+        documentClass: DocumentClassOf<documents.Adventure>;
         compendiumIndexFields: string[];
         compendiumBanner: string;
         sidebarIcon: string;
@@ -223,7 +220,7 @@ export default interface Config<
         collection: WorldCollection<documents.Cards>;
         compendiumIndexFields: string[];
         compendiumBanner: string;
-        documentClass: ConstructorOf<documents.Cards>;
+        documentClass: DocumentClassOf<documents.Cards>;
         sidebarIcon: string;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         presets: Record<string, { type: string; label: string; src: string }>;
@@ -233,9 +230,7 @@ export default interface Config<
 
     /** Configuration for the ChatMessage document */
     ChatMessage: {
-        documentClass: {
-            new (data: PreCreate<TChatMessage["_source"]>, context?: DocumentConstructionContext<null>): TChatMessage;
-        };
+        documentClass: DocumentClassOf<TChatMessage>;
         popoutClass: typeof applications.sidebar.apps.ChatPopout;
         collection: typeof collections.Messages;
         template: string;
@@ -247,9 +242,7 @@ export default interface Config<
 
     /** Configuration for the Combat document */
     Combat: {
-        documentClass: {
-            new (data: PreCreate<TCombat["_source"]>, context?: DocumentConstructionContext<null>): TCombat;
-        };
+        documentClass: DocumentClassOf<TCombat>;
         collection: typeof collections.CombatEncounters;
         defeatedStatusId: string;
         sidebarIcon: string;
@@ -261,7 +254,7 @@ export default interface Config<
 
     /** Configuration for the FogExploration document */
     FogExploration: {
-        documentClass: typeof documents.FogExploration;
+        documentClass: DocumentClassOf<documents.FogExploration>;
         collection: typeof WorldCollection;
         sheetClasses: Record<string, Record<string, SheetClassConfig>>;
         typeLabels: Record<string, string>;
@@ -270,7 +263,7 @@ export default interface Config<
     /** Configuration for the Folder document */
     Folder: {
         collection: typeof collections.Folders;
-        documentClass: typeof documents.Folder;
+        documentClass: DocumentClassOf<documents.Folder>;
         sheetClasses: Record<string, Record<string, SheetClassConfig>>;
         sidebarIcon: string;
         typeLabels: Record<string, string>;
@@ -283,9 +276,7 @@ export default interface Config<
         compendiumIndexFields: string[];
         dataModels: Record<string, ConstructorOf<TypeDataModel<documents.Item, DataSchema>>>;
         defaultType?: string;
-        documentClass: {
-            new (data: PreCreate<TItem["_source"]>, context?: DocumentConstructionContext<TItem["parent"]>): TItem;
-        };
+        documentClass: DocumentClassOf<TItem>;
         sheetClasses: Record<string, Record<string, SheetClassConfig>>;
         sidebarIcon: string;
         typeLabels: Record<string, string | undefined>;
@@ -294,7 +285,7 @@ export default interface Config<
 
     /** Configuration for the JournalEntry entity */
     JournalEntry: {
-        documentClass: typeof documents.JournalEntry;
+        documentClass: DocumentClassOf<documents.JournalEntry>;
         collection: collections.Journal;
         compendiumIndexFields: string[];
         compendiumBanner: string;
@@ -305,7 +296,7 @@ export default interface Config<
 
     /** Configuration for the Macro document */
     Macro: {
-        documentClass: ConstructorOf<TMacro>;
+        documentClass: DocumentClassOf<TMacro>;
         collection: typeof collections.Macros;
         compendiumIndexFields: string[];
         compendiumBanner: string;
@@ -314,7 +305,7 @@ export default interface Config<
 
     /** Configuration for the Playlist document */
     Playlist: {
-        documentClass: typeof documents.Playlist;
+        documentClass: DocumentClassOf<documents.Playlist>;
         collection: collections.Playlists;
         compendiumIndexFields: string[];
         compendiumBanner: string;
@@ -324,7 +315,7 @@ export default interface Config<
 
     /** Configuration for RollTable random draws */
     RollTable: {
-        documentClass: typeof documents.RollTable;
+        documentClass: DocumentClassOf<documents.RollTable>;
         collection: typeof collections.RollTables;
         compendiumIndexFields: string[];
         compendiumBanner: string;
@@ -335,7 +326,7 @@ export default interface Config<
 
     /** Configuration for Scene document */
     Scene: {
-        documentClass: ConstructorOf<TScene>;
+        documentClass: DocumentClassOf<TScene>;
         collection: typeof collections.Scenes;
         compendiumIndexFields: string[];
         compendiumBanner: string;
@@ -344,13 +335,13 @@ export default interface Config<
 
     /** Configuration for the User document */
     Setting: {
-        documentClass: typeof documents.Setting;
+        documentClass: DocumentClassOf<documents.Setting>;
         collection: typeof collections.WorldSettings;
     };
 
     /** Configuration for the User document */
     User: {
-        documentClass: ConstructorOf<TUser>;
+        documentClass: DocumentClassOf<TUser>;
         collection: typeof collections.Users;
     };
 
@@ -360,9 +351,7 @@ export default interface Config<
 
     /** Configuration for the ActiveEffect embedded document type */
     ActiveEffect: {
-        documentClass: {
-            new (data: PreCreate<TActiveEffect["_source"]>, context?: DocumentConstructionContext<TActiveEffect["parent"]>): TActiveEffect;
-        };
+        documentClass: DocumentClassOf<TActiveEffect>;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
@@ -370,28 +359,28 @@ export default interface Config<
 
     /** Configuration for the ActorDelta embedded document type. */
     ActorDelta: {
-        documentClass: ConstructorOf<TActorDelta>;
+        documentClass: DocumentClassOf<TActorDelta>;
     };
 
     Card: {
-        documentClass: typeof documents.Card;
+        documentClass: DocumentClassOf<documents.Card>;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
     };
 
     TableResult: {
-        documentClass: typeof documents.TableResult;
+        documentClass: DocumentClassOf<documents.TableResult>;
     };
 
     /** Configuration for the JournalEntryCategory embedded document type. */
     JournalEntryCategory: {
-        documentClass: typeof documents.JournalEntryCategory;
+        documentClass: DocumentClassOf<documents.JournalEntryCategory>;
     };
 
     /** Configuration for the JournalEntryPage embedded document type. */
     JournalEntryPage: {
-        documentClass: typeof documents.JournalEntryPage;
+        documentClass: DocumentClassOf<documents.JournalEntryPage>;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
@@ -401,27 +390,27 @@ export default interface Config<
 
     /** Configuration for the PlaylistSound embedded document type */
     PlaylistSound: {
-        documentClass: typeof documents.PlaylistSound;
+        documentClass: DocumentClassOf<documents.PlaylistSound>;
         sidebarIcon: string;
     };
 
     /** Configuration for the AmbientLight embedded document type and its representation on the game Canvas */
     AmbientLight: {
-        documentClass: ConstructorOf<TAmbientLightDocument>;
+        documentClass: DocumentClassOf<TAmbientLightDocument>;
         objectClass: ConstructorOf<NonNullable<TAmbientLightDocument["object"]>>;
         layerClass: typeof canvas.layers.LightingLayer;
     };
 
     /** Configuration for the AmbientSound embedded document type and its representation on the game Canvas */
     AmbientSound: {
-        documentClass: typeof documents.AmbientSoundDocument;
+        documentClass: DocumentClassOf<documents.AmbientSoundDocument>;
         objectClass: typeof canvas.placeables.AmbientSound;
         layerClass: typeof canvas.layers.SoundsLayer;
     };
 
     /** Configuration for the Combatant embedded document type within a Combat document */
     Combatant: {
-        documentClass: new (data: PreCreate<TCombatant["_source"]>, context?: DocumentConstructionContext<TCombatant["parent"]>) => TCombatant;
+        documentClass: DocumentClassOf<TCombatant>;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
@@ -429,7 +418,7 @@ export default interface Config<
 
     /** Configuration for the CombatantGroup embedded document type within a Combat document. */
     CombatantGroup: {
-        documentClass: typeof documents.CombatantGroup;
+        documentClass: DocumentClassOf<documents.CombatantGroup>;
         dataModels: Record<string, ConstructorOf<TypeDataModel<Document, DataSchema>>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
@@ -437,7 +426,7 @@ export default interface Config<
 
     /** Configuration for the Drawing embedded document type and its representation on the game Canvas */
     Drawing: {
-        documentClass: typeof documents.DrawingDocument;
+        documentClass: DocumentClassOf<documents.DrawingDocument>;
         objectClass: typeof canvas.placeables.Drawing;
         layerClass: typeof canvas.layers.DrawingsLayer;
         hudClass: typeof applications.hud.DrawingHUD;
@@ -449,28 +438,28 @@ export default interface Config<
             angle: number;
             width: number;
         };
-        documentClass: ConstructorOf<TMeasuredTemplateDocument>;
+        documentClass: DocumentClassOf<TMeasuredTemplateDocument>;
         objectClass: ConstructorOf<NonNullable<TMeasuredTemplateDocument["object"]>>;
         layerClass: typeof canvas.layers.TemplateLayer;
     };
 
     /** Configuration for the Note embedded document type and its representation on the game Canvas */
     Note: {
-        documentClass: typeof documents.NoteDocument;
+        documentClass: DocumentClassOf<documents.NoteDocument>;
         objectClass: typeof canvas.placeables.Note;
         layerClass: typeof canvas.layers.NotesLayer;
     };
 
     /** Configuration for the Region embedded document type and its representation on the game Canvas  */
     Region: {
-        documentClass: ConstructorOf<TRegionDocument>;
+        documentClass: DocumentClassOf<TRegionDocument>;
         objectClass: ConstructorOf<TRegionDocument["object"]>;
         layerClass: typeof canvas.layers.RegionLayer;
     };
 
     /** Configuration for the RegionBehavior embedded document type */
     RegionBehavior: {
-        documentClass: ConstructorOf<TRegionBehavior>;
+        documentClass: DocumentClassOf<TRegionBehavior>;
         dataModels: Record<string, ConstructorOf<foundry.data.regionBehaviors.RegionBehaviorType>>;
         typeLabels: Record<string, string>;
         typeIcons: Record<string, string>;
@@ -478,7 +467,7 @@ export default interface Config<
 
     /** Configuration for the Tile embedded document type and its representation on the game Canvas */
     Tile: {
-        documentClass: ConstructorOf<TTileDocument>;
+        documentClass: DocumentClassOf<TTileDocument>;
         objectClass: ConstructorOf<NonNullable<TTileDocument["object"]>>;
         layerClass: typeof canvas.layers.TilesLayer;
         hudClass: applications.hud.TileHUD;
@@ -486,7 +475,7 @@ export default interface Config<
 
     /** Configuration for the Token embedded document type and its representation on the game Canvas */
     Token: {
-        documentClass: ConstructorOf<TTokenDocument>;
+        documentClass: DocumentClassOf<TTokenDocument>;
         objectClass: ConstructorOf<NonNullable<TTokenDocument["object"]>>;
         layerClass: ConstructorOf<layers.TokenLayer>;
         prototypeSheetClass: ConstructorOf<PrototypeTokenConfig>;
@@ -507,7 +496,7 @@ export default interface Config<
 
     /** Configuration for the Wall embedded document type and its representation on the game Canvas */
     Wall: {
-        documentClass: ConstructorOf<TWallDocument>;
+        documentClass: DocumentClassOf<TWallDocument>;
         objectClass: ConstructorOf<placeables.Wall<TWallDocument>>;
         layerClass: typeof canvas.layers.WallsLayer;
         animationTypes: Record<string, WallDoorAnimationConfig>;

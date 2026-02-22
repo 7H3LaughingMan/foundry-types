@@ -1,4 +1,6 @@
-import { DataSchema, DatabaseUpdateOperation, Document } from "./common/abstract/_module.mjs";
+import { DocumentConstructionContext } from "#common/_types.mjs";
+import { DataField } from "#common/data/fields.mjs";
+import { DataSchema, DatabaseBackend, DatabaseUpdateOperation, Document, DocumentMetadata } from "./common/abstract/_module.mjs";
 import type DataModel from "./common/abstract/data.mjs";
 import Collection from "./common/utils/collection.mjs";
 
@@ -32,6 +34,18 @@ declare global {
     type AbstractConstructorOf<T> = abstract new (...args: any[]) => T;
 
     type ConstructorOf<T> = new (...args: any[]) => T;
+
+    type DocumentClassOf<TDocument extends foundry.abstract.Document> = {
+        new (data: PreCreate<TDocument["_source"]>, context?: DocumentConstructionContext<TDocument["parent"]>): TDocument;
+        readonly collectionName: string;
+        readonly database: DatabaseBackend;
+        readonly documentName: string;
+        readonly hasTypeData: boolean;
+        readonly hierarchy: Record<string, DataField>;
+        readonly metadata: DocumentMetadata;
+        readonly schema: foundry.data.fields.SchemaField<DataSchema>;
+        readonly TYPES: string[];
+    };
 
     type DocumentConstructorOf<T extends foundry.abstract.Document> = {
         new (...args: any[]): T;
