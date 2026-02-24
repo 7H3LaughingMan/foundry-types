@@ -8,6 +8,8 @@ import Collection from "./common/utils/collection.mjs";
 declare global {
     type Maybe<T> = T | null | undefined;
 
+    type MaybePromise<T> = T | Promise<T>;
+
     type DeepPartial<T> = T extends Date | FileList | File | NestedValue | Document | Function
         ? T
         : T extends (infer U)[]

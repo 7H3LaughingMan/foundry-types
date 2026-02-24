@@ -317,37 +317,23 @@ export default abstract class ApplicationV2<
      * Perform an event in the application life-cycle.
      * Await an internal life-cycle method defined by the class.
      * Optionally dispatch an event for any registered listeners.
-     * @param handler                           A handler function to call
-     * @param options                           Options which configure event handling
-     * @param [options.async]                   Await the result of the handler function?
-     * @param [options.handlerArgs]             Arguments passed to the handler function
-     * @param [options.debugText]               Debugging text to log for the event
-     * @param [options.eventName]               An event name to dispatch for registered listeners
-     * @param [options.hookName]                A hook name to dispatch for this and all parent classes
-     * @param [options.hookArgs]                Arguments passed to the requested hook function
-     * @param [options.hookResponse=false]      Add the handler response to hookArgs
-     * @param [options.parentClassHooks=true]   Call hooks for parent classes in the inheritance chain?
-     * @returns                                 A promise which resoles once the handler is complete if async is true
-     * @internal
+     * @param handler A handler function to call
+     * @param options Options which configure event handling
+     * @param options.async Await the result of the handler function?
+     * @param options.handlerArgs Arguments passed to the handler function
+     * @param options.debugText Debugging text to log for the event
+     * @param options.eventName An event name to dispatch for registered listeners
+     * @param options.hookName A hook name to dispatch for this and all parent classes
+     * @param options.hookArgs Arguments passed to the requested hook function
+     * @param options.hookResponse Add the handler response to hookArgs
+     * @param options.parentClassHooks Call hooks for parent classes in the inheritance chain?
+     * @returns A promise which resoles once the handler is complete if async is true
      */
-    _doEvent(
-        handler: Function,
-        options: {
-            async: true;
-            handlerArgs?: any[];
-            debugText?: string;
-            eventName?: string;
-            hookName?: string;
-            hookArgs?: any[];
-            hookResponse?: boolean;
-            parentClassHooks?: boolean;
-        },
-    ): Promise<void>;
-    _doEvent(
-        handler: Function,
+    _doEvent<F extends (...args: any) => any>(
+        handler: F,
         options?: {
             async?: boolean;
-            handlerArgs?: any[];
+            handlerArgs?: Parameters<F>;
             debugText?: string;
             eventName?: string;
             hookName?: string;
@@ -355,20 +341,7 @@ export default abstract class ApplicationV2<
             hookResponse?: boolean;
             parentClassHooks?: boolean;
         },
-    ): void;
-    _doEvent(
-        handler: Function,
-        options?: {
-            async?: boolean;
-            handlerArgs?: any[];
-            debugText?: string;
-            eventName?: string;
-            hookName?: string;
-            hookArgs?: any[];
-            hookResponse?: boolean;
-            parentClassHooks?: boolean;
-        },
-    ): Promise<void> | void;
+    ): MaybePromise<Awaited<ReturnType<F>>>;
 
     /* -------------------------------------------- */
     /*  Life-Cycle Handlers                         */
