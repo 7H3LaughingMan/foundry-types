@@ -313,6 +313,36 @@ export default abstract class ApplicationV2<
      */
     submit(submitOptions?: object): Promise<unknown>;
 
+    /**
+     * Perform an event in the application life-cycle.
+     * Await an internal life-cycle method defined by the class.
+     * Optionally dispatch an event for any registered listeners.
+     * @param handler A handler function to call
+     * @param options Options which configure event handling
+     * @param options.async Await the result of the handler function?
+     * @param options.handlerArgs Arguments passed to the handler function
+     * @param options.debugText Debugging text to log for the event
+     * @param options.eventName An event name to dispatch for registered listeners
+     * @param options.hookName A hook name to dispatch for this and all parent classes
+     * @param options.hookArgs Arguments passed to the requested hook function
+     * @param options.hookResponse Add the handler response to hookArgs
+     * @param options.parentClassHooks Call hooks for parent classes in the inheritance chain?
+     * @returns A promise which resoles once the handler is complete if async is true
+     */
+    _doEvent<F extends (...args: any) => any>(
+        handler: F,
+        options?: {
+            async?: boolean;
+            handlerArgs?: Parameters<F>;
+            debugText?: string;
+            eventName?: string;
+            hookName?: string;
+            hookArgs?: any[];
+            hookResponse?: boolean;
+            parentClassHooks?: boolean;
+        },
+    ): MaybePromise<Awaited<ReturnType<F>>>;
+
     /* -------------------------------------------- */
     /*  Life-Cycle Handlers                         */
     /* -------------------------------------------- */
