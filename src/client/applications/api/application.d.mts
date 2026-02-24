@@ -330,9 +330,45 @@ export default abstract class ApplicationV2<
      * @returns                                 A promise which resoles once the handler is complete if async is true
      * @internal
      */
-    _doEvent(handler: Function, options: { async: true, handlerArgs?: any[], debugText?: string, eventName?: string, hookName?: string, hookArgs?: any[], hookResponse?: boolean, parentClassHooks?: boolean }): Promise<void>;
-    _doEvent(handler: Function, options?: { async?: boolean, handlerArgs?: any[], debugText?: string, eventName?: string, hookName?: string, hookArgs?: any[], hookResponse?: boolean, parentClassHooks?: boolean }):  void;
-    _doEvent(handler: Function, options?: { async?: boolean, handlerArgs?: any[], debugText?: string, eventName?: string, hookName?: string, hookArgs?: any[], hookResponse?: boolean, parentClassHooks?: boolean }): Promise<void> | void;
+    _doEvent(
+        handler: Function,
+        options: {
+            async: true;
+            handlerArgs?: any[];
+            debugText?: string;
+            eventName?: string;
+            hookName?: string;
+            hookArgs?: any[];
+            hookResponse?: boolean;
+            parentClassHooks?: boolean;
+        },
+    ): Promise<void>;
+    _doEvent(
+        handler: Function,
+        options?: {
+            async?: boolean;
+            handlerArgs?: any[];
+            debugText?: string;
+            eventName?: string;
+            hookName?: string;
+            hookArgs?: any[];
+            hookResponse?: boolean;
+            parentClassHooks?: boolean;
+        },
+    ): void;
+    _doEvent(
+        handler: Function,
+        options?: {
+            async?: boolean;
+            handlerArgs?: any[];
+            debugText?: string;
+            eventName?: string;
+            hookName?: string;
+            hookArgs?: any[];
+            hookResponse?: boolean;
+            parentClassHooks?: boolean;
+        },
+    ): Promise<void> | void;
 
     /* -------------------------------------------- */
     /*  Life-Cycle Handlers                         */
