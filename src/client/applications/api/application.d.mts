@@ -341,7 +341,7 @@ export default abstract class ApplicationV2<
             hookResponse?: boolean;
             parentClassHooks?: boolean;
         },
-    ): MaybePromise<Awaited<ReturnType<F>>>;
+    ): ReturnType<F>;
 
     /* -------------------------------------------- */
     /*  Life-Cycle Handlers                         */

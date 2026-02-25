@@ -1,4 +1,3 @@
-import { abstract } from "#client/_module.mjs";
 import { DocumentConstructionContext } from "#common/_types.mjs";
 import { EmbeddedCollectionField, EmbeddedDocumentField } from "#common/data/fields.mjs";
 import { DataSchema, DatabaseBackend, DatabaseUpdateOperation, Document, DocumentMetadata } from "./common/abstract/_module.mjs";
@@ -30,9 +29,9 @@ declare global {
 
     type CollectionValue<T> = T extends Collection<string, infer U> ? U : never;
 
-    type AnyConstructor = abstract new (...args: never) => unknown;
+    type AnyConstructor = abstract new (...args: any[]) => any;
 
-    type AnyConcreteConstructor = new (...args: never) => unknown;
+    type AnyConcreteConstructor = new (...args: any[]) => any;
 
     type AbstractConstructorOf<T> = abstract new (...args: any[]) => T;
 
@@ -44,7 +43,7 @@ declare global {
         readonly database: DatabaseBackend;
         readonly documentName: string;
         readonly hasTypeData: boolean;
-        readonly hierarchy: Record<string, EmbeddedCollectionField<abstract.Document<abstract.Document>> | EmbeddedDocumentField<abstract.Document>>;
+        readonly hierarchy: Record<string, EmbeddedCollectionField<Document<Document>> | EmbeddedDocumentField<Document>>;
         readonly metadata: DocumentMetadata;
         readonly schema: foundry.data.fields.SchemaField<DataSchema>;
         readonly TYPES: string[];
