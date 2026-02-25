@@ -1,6 +1,6 @@
 {
     "name": "@7h3laughingman/foundry-types",
-    "version": "13.351.14",
+    "version": "13.351.15",
     "description": "Basic TypeScript types for FoundryVTT.",
     "homepage": "https://github.com/7H3LaughingMan/foundry-types#readme",
     "bugs": {
