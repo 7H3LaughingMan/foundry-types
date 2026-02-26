@@ -26,7 +26,7 @@ jobs:
           cache: "pnpm"
       
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --no-git-check
 
       - name: Publish Package
         run: pnpm publish
