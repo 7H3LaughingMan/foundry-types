@@ -23,4 +23,4 @@ jobs:
         run: pnpm install
 
       - name: Build/ESLint
-        run: pnpm run tsc && npm run eslint
+        run: pnpm run tsc && pnpm run eslint
