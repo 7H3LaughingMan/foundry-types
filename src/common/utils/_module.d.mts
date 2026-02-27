@@ -14,4 +14,6 @@ export { default as StringTree } from "./string-tree.mjs";
 export { default as WordTree } from "./word-tree.mjs";
 
 /** The constructor of an async function. */
-export const AsyncFunction: <T = unknown>(...args: string[]) => (...args: any[]) => Promise<T>;
+export const AsyncFunction: {
+    new <T = unknown>(...args: any[]): (...args: any[]) => Promise<T>;
+};
