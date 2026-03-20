@@ -1,3 +1,4 @@
+import { TokenShapeType } from "#common/constants.mjs";
 import { DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse, TokenPosition } from "./../common/_types.mjs";
 import { DataModel } from "./../common/abstract/_module.mjs";
 import { DataField } from "./../common/data/fields.mjs";
@@ -8,7 +9,7 @@ import { CanvasAnimationData, CanvasAnimationEasingFunction } from "./canvas/ani
 import { Ray } from "./canvas/geometry/_module.mjs";
 import { PingData } from "./canvas/interaction/_types.mjs";
 import AmbientLight from "./canvas/placeables/light.mjs";
-import Token, { TokenShape } from "./canvas/placeables/token.mjs";
+import Token from "./canvas/placeables/token.mjs";
 import PointVisionSource from "./canvas/sources/point-vision-source.mjs";
 import {
     SceneDimensions,
@@ -101,7 +102,7 @@ export interface TokenFindMovementPathWaypoint {
      * The shape type (see {@link CONST.TOKEN_SHAPES}).
      *           Default: the previous or source shape.
      */
-    shape?: TokenShape;
+    shape?: TokenShapeType;
 
     /**
      * The movement action from the previous to this waypoint.
@@ -159,7 +160,7 @@ export interface TokenConstrainMovementPathWaypoint {
      * The shape type (see {@link CONST.TOKEN_SHAPES}).
      *              Default: the previous or source shape.
      */
-    shape?: TokenShape;
+    shape?: TokenShapeType;
     /**
      * The movement action from the previous to this waypoint.
      *                   Default: `CONFIG.Token.movement.defaultAction`.

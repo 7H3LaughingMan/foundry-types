@@ -1,3 +1,4 @@
+import { GridMeasurePathResult } from "#common/grid/_types.mjs";
 import { CanvasAnimationAttribute } from "../animation/_types.mjs";
 import { PreciseText } from "../containers/_module.mjs";
 import PolygonVertex from "../geometry/edges/vertex.mjs";
@@ -10,13 +11,31 @@ import { ColorSource, Point } from "./../../../common/_types.mjs";
 import { DatabaseCreateCallbackOptions } from "./../../../common/abstract/_types.mjs";
 import { TokenDisplayMode, WallRestrictionType } from "./../../../common/constants.mjs";
 import Color from "./../../../common/utils/color.mjs";
-import { ReticuleOptions, TokenAnimationContext, TokenAnimationData, TokenAnimationOptions, TokenPlannedMovement } from "./../../_types.mjs";
-import { TokenDocument, User } from "./../../documents/_module.mjs";
+import {
+    ReticuleOptions,
+    TokenAnimationContext,
+    TokenAnimationData,
+    TokenAnimationOptions,
+    TokenConstrainedMovementWaypoint,
+    TokenConstrainMovementPathOptions,
+    TokenConstrainMovementPathWaypoint,
+    TokenFindMovementPathJob,
+    TokenFindMovementPathOptions,
+    TokenFindMovementPathWaypoint,
+    TokenPlannedMovement,
+} from "./../../_types.mjs";
+import {
+    TokenDocument,
+    TokenMeasureMovementPathOptions,
+    TokenMeasureMovementPathWaypoint,
+    TokenMovementCostFunction,
+    User,
+} from "./../../documents/_module.mjs";
 import { TokenUpdateCallbackOptions } from "./../../documents/token.mjs";
-import PlaceableObject, { PlaceableShape } from "./placeable-object.mjs";
-import Region from "./region.mjs";
+import PlaceableObject from "./placeable-object.mjs";
 import BaseTokenRuler from "./tokens/base-ruler.mjs";
 import TokenRing from "./tokens/ring.mjs";
+import TokenTurnMarker from "./tokens/turn-marker.mjs";
 
 /** A Token is an implementation of PlaceableObject that represents an Actor within a viewed Scene on the game canvas. */
 export default class Token<TDocument extends TokenDocument = TokenDocument> extends PlaceableObject<TDocument> {
@@ -49,7 +68,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     };
 
     /** The shape of this token. */
-    shape: TokenShape;
+    shape: PIXI.Rectangle | PIXI.Polygon | PIXI.Circle | PIXI.Ellipse;
 
     /** Defines the filter to use for detection. */
     detectionFilter: PIXI.Filter | null;
@@ -109,8 +128,29 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
      */
     light: PointLightSource<this>;
 
+    /**
+     * The Turn Marker of this Token.
+     * Only a subset of Token objects have a turn marker at any given time.
+     */
+    turnMarker: TokenTurnMarker | null;
+
     /** The current animations of this Token. */
     get animationContexts(): Map<string, TokenAnimationContext>;
+
+    /** The general animation name used for this Token. */
+    get animationName(): string;
+
+    /** The animation name used to animate this Token's movement. */
+    get movementAnimationName(): string;
+
+    /**
+     * The promise of the current movement animation chain of this Token
+     * or null if there isn't a movement animation in progress.
+     */
+    get movementAnimationPromise(): Promise<void> | null;
+
+    /** Should the ruler of this Token be visible? */
+    get showRuler(): boolean;
 
     /**
      * A TokenRing instance which is used if this Token applies a dynamic ring.
@@ -123,7 +163,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /* -------------------------------------------- */
     /*  Permission Attributes
-        /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     /** A convenient reference to the Actor object associated with the Token embedded document. */
     get actor(): TDocument["actor"];
@@ -136,7 +176,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /* -------------------------------------------- */
     /*  Rendering Attributes
-        /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     get bounds(): PIXI.Rectangle;
 
@@ -150,6 +190,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     get center(): PIXI.Point;
 
     /** The Token's central position, adjusted in each direction by one or zero pixels to offset it relative to walls. */
+    getMovementAdjustedPoint(point: ElevatedPoint, options?: { offsetX: number; offsetY: number }): ElevatedPoint;
     getMovementAdjustedPoint(point: Point, options?: { offsetX: number; offsetY: number }): Point;
 
     /** The HTML source element for the primary Tile texture */
@@ -162,7 +203,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /* -------------------------------------------- */
     /*  State Attributes
-        /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     /** An indicator for whether or not this token is currently involved in the active combat encounter. */
     get inCombat(): boolean;
@@ -172,6 +213,9 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /** An indicator for whether the Token is currently targeted by the active game User */
     get isTargeted(): boolean;
+
+    /** Is this Token currently being dragged?*/
+    get isDragged(): boolean;
 
     /** Return a reference to the detection modes array. */
     get detectionModes(): TDocument["detectionModes"];
@@ -186,14 +230,6 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
      * @see {CanvasVisibility#testVisibility}
      */
     get isVisible(): boolean;
-
-    /** The animation name used for Token movement */
-    get animationName(): string;
-
-    /**
-     * The animation name used to animate this Token's movement.
-     */
-    get movementAnimationName(): string;
 
     /* -------------------------------------------- */
     /*  Lighting and Vision Attributes              */
@@ -287,14 +323,17 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     protected override _draw(options?: object): Promise<void>;
 
+    /**
+     * Create the BaseTokenRuler instance for this Token, if any.
+     * This function is called when the Token is drawn for the first time.
+     */
+    protected _initializeRuler(): BaseTokenRuler<this> | null;
+
     /* -------------------------------------------- */
     /*  Incremental Refresh                         */
     /* -------------------------------------------- */
 
     protected override _applyRenderFlags(flags: Record<string, boolean>): void;
-
-    /** Recovering state after a preview. */
-    protected _recoverFromPreview(): void;
 
     /** Refresh the token ring visuals if necessary. */
     protected _refreshRingVisuals(): void;
@@ -308,8 +347,14 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
      */
     protected _refreshState(): void;
 
+    /** Resize mesh and handle scale adjustment. */
+    protected _refreshMeshSizeAndScale(): void;
+
     /** Refresh the size. */
     protected _refreshSize(): void;
+
+    /** Refresh the token mesh. */
+    protected _refreshMesh(): void;
 
     /** Refresh the shape. */
     protected _refreshShape(): void;
@@ -329,9 +374,6 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     /** Refresh the text content, position, and visibility of the Token nameplate. */
     protected _refreshNameplate(): void;
 
-    /** Refresh the token mesh. */
-    protected _refreshMesh(): void;
-
     /** Refresh the token mesh shader. */
     protected _refreshShader(): void;
 
@@ -340,9 +382,12 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /**
      * Get the hex color that should be used to render the Token border
-     * @returns    The hex color used to depict the border color
+     * @returns The hex color used to depict the border color
      */
     protected _getBorderColor(): number;
+
+    /** Get the Color used to represent the disposition of this Token. */
+    getDispositionColor(): number;
 
     /**
      * Refresh the target indicators for the Token.
@@ -353,9 +398,12 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /**
      * Draw the targeting arrows around this token.
-     * @param [reticule]  Additional parameters to configure how the targeting reticule is drawn.
+     * @param reticule Additional parameters to configure how the targeting reticule is drawn.
      */
-    protected _drawTarget(reticule?: ReticuleOptions): void;
+    protected _drawTargetArrows(reticule?: ReticuleOptions): void;
+
+    /** Draw the targeting pips around this token. */
+    protected _drawTargetPips(): void;
 
     /**
      * Refresh the display of Token attribute bars, rendering its latest resource data.
@@ -394,6 +442,12 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /** Refresh the display of status effects, adjusting their position for the token width and height. */
     protected _refreshEffects(): void;
+
+    /** Refresh presentation of the Token's combat turn marker, if any. */
+    protected _refreshTurnMarker(): void;
+
+    /** Refresh the display of the ruler. */
+    protected _refreshRuler(): void;
 
     /**
      * Helper method to determine whether a token attribute is viewable under a certain mode
@@ -452,6 +506,23 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     protected _getAnimationDuration(from: TokenAnimationData, to: Partial<TokenAnimationData>, options?: { movementSpeed?: number }): number;
 
     /**
+     * Get the base movement speed for the animation in grid size per second.
+     * The default implementation returns `CONFIG.Token.movement.defaultSpeed`.
+     * @param options The options that configure the animation behavior
+     * @returns The base movement speed in grid size per second
+     */
+    protected _getAnimationMovementSpeed(options: TokenAnimationOptions): number;
+
+    /**
+     * Modify the base movement speed of the animation.
+     * Divides by the terrain difficulty, if present, by default.
+     * @param speed The base movement speed in grid size per second
+     * @param options The options that configure the animation behavior
+     * @returns The modified movement speed in grid size per second
+     */
+    protected _modifyAnimationMovementSpeed(speed: number, options: TokenAnimationOptions): void;
+
+    /**
      * Prepare the animation data changes: performs special handling required for animating rotation.
      * @param from                         The animation data to animate from
      * @param changes                      The animation data changes
@@ -483,7 +554,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     /* -------------------------------------------- */
     /*  Methods
-        /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     /**
      * Check for collision when attempting a move to a new position
@@ -513,7 +584,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     getSize(): { width: number; height: number };
 
     /** Get the shape of this Token. */
-    getShape(): TokenShape;
+    getShape(): PIXI.Rectangle | PIXI.Polygon | PIXI.Circle | PIXI.Ellipse;
 
     /**
      * Get the center point for a given position or the current position.
@@ -525,21 +596,51 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
     override getSnappedPosition(position?: Point): Point;
 
     /**
-     * Test whether the Token is inside the Region.
-     * This function determines the state of {@link TokenDocument#regions} and {@link RegionDocument#tokens}.
-     *
-     * Implementations of this function are restricted in the following ways:
-     *   - If the bounds (given by {@link Token#getSize}) of the Token do not intersect the Region, then the Token is not
-     *     contained within the Region.
-     *   - If the Token is inside the Region a particular elevation, then the Token is inside the Region at any elevation
-     *     within the elevation range of the Region.
-     *
-     * If this function is overridden, then {@link Token#segmentizeRegionMovement} must be overridden too.
-     * @param region   The region.
-     * @param position The (x, y) and/or elevation to use instead of the current values.
-     * @returns Is the Token inside the Region?
+     * Measure the movement path for this Token.
+     * @param waypoints The waypoints of movement
+     * @param options Additional options that affect cost calculations (passed to {@link Token#_getMovementCostFunction})
      */
-    testInsideRegion(region: Region, position: Point | (Point & { elevation: number }) | { elevation: number }): boolean;
+    measureMovementPath(waypoints: TokenMeasureMovementPathWaypoint[], options?: TokenMeasureMovementPathOptions): GridMeasurePathResult;
+
+    /**
+     * Create the movement cost function for this Token.
+     * In square and hexagonal grids it calculates the cost for single grid space move between two grid space offsets.
+     * For tokens that occupy more than one grid space the cost of movement is calculated as the median of all individual
+     * grid space moves unless the cost of any of these is infinite, in which case total cost is always infinite.
+     * In gridless grids the `from` and `to` parameters of the cost function are top-left offsets.
+     * If the movement cost function is undefined, the cost equals the distance moved.
+     * @param  options Additional options that affect cost calculations
+     */
+    protected _getMovementCostFunction(options?: TokenMeasureMovementPathOptions): TokenMovementCostFunction | void;
+
+    /**
+     * Constrain the given movement path.
+     *
+     * The result of this function must not be affected by the animation of this Token.
+     * @param waypoints The waypoints of movement
+     * @param options Additional options
+     * @returns
+     *   The (constrained) path of movement and a boolean that is true if and only if the path was constrained.
+     *   If it wasn't constrained, then a copy of the path of all given waypoints with all default values filled in
+     *   is returned.
+     */
+    constrainMovementPath(
+        waypoints: TokenConstrainMovementPathWaypoint[],
+        options?: TokenConstrainMovementPathOptions,
+    ): [TokenConstrainedMovementWaypoint[], boolean];
+
+    /**
+     * Find a movement path through the waypoints.
+     * The path may not necessarily be one with the least cost.
+     * The path returned may be partial, i.e. it doesn't go through all waypoints, but must always start with the first
+     * waypoints unless the waypoints are empty, in which case an empty path is returned.
+     *
+     * The result of this function must not be affected by the animation of this Token.
+     * @param waypoints The waypoints of movement
+     * @param options Additional options
+     * @returns The job of the movement pathfinder
+     */
+    findMovementPath(waypoints: TokenFindMovementPathWaypoint[], options?: TokenFindMovementPathOptions): TokenFindMovementPathJob;
 
     /**
      * Set this Token as an active target for the current game User.
@@ -657,8 +758,6 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 export default interface Token<TDocument extends TokenDocument = TokenDocument> extends PlaceableObject<TDocument> {
     get layer(): TokenLayer<this>;
 }
-
-type TokenShape = Extract<PlaceableShape, PIXI.Circle | PIXI.Polygon | PIXI.Rectangle>;
 
 interface TokenResourceData {
     attribute: string;
