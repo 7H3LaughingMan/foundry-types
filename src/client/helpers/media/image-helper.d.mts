@@ -1,4 +1,4 @@
-import { ImageFilePath } from "./../../../common/constants.mjs";
+import { ImageFilePath } from "#common/constants.mjs";
 
 /**
  * A helper class to provide common functionality for working with Image objects

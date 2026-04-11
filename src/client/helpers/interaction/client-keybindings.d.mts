@@ -1,4 +1,4 @@
-import { KeybindingAction, KeybindingActionBinding, KeybindingActionConfig } from "./../../_types.mjs";
+import { KeybindingAction, KeybindingActionBinding, KeybindingActionConfig } from "#client/_types.mjs";
 
 /**
  * A class responsible for managing defined game keybinding.

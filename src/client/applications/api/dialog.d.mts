@@ -1,5 +1,5 @@
-import { ApplicationConfiguration, ApplicationRenderContext, ApplicationRenderOptions } from "../_types.mjs";
-import User from "./../../documents/user.mjs";
+import User from "#client/documents/user.mjs";
+import { ApplicationConfiguration, ApplicationRenderOptions } from "../_types.mjs";
 import ApplicationV2 from "./application.mjs";
 
 export default class DialogV2<
@@ -10,7 +10,7 @@ export default class DialogV2<
 
     protected override _initializeApplicationOptions(options: DeepPartial<TConfig>): TConfig;
 
-    protected override _renderHTML(context: ApplicationRenderContext, options: TRenderOptions): Promise<HTMLFormElement>;
+    protected override _renderHTML(): Promise<HTMLFormElement>;
 
     /**
      * Render configured buttons
@@ -25,11 +25,11 @@ export default class DialogV2<
      */
     protected _onSubmit(target: HTMLButtonElement, event: PointerEvent | SubmitEvent): Promise<DialogV2>;
 
-    protected override _onFirstRender(context: object, options: TRenderOptions): Promise<void>;
+    protected override _onFirstRender(): Promise<void>;
 
     protected override _attachFrameListeners(): void;
 
-    protected override _replaceHTML(result: unknown, content: HTMLFormElement, options: TRenderOptions): void;
+    protected override _replaceHTML(result: unknown, content: HTMLFormElement): void;
 
     /**
      * Handle keypresses within the dialog
@@ -198,7 +198,7 @@ export type DialogV2ButtonCallback = (event: PointerEvent | SubmitEvent, button:
  * @param event The render event.
  * @param dialog The dialog element.
  */
-export type DialogV2RenderCallback = (event: Event, dialog: DialogV2) => void;
+export type DialogV2RenderCallback = (event: Event, dialog: HTMLDialogElement) => void;
 
 /**
  * @param event The close event

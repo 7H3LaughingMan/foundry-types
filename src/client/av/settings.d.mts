@@ -1,4 +1,4 @@
-import * as fields from "./../../common/data/fields.mjs";
+import * as fields from "#common/data/fields.mjs";
 
 interface AVSettingsData {
     /** Whether this user has muted themselves. */

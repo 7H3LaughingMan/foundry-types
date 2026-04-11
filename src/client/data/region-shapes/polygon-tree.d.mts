@@ -1,4 +1,4 @@
-import { Point } from "./../../../common/_types.mjs";
+import { Point } from "#common/_types.mjs";
 
 /**
  * The node of a {@link RegionPolygonTree}.

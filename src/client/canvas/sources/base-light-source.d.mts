@@ -1,7 +1,7 @@
+import { LightSourceAnimationConfig } from "#client/config.mjs";
+import { LightingLevel } from "#common/constants.mjs";
 import { AmbientLight, Token } from "../placeables/_module.mjs";
 import AbstractBaseShader from "../rendering/shaders/base-shader.mjs";
-import { LightingLevel } from "./../../../common/constants.mjs";
-import { LightSourceAnimationConfig } from "./../../config.mjs";
 import RenderedEffectSource, { RenderedEffectLayerConfig, RenderedEffectSourceData } from "./rendered-effect-source.mjs";
 
 export interface LightSourceData extends RenderedEffectSourceData {

@@ -1,22 +1,20 @@
-import { TokenShapeType } from "#common/constants.mjs";
-import { DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse, TokenPosition } from "./../common/_types.mjs";
-import { DataModel } from "./../common/abstract/_module.mjs";
-import { DataField } from "./../common/data/fields.mjs";
-import { GridMeasurePathResultWaypoint, GridOffset3D } from "./../common/grid/_types.mjs";
+import { DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse, TokenPosition } from "#common/_types.mjs";
+import { DataModel } from "#common/abstract/_module.mjs";
+import { DataField } from "#common/data/fields.mjs";
+import { GridMeasurePathResultWaypoint, GridOffset3D } from "#common/grid/_types.mjs";
 import { DocumentHTMLEmbedConfig } from "./applications/ux/text-editor.mjs";
 import { AVSettingsData } from "./av/settings.mjs";
 import { CanvasAnimationData, CanvasAnimationEasingFunction } from "./canvas/animation/_types.mjs";
 import { Ray } from "./canvas/geometry/_module.mjs";
 import { PingData } from "./canvas/interaction/_types.mjs";
 import AmbientLight from "./canvas/placeables/light.mjs";
-import Token from "./canvas/placeables/token.mjs";
+import Token, { TokenShape } from "./canvas/placeables/token.mjs";
 import PointVisionSource from "./canvas/sources/point-vision-source.mjs";
 import {
     SceneDimensions,
     TokenDocument,
     TokenGetCompleteMovementPathWaypoint,
     TokenMeasuredMovementWaypoint,
-    TokenMeasureMovementPathOptions,
     TokenMovementSegmentData,
     TokenMovementWaypoint,
 } from "./documents/_module.mjs";
@@ -102,7 +100,7 @@ export interface TokenFindMovementPathWaypoint {
      * The shape type (see {@link CONST.TOKEN_SHAPES}).
      *           Default: the previous or source shape.
      */
-    shape?: TokenShapeType;
+    shape?: TokenShape;
 
     /**
      * The movement action from the previous to this waypoint.
@@ -160,7 +158,7 @@ export interface TokenConstrainMovementPathWaypoint {
      * The shape type (see {@link CONST.TOKEN_SHAPES}).
      *              Default: the previous or source shape.
      */
-    shape?: TokenShapeType;
+    shape?: TokenShape;
     /**
      * The movement action from the previous to this waypoint.
      *                   Default: `CONFIG.Token.movement.defaultAction`.
@@ -191,6 +189,165 @@ export interface TokenConstrainMovementPathWaypoint {
      * Is this waypoint a checkpoint? Default: `false`.
      */
     checkpoint?: boolean;
+}
+
+export interface TokenSegmentizeMovementWaypoint {
+    /**
+     * The x-coordinate in pixels (integer).
+     * Default: the previous or source x-coordinate.
+     */
+    x?: number;
+
+    /**
+     * The y-coordinate in pixels (integer).
+     * Default: the previous or source y-coordinate.
+     */
+    y?: number;
+
+    /**
+     * The elevation in grid units.
+     * Default: the previous or source elevation.
+     */
+    elevation?: number;
+
+    /**
+     * The width in grid spaces (positive).
+     * Default: the previous or source width.
+     */
+    width?: number;
+
+    /**
+     * The height in grid spaces (positive).
+     * Default: the previous or source height.
+     */
+    height?: number;
+
+    /**
+     * The shape type (see {@link CONST.TOKEN_SHAPES}).
+     *              Default: the previous or source shape.
+     */
+    shape?: TokenShape;
+    /**
+     * The movement action from the previous to this waypoint.
+     *                   Default: `CONFIG.Token.movement.defaultAction`.
+     */
+    action?: string;
+    /**
+     * Teleport from the previous to this waypoint? Default: `false`.
+     */
+    teleport?: boolean;
+    /**
+     * Is the movement from the previous to this waypoint forced?
+     *            Default: `false`.
+     */
+    forced?: boolean;
+    /**
+     * The terrain data of this segment. Default: `null`.
+     */
+    terrain?: DataModel | null;
+    /**
+     * Was this waypoint snapped to the grid? Default: `false`.
+     */
+    snapped?: boolean;
+}
+
+export type TokenRegionMovementWaypoint = TokenPosition;
+
+export interface TokenRegionMovementSegment {
+    /**
+     * The type of this segment (see {@link CONST.REGION_MOVEMENT_SEGMENTS}).
+     */
+    type: RegionMovementSegment;
+    /**
+     * The waypoint that this segment starts from.
+     */
+    from: TokenRegionMovementWaypoint;
+    /**
+     * The waypoint that this segment goes to.
+     */
+    to: TokenRegionMovementWaypoint;
+    /**
+     * The movement action between the waypoints.
+     */
+    action: string;
+    /**
+     * Teleport between the waypoints?
+     */
+    teleport: boolean;
+    /**
+     * Is the movement on this segment forced?
+     */
+    forced: boolean;
+    /**
+     * The terrain data of this segment.
+     */
+    terrain: DataModel | null;
+    /**
+     * Is the destination snapped to the grid?
+     */
+    snapped: boolean;
+}
+
+export interface TokenMovementContinuationData {
+    /**
+     * The movement ID
+     */
+    movementId: string;
+    /**
+     * The number of continuations
+     */
+    continueCounter: number;
+    /**
+     * Was continued?
+     */
+    continued: boolean;
+    /**
+     * The continuation promise
+     */
+    continuePromise: Promise<boolean> | null;
+    /**
+     * The promise to wait for before continuing movement
+     */
+    waitPromise: Promise<void>;
+    /**
+     * Resolve function of the wait promise
+     */
+    resolveWaitPromise: () => {} | undefined;
+    /**
+     * The promise that resolves after the update workflow
+     */
+    postWorkflowPromise: Promise<void>;
+    /**
+     * The movement continuation states
+     */
+    states: {
+        [movementId: string]: {
+            handles: Map<string | symbol, TokenMovementContinuationHandle>;
+            callbacks: Array<(continued: boolean) => void>;
+            pending: Set<string>;
+        };
+    };
+}
+
+export interface TokenMovementContinuationHandle {
+    /**
+     * The movement ID
+     */
+    movementId: string;
+    /**
+     * The continuation promise
+     */
+    continuePromise: Promise<boolean> | undefined;
+}
+
+export type TokenResumeMovementCallback = () => Promise<boolean>;
+
+export interface TokenMeasureMovementPathOptions {
+    /**
+     * Measure a preview path?
+     * @default false
+     */
+    preview?: boolean;
 }
 
 export interface TokenConstrainMovementPathOptions {
@@ -718,6 +875,35 @@ export interface JournalEntryPageHeading {
     order: number;
 }
 
+export interface RegionSegmentizeMovementPathWaypoint extends ElevatedPoint {
+    /** Teleport from the previous to this waypoint? Default: `false`. */
+    teleport?: boolean;
+}
+
+export interface RegionMovementSegment {
+    /** The type of this segment (see {@link CONST.REGION_MOVEMENT_SEGMENTS}). */
+    type: RegionMovementSegment;
+    /** The waypoint that this segment starts from. */
+    from: ElevatedPoint;
+    /** The waypoint that this segment goes to. */
+    to: ElevatedPoint;
+    /** The movement action between the waypoints. */
+    action: string;
+    /** Teleport between the waypoints? */
+    teleport: boolean;
+    /** Is the movement on this segment forced? */
+    forced: boolean;
+    /** Is the destination snapped to the grid? */
+    snapped: boolean;
+}
+
+export interface TrackedAttributesDescription {
+    /** A list of property path arrays to attributes with both a value and a max property. */
+    bar: string[][];
+    /** A list of property path arrays to attributes that have only a value property. */
+    value: string[][];
+}
+
 export type SearchableField = DataField | { [K in string]: SearchableField };
 
 export interface FromCompendiumOptions {
@@ -731,6 +917,27 @@ export interface FromCompendiumOptions {
     clearOwnership?: boolean;
     /** Retain the Document ID from the source Compendium. */
     keepId?: boolean;
+    /** In cases where necessary, prompt the user with a confirmation dialog */
+    dialog?: boolean;
+}
+
+export interface ToCompendiumOptions {
+    /** Clear the flags object */
+    clearFlags?: boolean;
+    /** Clear any prior source information */
+    clearSource?: boolean;
+    /** Clear the currently assigned sort order */
+    clearSort?: boolean;
+    /** Clear the currently assigned folder */
+    clearFolder?: boolean;
+    /** Clear document ownership */
+    clearOwnership?: boolean;
+    /** Clear fields which store document state */
+    clearState?: boolean;
+    /** Retain the current Document id */
+    keepId?: boolean;
+    /** In cases where necessary, prompt the user with a confirmation dialog */
+    dialog?: boolean;
 }
 
 export interface RollTableHTMLEmbedConfig extends DocumentHTMLEmbedConfig {
@@ -763,7 +970,7 @@ export interface SettingConfig<TChoices extends Record<string, unknown> | undefi
     /** An additional human readable hint */
     hint?: string;
     /** The scope the Setting is stored in, either World or Client */
-    scope: "world" | "client" | "user";
+    scope: "world" | "client";
     /** Indicates if this Setting should render in the Config application */
     config: boolean;
     /** This will prompt the user to reload the application for the setting to take effect. */
@@ -783,22 +990,18 @@ export interface SettingConfig<TChoices extends Record<string, unknown> | undefi
 }
 
 export interface SettingSubmenuConfig {
-    /** A unique machine-readable id for the setting */
-    key: string;
-    /** The namespace the setting belongs to */
-    namespace: string;
     /** The human readable name */
     name: string;
     /** The human readable label */
     label: string;
     /** An additional human readable hint */
-    hint?: string;
+    hint: string;
     /** The classname of an Icon to render */
-    icon?: string;
+    icon: string;
     /** The FormApplication to render */
     type: ConstructorOf<foundry.appv1.api.Application> | ConstructorOf<foundry.applications.api.ApplicationV2>;
     /** If true, only a GM can edit this Setting */
-    restricted?: boolean;
+    restricted: boolean;
 }
 
 /** A Client Keybinding Action Configuration */

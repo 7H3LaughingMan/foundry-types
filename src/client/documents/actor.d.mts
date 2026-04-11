@@ -1,10 +1,10 @@
+import Token from "#client/canvas/placeables/token.mjs";
+import { DocumentConstructionContext } from "#common/_types.mjs";
+import { DatabaseCreateOperation, DatabaseDeleteOperation, DatabaseUpdateCallbackOptions, DatabaseUpdateOperation } from "#common/abstract/_types.mjs";
+import Document from "#common/abstract/document.mjs";
+import { ImageFilePath, VideoFilePath } from "#common/constants.mjs";
+import { IterableWeakMap, IterableWeakSet } from "#common/utils/_module.mjs";
 import ActorSheet from "../appv1/sheets/actor-sheet.mjs";
-import { DocumentConstructionContext } from "./../../common/_types.mjs";
-import { DatabaseCreateOperation, DatabaseDeleteOperation, DatabaseUpdateCallbackOptions, DatabaseUpdateOperation } from "./../../common/abstract/_types.mjs";
-import Document from "./../../common/abstract/document.mjs";
-import { ImageFilePath, VideoFilePath } from "./../../common/constants.mjs";
-import { IterableWeakMap, IterableWeakSet } from "./../../common/utils/_module.mjs";
-import Token from "./../canvas/placeables/token.mjs";
 import { ActiveEffect, ActorSource, ActorUUID, BaseActor, Combat, Item, Scene, TokenDocument } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
@@ -97,6 +97,8 @@ declare class Actor<TParent extends TokenDocument | null = TokenDocument | null>
          * @param [document=false] Return the Document instance rather than the PlaceableObject
          * @return An array of Token instances in the current Scene which reference this Actor.
          */
+    getActiveTokens(linked: boolean | undefined, document: true): TokenDocument<Scene>[];
+    getActiveTokens(linked?: boolean | undefined, document?: false): Token<TokenDocument<Scene>>[];
     getActiveTokens(linked?: boolean, document?: boolean): TokenDocument<Scene>[] | Token<TokenDocument<Scene>>[];
 
     /**

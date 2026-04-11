@@ -1,6 +1,6 @@
+import { TokenShape } from "#client/canvas/placeables/token.mjs";
 import { DataModelConstructionContext } from "./abstract/_types.mjs";
 import Document from "./abstract/document.mjs";
-import { TokenShapeType } from "./constants.mjs";
 import { GridOffset2D } from "./grid/_types.mjs";
 import Color from "./utils/color.mjs";
 
@@ -34,25 +34,33 @@ type DeepReadonly<T> = {
               : DeepReadonly<T[K]>;
 };
 
-/**A 2D point, expressed as {x, y}. */
+/**
+ * A 2D point, expressed as an array [x, y].
+ */
 export interface Point {
-    /** The x-coordinate */
+    /** The x-coordinate in pixels */
     x: number;
-    /** The y-coordinate */
+    /** The y-coordinate of the top-left corner */
     y: number;
 }
 
-/** A 2D point, expressed as an array [x, y]. */
+/**
+ * A single point, expressed as an array [x,y]
+ */
 export type PointArray = [x: number, y: number];
 
-/** A 3D point, expessed as {x, y, elevation}. */
+/**
+ * A 3D point, expessed as {x, y, elevation}.
+ */
 export interface ElevatedPoint extends Point {
     /** The elevation in grid units */
     elevation: number;
 }
 
-/** A standard rectangle interface. */
-export interface Rectangle {
+/**
+ * A standard rectangle interface.
+ */
+interface Rectangle {
     /** The x-coordinate of the top-left corner */
     x: number;
     /** The y-coordinate of the top-left corner */
@@ -63,9 +71,9 @@ export interface Rectangle {
     height: number;
 }
 
-export type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor | ObjectConstructor;
+type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor;
 
-export type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
+type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
 
 /* ----------------------------------------- */
 /*  Socket Requests and Responses            */
@@ -114,7 +122,7 @@ interface TokenPosition extends ElevatedPoint {
     /** The height in grid spaces (positive). */
     height: number;
     /** The shape type (see {@link CONST.TOKEN_SHAPES}). */
-    shape: TokenShapeType;
+    shape: TokenShape;
 }
 
 type TokenDimensions = Pick<TokenPosition, "width" | "height" | "shape">;

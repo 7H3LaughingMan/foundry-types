@@ -1,6 +1,6 @@
+import { ContextMenuEntry } from "#client/applications/ux/context-menu.mjs";
+import Actor from "#client/documents/actor.mjs";
 import DocumentDirectory, { DocumentDirectoryConfiguration } from "../document-directory.mjs";
-import { ContextMenuEntry } from "./../../../applications/ux/context-menu.mjs";
-import Actor from "./../../../documents/actor.mjs";
 
 /**
  * The World Actor directory listing.

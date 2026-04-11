@@ -1,5 +1,5 @@
-import { ColorSource } from "./../_types.mjs";
-import { HexColorString } from "./../constants.mjs";
+import { ColorSource } from "#common/_types.mjs";
+import { HexColorString } from "#common/constants.mjs";
 
 /**
  * A representation of a color in hexadecimal format.

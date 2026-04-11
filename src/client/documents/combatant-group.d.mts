@@ -1,4 +1,4 @@
-import BaseCombatantGroup from "./../../common/documents/combatant-group.mjs";
+import BaseCombatantGroup from "#common/documents/combatant-group.mjs";
 import { Combat, Combatant } from "./_module.mjs";
 import { ClientDocument } from "./abstract/client-document.mjs";
 

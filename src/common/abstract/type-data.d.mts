@@ -1,8 +1,7 @@
+import { HTMLDocumentEmbedElement } from "#client/applications/elements/_module.mjs";
+import { DocumentHTMLEmbedConfig, EnrichmentOptions } from "#client/applications/ux/text-editor.mjs";
+import User from "#client/documents/user.mjs";
 import * as packages from "../packages/_module.mjs";
-import { HTMLDocumentEmbedElement } from "./../../client/applications/elements/_module.mjs";
-import { DocumentHTMLEmbedConfig, EnrichmentOptions } from "./../../client/applications/ux/text-editor.mjs";
-import User from "./../../client/documents/user.mjs";
-import { SourceFromSchema } from "./../data/fields.mjs";
 import * as abstract from "./_module.mjs";
 
 /**
@@ -104,7 +103,11 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param user The User requesting the document creation
      * @returns Return false to exclude this Document from the creation operation
      */
-    protected _preCreate(data: { system?: DeepPartial<SourceFromSchema<TSchema>> }, options: object, user: User): Promise<boolean | void>;
+    protected _preCreate(
+        data: DeepPartial<NonNullable<TParent>["_source"]>,
+        options: abstract.DatabaseCreateCallbackOptions,
+        user: User,
+    ): Promise<boolean | void>;
 
     /* -------------------------------------------- */
 
@@ -115,7 +118,7 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param options Additional options which modify the creation request
      * @param userId The id of the User requesting the document update
      */
-    protected _onCreate(data: { system?: DeepPartial<SourceFromSchema<TSchema>> }, options: object, userId: string): void;
+    protected _onCreate(data: DeepPartial<NonNullable<TParent>["_source"]>, options: abstract.DatabaseCreateCallbackOptions, userId: string): void;
 
     /* -------------------------------------------- */
 
@@ -127,7 +130,7 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param user The User requesting the document update
      * @returns A return value of false indicates the update operation should be cancelled.
      */
-    protected _preUpdate(changes: Record<string, unknown>, options: object, user: User): Promise<boolean | void>;
+    protected _preUpdate(changes: Record<string, unknown>, options: abstract.DatabaseUpdateCallbackOptions, user: User): Promise<boolean | void>;
 
     /* -------------------------------------------- */
 
@@ -138,7 +141,7 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param options Additional options which modify the update request
      * @param userId The id of the User requesting the document update
      */
-    protected _onUpdate(changed: Record<string, unknown>, options: object, userId: string): void;
+    protected _onUpdate(changed: DeepPartial<NonNullable<TParent>["_source"]>, options: abstract.DatabaseUpdateCallbackOptions, userId: string): void;
 
     /* -------------------------------------------- */
 
@@ -149,7 +152,7 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param user The User requesting the document deletion
      * @returns A return value of false indicates the deletion operation should be cancelled.
      */
-    protected _preDelete(options: object, user: User): Promise<boolean | void>;
+    protected _preDelete(options: abstract.DatabaseDeleteCallbackOptions, user: User): Promise<boolean | void>;
 
     /* -------------------------------------------- */
 
@@ -159,5 +162,5 @@ export default abstract class TypeDataModel<TParent extends abstract.DataModel |
      * @param options Additional options which modify the deletion request
      * @param userId The id of the User requesting the document update
      */
-    protected _onDelete(options: object, userId: string): void;
+    protected _onDelete(options: abstract.DatabaseDeleteCallbackOptions, userId: string): void;
 }

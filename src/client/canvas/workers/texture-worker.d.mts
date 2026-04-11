@@ -1,4 +1,4 @@
-import { AsyncWorker, AsyncWorkerOptions } from "./../../helpers/workers.mjs";
+import { AsyncWorker, AsyncWorkerOptions } from "#client/helpers/workers.mjs";
 
 /**
  * Wrapper for a web worker meant to convert a pixel buffer to the specified image format

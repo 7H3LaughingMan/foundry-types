@@ -1,4 +1,4 @@
-import { Point } from "./../../../common/_types.mjs";
+import { Point } from "#common/_types.mjs";
 import { ClockwiseSweepPolygonConfig, EdgeType, PolygonRay } from "./_types.mjs";
 import { Edge, PolygonVertex } from "./edges/_module.mjs";
 import Ray from "./shapes/ray.mjs";

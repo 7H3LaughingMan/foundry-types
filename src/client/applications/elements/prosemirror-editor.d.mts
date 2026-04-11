@@ -1,6 +1,6 @@
+import { DocumentUUID } from "#client/utils/_module.mjs";
+import { FormInputConfig } from "#common/data/_types.mjs";
 import * as ProseMirror from "prosemirror-state";
-import { FormInputConfig } from "./../../../common/data/_types.mjs";
-import { DocumentUUID } from "./../../utils/_module.mjs";
 import AbstractFormInputElement from "./form-element.mjs";
 
 /**
@@ -26,11 +26,7 @@ declare global {
         enriched?: string;
         /** Does this editor instance support collaborative editing? */
         collaborate: boolean;
-        /**  Should the editor be presented in compact mode? */
-        compact: boolean;
         /** A Document UUID. Required for collaborative editing */
         documentUUID?: DocumentUUID;
-        /** The height of the editor in pixels */
-        height?: number;
     }
 }

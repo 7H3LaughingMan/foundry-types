@@ -1,5 +1,5 @@
+import { FormGroupConfig, FormInputConfig } from "#common/data/_types.mjs";
 import { HTMLMultiSelectElement } from "../elements/multi-select.mjs";
-import { FormGroupConfig, FormInputConfig } from "./../../../common/data/_types.mjs";
 
 /** Create a standardized form field group. */
 export function createFormGroup(config: FormGroupConfig): HTMLDivElement;
@@ -122,8 +122,8 @@ export type MultiSelectInputConfig = Omit<SelectInputConfig, "blank"> & {
 };
 
 export interface NumberInputConfig extends FormInputConfig<number> {
-    min?: number;
-    max?: number;
+    min: number;
+    max: number;
     step: number | "any";
 }
 

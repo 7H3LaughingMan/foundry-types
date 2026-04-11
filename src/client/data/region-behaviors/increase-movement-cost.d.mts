@@ -1,11 +1,11 @@
-import * as fields from "./../../../common/data/fields.mjs";
-import { TokenMovementWaypoint } from "./../../documents/_types.mjs";
-import TokenDocument from "./../../documents/token.mjs";
+import { TokenMovementWaypoint } from "#client/documents/_types.mjs";
+import TokenDocument from "#client/documents/token.mjs";
+import * as fields from "#common/data/fields.mjs";
 import RegionBehaviorType, { EventBehaviorStaticHandler } from "./base.mjs";
 
 /**
  * @import {RegionBehaviorViewedEvent, RegionBehaviorUnviewedEvent,
- *   RegionRegionBoundaryEvent} from "./../../documents/_types.mjs";
+ *   RegionRegionBoundaryEvent} from "#client/documents/_types.mjs";
  */
 
 /**

@@ -6,7 +6,7 @@ import AbstractFormInputElement from "./form-element.mjs";
  * Multi-select components return an array of values as part of form submission.
  * Different implementations may provide different experiences around how inputs are presented to the user.
  */
-export abstract class AbstractMultiSelectElement extends AbstractFormInputElement<Set<string>, string[], string[]> {
+export abstract class AbstractMultiSelectElement extends AbstractFormInputElement<string[], string[]> {
     /** Predefined <option> and <optgroup> elements which were defined in the original HTML. */
     protected _options: (HTMLOptionElement | HTMLOptGroupElement)[];
 

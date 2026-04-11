@@ -1,5 +1,5 @@
+import { ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
 import { ApplicationV2, HandlebarsApplicationMixin, HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/_module.mjs";
-import { ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
 
 /**
  * A submenu for managing user overrides of PrototypeTokens

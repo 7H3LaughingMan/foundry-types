@@ -1,9 +1,10 @@
+import { FromCompendiumOptions, ToCompendiumOptions } from "#client/_types.mjs";
+import { ApplicationRenderOptions } from "#client/applications/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import Application, { AppV1RenderOptions } from "#client/appv1/api/application-v1.mjs";
+import { DatabaseAction, DatabaseCreateOperation, DatabaseOperation, DatabaseUpdateOperation, Document } from "#common/abstract/_module.mjs";
+import Collection from "#common/utils/collection.mjs";
 import User from "../user.mjs";
-import { DatabaseAction, DatabaseCreateOperation, DatabaseOperation, DatabaseUpdateOperation, Document } from "./../../../common/abstract/_module.mjs";
-import Collection from "./../../../common/utils/collection.mjs";
-import { ApplicationRenderOptions } from "./../../applications/_types.mjs";
-import ApplicationV2 from "./../../applications/api/application.mjs";
-import Application, { AppV1RenderOptions } from "./../../appv1/api/application-v1.mjs";
 
 /**
  * A Collection of Document objects within the Foundry Virtual Tabletop framework.
@@ -45,6 +46,16 @@ export default abstract class DocumentCollection<TDocument extends Document> ext
     /* -------------------------------------------- */
     /*  Database Operations                         */
     /* -------------------------------------------- */
+
+    /**
+     * Import a Document into this collection, persisting the result.
+     * If the document ID already exists in the collection, it should be replaced with an optional confirmation dialog.
+     * If the document ID is undefined or does not already exist, a new Document will be created in the collection.
+     * @param document A source Document to be imported. The document will be safely copied.
+     * @param options  Options which modify import behavior
+     * @returns The imported Document instance
+     */
+    importDocument(document: Document, options: FromCompendiumOptions | ToCompendiumOptions): Promise<Document>;
 
     /**
      * Update all objects in this DocumentCollection with a provided transformation.

@@ -1,3 +1,4 @@
+import User from "#client/documents/user.mjs";
 import {
     ApplicationClosingOptions,
     ApplicationConfiguration,
@@ -8,7 +9,6 @@ import {
 } from "../_types.mjs";
 import { HandlebarsApplicationMixin, HandlebarsRenderOptions, HandlebarsTemplatePart } from "../api/_module.mjs";
 import ApplicationV2 from "../api/application.mjs";
-import User from "./../../documents/user.mjs";
 
 export type FilePickerSource = "data" | "public" | "s3";
 
@@ -18,27 +18,27 @@ type FilerPickerDisplayMode = (typeof FilePicker.DISPLAY_MODES)[number];
 
 export interface FilePickerConfiguration extends ApplicationConfiguration {
     /** A type of file to target. Default: `"any"` */
-    type?: FilePickerFileType;
+    type: FilePickerFileType;
     /** A current file source in "data", "public", or "s3". */
-    activeSource?: FilePickerSource;
+    activeSource: FilePickerSource;
     /** A callback function to trigger once a file has been selected */
-    callback?: (path: string, filePicker: FilePicker) => void;
-    /** The current file path being modified, if any */
-    current?: string;
+    callback: Function;
+    /** */
+    current: string;
     /** A flag which permits explicitly disallowing upload, `true` by default */
-    allowUpload?: boolean;
+    allowUpload: boolean;
     /** An HTML form field that the result of this selection is applied to */
-    field?: HTMLElement;
+    field: HTMLElement;
     /** An HTML button element which triggers the display of this picker */
-    button?: HTMLButtonElement;
+    button: HTMLButtonElement;
     /**  */
-    favorites?: Record<string, FavoriteFolder>;
+    favorites: Record<string, FavoriteFolder>;
     /** The picker display mode in FilePicker.DISPLAY_MODES */
-    displayMode?: string;
+    displayMode: string;
     /** Display the tile size configuration. */
-    tileSize?: boolean;
+    tileSize: boolean;
     /** Redirect to the root directory rather than starting in the source directory of one of these files. */
-    redirectToRoot?: string[];
+    redirectToRoot: string[];
 }
 
 export interface FavoriteFolder {
@@ -129,7 +129,7 @@ export default class FilePicker extends HandlebarsApplicationMixin(ApplicationV2
     /**
      *  @param [options={}] Options that configure the behavior of the FilePicker
      */
-    constructor(options: DeepPartial<FilePickerConfiguration>);
+    constructor(options: FilePickerConfiguration);
 
     /** The full requested path given by the user */
     request: string;

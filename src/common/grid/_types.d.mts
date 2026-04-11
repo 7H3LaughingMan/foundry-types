@@ -1,5 +1,5 @@
+import { GridDiagonalRule, GridSnappingMode } from "#common/constants.mjs";
 import { ColorSource, DeepReadonly, ElevatedPoint, Point } from "../_types.mjs";
-import { GridDiagonalRule, GridSnappingMode } from "./../constants.mjs";
 
 /**
  * 2D offset coordinates of a grid space.

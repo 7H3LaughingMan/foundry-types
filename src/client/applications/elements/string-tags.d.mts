@@ -1,11 +1,11 @@
-import { FormInputConfig } from "./../../../common/data/_module.mjs";
+import { FormInputConfig } from "#common/data/_module.mjs";
 import AbstractFormInputElement from "./form-element.mjs";
 
 /**
  * A custom HTML element which allows for arbitrary assignment of a set of string tags.
  * This element may be used directly or subclassed to impose additional validation or functionality.
  */
-export default class HTMLStringTagsElement extends AbstractFormInputElement<Set<string>, string[], string[]> {
+export default class HTMLStringTagsElement extends AbstractFormInputElement<Set<string>, string[]> {
     static override tagName: "string-tags";
 
     static icons: {

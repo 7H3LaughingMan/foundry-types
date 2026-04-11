@@ -1,13 +1,13 @@
+import DocumentSheetV2 from "#client/applications/api/document-sheet.mjs";
 import {
     DatabaseCreateOperation,
     DatabaseDeleteCallbackOptions,
     DatabaseDeleteOperation,
     DatabaseUpdateCallbackOptions,
     DatabaseUpdateOperation,
-} from "./../../common/abstract/_types.mjs";
-import Document from "./../../common/abstract/document.mjs";
-import { PlaylistSource } from "./../../common/documents/playlist.mjs";
-import DocumentSheetV2 from "./../applications/api/document-sheet.mjs";
+} from "#common/abstract/_types.mjs";
+import Document from "#common/abstract/document.mjs";
+import { PlaylistSource } from "#common/documents/playlist.mjs";
 import { BasePlaylist, BaseUser, PlaylistSound } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 import CompendiumCollection from "./collections/compendium-collection.mjs";

@@ -1,6 +1,6 @@
+import { ImageFilePath } from "#common/constants.mjs";
 import { DatabaseUpdateCallbackOptions, Document, DocumentMetadata } from "../abstract/_module.mjs";
 import * as fields from "../data/fields.mjs";
-import { ImageFilePath } from "./../constants.mjs";
 import { BaseScene, BaseUser } from "./_module.mjs";
 
 /**
@@ -32,19 +32,15 @@ interface FogExplorationMetadata extends DocumentMetadata {
 }
 
 type FogExplorationSchema = {
-    /** The _id which uniquely identifies this FogExploration document */
     _id: fields.DocumentIdField;
-    /** The _id of the Scene document to which this fog applies */
-    scene: fields.ForeignDocumentField<BaseScene>;
-    /** The _id of the User document to which this fog applies */
     user: fields.ForeignDocumentField<BaseUser>;
-    /** The base64 png image of the explored fog polygon */
+    scene: fields.ForeignDocumentField<BaseScene>;
+    level: fields.DocumentIdField<string, true, true, true>;
     explored: fields.FilePathField<ImageFilePath, ImageFilePath, true>;
-    /** The object of scene positions which have been explored at a certain vision radius */
     positions: fields.ObjectField<object>;
-    /** The timestamp at which this fog exploration was last updated */
     timestamp: fields.NumberField<number, number, false, true, true>;
     flags: fields.DocumentFlagsField;
+    _stats: fields.DocumentStatsField;
 };
 
 export type FogExplorationSource = fields.SourceFromSchema<FogExplorationSchema>;

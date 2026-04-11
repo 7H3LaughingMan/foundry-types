@@ -1,5 +1,5 @@
-import { ImageFileExtension, VideoFilePath } from "./../../../common/constants.mjs";
-import SpriteMesh from "./../../canvas/containers/elements/sprite-mesh.mjs";
+import SpriteMesh from "#client/canvas/containers/elements/sprite-mesh.mjs";
+import { ImageFileExtension, VideoFilePath } from "#common/constants.mjs";
 
 /**
  * A helper class to provide common functionality for working with HTML5 video objects

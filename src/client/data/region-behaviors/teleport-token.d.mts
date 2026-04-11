@@ -1,5 +1,5 @@
-import * as fields from "./../../../common/data/fields.mjs";
-import { TokenDocumentUUID } from "./../../../common/documents/_module.mjs";
+import * as fields from "#common/data/fields.mjs";
+import { TokenDocumentUUID } from "#common/documents/_module.mjs";
 import RegionBehaviorType, { EventBehaviorStaticHandler } from "./base.mjs";
 
 /** The data model for a behavior that teleports Token that enter the Region to a preset destination Region. */

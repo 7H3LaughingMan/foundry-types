@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { TileOcclusionMode } from "#common/constants.mjs";
 import Token from "../placeables/token.mjs";
-import { TileOcclusionMode } from "./../../../common/constants.mjs";
 import PrimaryCanvasObjectMixin from "./primary-canvas-object.mjs";
 
 /**
@@ -10,6 +9,7 @@ import PrimaryCanvasObjectMixin from "./primary-canvas-object.mjs";
  * @returns A DisplayObject subclass mixed with OccludableObject features
  * @mixin
  */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 export default function PrimaryOccludableObjectMixin<TBase extends ConstructorOf<PIXI.DisplayObject>>(DisplayObject: TBase) {
     abstract class PrimaryOccludableObject extends PrimaryCanvasObjectMixin(DisplayObject) {

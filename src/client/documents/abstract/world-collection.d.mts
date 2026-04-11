@@ -1,13 +1,12 @@
-import { FromCompendiumOptions } from "#client/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import DocumentSheetConfig from "#client/applications/apps/document-sheet-config.mjs";
+import DocumentDirectory from "#client/applications/sidebar/document-directory.mjs";
+import { Application, DocumentSheet } from "#client/appv1/api/_module.mjs";
+import { DatabaseCreateOperation } from "#common/abstract/_module.mjs";
+import Collection from "#common/utils/collection.mjs";
 import DocumentSheetV2 from "../../applications/api/document-sheet.mjs";
 import { Folder, Setting, WorldDocument } from "../_module.mjs";
 import CompendiumCollection from "../collections/compendium-collection.mjs";
-import { DatabaseCreateOperation } from "./../../../common/abstract/_module.mjs";
-import Collection from "./../../../common/utils/collection.mjs";
-import ApplicationV2 from "./../../applications/api/application.mjs";
-import DocumentSheetConfig from "./../../applications/apps/document-sheet-config.mjs";
-import DocumentDirectory from "./../../applications/sidebar/document-directory.mjs";
-import { Application, DocumentSheet } from "./../../appv1/api/_module.mjs";
 import { DirectoryCollectionConstructor } from "./directory-collection-mixin.mjs";
 
 export const DirectoryCollectionMix: DirectoryCollectionConstructor;
@@ -154,4 +153,17 @@ export default abstract class WorldCollection<TDocument extends WorldDocument | 
     static unregisterSheet(...args: DropFirst<Parameters<(typeof DocumentSheetConfig)["unregisterSheet"]>>): void;
 
     static get registeredSheets(): (DocumentSheetV2 | DocumentSheet)[];
+}
+
+export interface FromCompendiumOptions {
+    /** Clear the currently assigned folder. */
+    clearFolder?: boolean;
+    /** Clear fields which store Document state. */
+    clearState?: boolean;
+    /** Clear the current sort order. */
+    clearSort?: boolean;
+    /** Clear Document ownership (recursive). */
+    clearOwnership?: boolean;
+    /** Retain the Document ID from the source Compendium. */
+    keepId?: boolean;
 }

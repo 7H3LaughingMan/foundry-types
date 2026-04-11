@@ -1,7 +1,7 @@
+import Region from "#client/canvas/placeables/region.mjs";
 import { ApplicationClosingOptions, ApplicationConfiguration, ApplicationRenderContext, ApplicationRenderOptions } from "../_types.mjs";
 import ApplicationV2 from "../api/application.mjs";
 import HandlebarsApplicationMixin, { HandlebarsTemplatePart } from "../api/handlebars-application.mjs";
-import Region from "./../../canvas/placeables/region.mjs";
 
 /**
  * Scene Region Legend.

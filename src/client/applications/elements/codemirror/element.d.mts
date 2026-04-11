@@ -1,6 +1,6 @@
+import { Point } from "#common/_types.mjs";
+import { CodeMirrorInputConfig, CodeMirrorLanguage } from "#common/data/_types.mjs";
 import AbstractFormInputElement from "../form-element.mjs";
-import { Point } from "./../../../../common/_types.mjs";
-import { CodeMirrorInputConfig, CodeMirrorLanguage, FormInputConfig } from "./../../../../common/data/_types.mjs";
 
 interface HTMLCodeMirrorOptions {
     /** The initial editor contents. */
@@ -22,7 +22,7 @@ export default class HTMLCodeMirrorElement extends AbstractFormInputElement<stri
      */
     get language(): CodeMirrorLanguage;
 
-    set language(value: CodeMirrorLanguage);
+    set language(value);
 
     /**
      * This element's indent attribute, which determines the number of spaces added upon pressing the TAB key. A value
@@ -30,14 +30,14 @@ export default class HTMLCodeMirrorElement extends AbstractFormInputElement<stri
      */
     get indent(): number;
 
-    set indent(value: number);
+    set indent(value);
 
     /**
      * The element's nowrap attribute, which if present disables line-wrapping
      */
     get nowrap(): boolean;
 
-    set nowrap(value: boolean);
+    set nowrap(value);
 
     protected override _toggleDisabled(disabled: boolean): void;
 
@@ -69,5 +69,5 @@ export default class HTMLCodeMirrorElement extends AbstractFormInputElement<stri
     /**
      * Create an HTMLCodeMirrorElement element for a StringField (typically a JSONField or JavascriptField).
      */
-    static create(config: FormInputConfig<string> & CodeMirrorInputConfig): HTMLCodeMirrorElement;
+    static create(config: CodeMirrorInputConfig): HTMLCodeMirrorElement;
 }

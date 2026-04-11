@@ -1,8 +1,10 @@
-import { RollMode } from "./../../common/constants.mjs";
-import Collection from "./../../common/utils/collection.mjs";
-import { SettingConfig, SettingSubmenuConfig } from "./../_types.mjs";
-import SettingsConfig from "./../applications/settings/config.mjs";
-import Setting from "./../documents/setting.mjs";
+import { SettingConfig, SettingSubmenuConfig } from "#client/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import SettingsConfig from "#client/applications/settings/config.mjs";
+import Application from "#client/appv1/api/application-v1.mjs";
+import { ChatMessageMode } from "#client/config.mjs";
+import Setting from "#client/documents/setting.mjs";
+import Collection from "#common/utils/collection.mjs";
 
 export interface ClientSettingsStorage extends Map<"client" | "world" | "user", Storage | WorldSettings> {
     get(key: "client"): Storage;
@@ -19,7 +21,7 @@ export default class ClientSettings {
     settings: ClientSettingsMap;
 
     /** Registered settings menus which trigger secondary applications */
-    menus: Map<string, SettingSubmenuConfig>;
+    menus: Map<string, { type: ConstructorOf<Application> | ConstructorOf<ApplicationV2> }>;
 
     /**
      * The storage interfaces used for persisting settings
@@ -33,26 +35,19 @@ export default class ClientSettings {
     get sheet(): SettingsConfig;
 
     /**
-     * Register a new namespaced game setting. The setting's scope determines where the setting is saved.
-     * World - World settings are applied to everyone in the World. Use this for settings like system rule variants that
-     * everyone must abide by.
-     * User - User settings are applied to an individual user. Use this for settings that are a player's personal
-     * preference, like 3D dice skins.
-     * Client - Client settings are applied to the browser or client used to access the World. Use this for settings that
-     * are affected by the client itself, such as screen dimensions, resolution, or performance.
+     * Register a new game setting under this setting scope
      *
-     * @param namespace The namespace under which the setting is registered
-     * @param key The key name for the setting under the namespace
-     * @param data Configuration for setting data
+     * @param module   The namespace under which the setting is registered
+     * @param key      The key name for the setting under the namespace module
+     * @param data     Configuration for setting data
      *
-     * @example Register a client setting
-     * ```js
+     * @example
+     * // Register a client setting
      * game.settings.register("myModule", "myClientSetting", {
      *   name: "Register a Module Setting with Choices",
      *   hint: "A description of the registered setting and its behavior.",
      *   scope: "client",     // This specifies a client-stored setting
      *   config: true,        // This specifies that the setting appears in the configuration view
-     *   requiresReload: true // This will prompt the user to reload the application for the setting to take effect.
      *   type: String,
      *   choices: {           // If choices are defined, the resulting setting will be a select menu
      *     "a": "Option A",
@@ -63,96 +58,68 @@ export default class ClientSettings {
      *     console.log(value)
      *   }
      * });
-     * ```
      *
-     * @example Register a world setting
-     * ```js
+     * @example
+     * // Register a world setting
      * game.settings.register("myModule", "myWorldSetting", {
      *   name: "Register a Module Setting with a Range slider",
      *   hint: "A description of the registered setting and its behavior.",
      *   scope: "world",      // This specifies a world-level setting
      *   config: true,        // This specifies that the setting appears in the configuration view
-     *   requiresReload: true // This will prompt the GM to have all clients reload the application for the setting to
-     *                        // take effect.
-     *   type: new foundry.fields.NumberField({nullable: false, min: 0, max: 100, step: 10}),
+     *   type: Number,
+     *   range: {             // If range is specified, the resulting setting will be a range slider
+     *     min: 0,
+     *     max: 100,
+     *     step: 10
+     *   }
      *   default: 50,         // The default value for the setting
      *   onChange: value => { // A callback function which triggers when the setting is changed
      *     console.log(value)
      *   }
      * });
-     * ```
-     *
-     * @example Register a user setting
-     * ```js
-     * game.settings.register("myModule", "myUserSetting", {
-     *   name: "Register a Module Setting with a checkbox",
-     *   hint: "A description of the registered setting and its behavior.",
-     *   scope: "user",       // This specifies a user-level setting
-     *   config: true,        // This specifies that the setting appears in the configuration view
-     *   type: new foundry.fields.BooleanField(),
-     *   default: false
-     * });
-     * ```
      */
-    register<TChoices extends Record<string, unknown> | undefined>(namespace: string, key: string, data: SettingRegistration<TChoices>): void;
+    register<TChoices extends Record<string, unknown> | undefined>(module: string, key: string, data: SettingRegistration<TChoices>): void;
 
     /**
      * Register a new sub-settings menu
      *
-     * @param namespace The namespace under which the menu is registered
-     * @param key The key name for the setting under the namespace
-     * @param data Configuration for setting data
+     * @param module   The namespace under which the menu is registered
+     * @param key      The key name for the setting under the namespace module
+     * @param data     Configuration for setting data
      *
-     * @example Define a settings submenu which handles advanced configuration needs
-     * ```js
+     * @example
+     * // Define a settings submenu which handles advanced configuration needs
      * game.settings.registerMenu("myModule", "mySettingsMenu", {
      *   name: "My Settings Submenu",
      *   label: "Settings Menu Label",      // The text label used in the button
      *   hint: "A description of what will occur in the submenu dialog.",
-     *   icon: "fa-solid fa-bars",               // A Font Awesome icon used in the submenu button
+     *   icon: "fas fa-bars",               // A Font Awesome icon used in the submenu button
      *   type: MySubmenuApplicationClass,   // A FormApplication subclass which should be created
      *   restricted: true                   // Restrict this submenu to gamemaster only?
      * });
-     * ```
      */
-    registerMenu(namespace: string, key: string, data: Omit<SettingSubmenuConfig, "key" | "namespace">): void;
-}
+    registerMenu(module: string, key: string, data: SettingSubmenuConfig): void;
 
-export default interface ClientSettings {
     /**
-     * Get the value of a game setting for a certain namespace and setting key
-     *
-     * @param namespace The namespace under which the setting is registered
-     * @param key The setting key to retrieve
-     * @param document Retrieve the full Setting document instance instead of just its value
-     * @returns The current value or the Setting document instance
-     *
-     * @example Retrieve the current setting value
-     * ```js
-     * game.settings.get("myModule", "myClientSetting");
-     * ````
+     * Get the value of a game setting for a certain module and setting key
+     * @param namespace    The module namespace under which the setting is registered
+     * @param key       The setting key to retrieve
+     * @param {object} options      Additional options for setting retrieval
+     * @param {boolean} [options.document]  Retrieve the full Setting document instance instead of just its value
      */
     get(namespace: "core", key: "compendiumConfiguration"): Record<string, { private: boolean; locked: boolean }>;
     get(namespace: "core", key: "fontSize"): number;
     get(namespace: "core", key: "noCanvas"): boolean;
-    get(namespace: "core", key: "rollMode"): RollMode;
+    get(namespace: "core", key: "messageMode"): ChatMessageMode;
     get(namespace: "core", key: "uiConfig"): { colorScheme: { applications: string; interface: string } };
-    get(namespace: string, key: string): unknown;
+    get(namespace: string, key: string, options?: { document: true }): Setting;
+    get(namespace: string, key: string, options?: { document?: boolean }): unknown;
 
     /**
-     * Set the value of a game setting for a certain namespace and setting key
-     *
-     * @param namespace The namespace under which the setting is registered
-     * @param key The setting key to retrieve
+     * Get the value of a game setting for a certain module and setting key
+     * @param namespace    The module namespace under which the setting is registered
+     * @param key   The setting key to retrieve
      * @param value The data to assign to the setting key
-     * @param options Additional options passed to the server when updating world-scope settings
-     * @param document Return the updated Setting document instead of just its value
-     * @returns The assigned setting value or the Setting document instance
-     *
-     * @example Update the current value of a setting
-     * ```js
-     * game.settings.set("myModule", "myClientSetting", "b");
-     * ```
      */
     set(namespace: string, key: string, value: unknown): Promise<unknown>;
 }
@@ -162,7 +129,7 @@ interface SettingRegistration<TChoices extends Record<string, unknown> | undefin
     "config" | "key" | "namespace" | "scope"
 > {
     config?: boolean;
-    scope?: "world" | "client" | "user";
+    scope?: "client" | "world" | "user";
 }
 
 interface ClientSettingsMap extends Map<string, SettingConfig> {
@@ -185,23 +152,7 @@ interface ClientSettingsMap extends Map<string, SettingConfig> {
 export class WorldSettings extends Collection<string, Setting> {
     constructor(settings: object);
 
-    /* -------------------------------------------- */
-    /* World Settings Methods                       */
-    /* -------------------------------------------- */
+    getItem(key: string): string | null;
 
-    /**
-     * Return the Setting document with the given key.
-     * @param key The setting key
-     * @param user For user-scoped settings, the user ID.
-     * @returns The Setting
-     */
-    getSetting(key: string, user?: string): Setting;
-
-    /**
-     * Return the serialized value of the world setting as a string
-     * @param key The setting key
-     * @param user For user-scoped settings, the user ID.
-     * @returns The serialized setting string
-     */
-    getItem(key: string, user?: string): string | null;
+    setItem(key: string, value: unknown): void;
 }

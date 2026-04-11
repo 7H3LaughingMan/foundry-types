@@ -1,11 +1,11 @@
-import { ElevatedPoint, TokenPosition } from "./../../common/_types.mjs";
-import DataModel from "./../../common/abstract/data.mjs";
-import { RegionMovementSegmentType, TokenShapeType } from "./../../common/constants.mjs";
-import { EffectDurationData } from "./../../common/documents/active-effect.mjs";
-import { GridMeasurePathCostFunction3D, GridOffset3D } from "./../../common/grid/_types.mjs";
-import { TokenConstrainMovementPathOptions, TokenMovementActionConfig } from "./../_types.mjs";
-import { TerrainData } from "./../data/terrain-data.mjs";
-import Roll from "./../dice/roll.mjs";
+import { TokenConstrainMovementPathOptions, TokenMovementActionConfig } from "#client/_types.mjs";
+import { TerrainData } from "#client/data/terrain-data.mjs";
+import Roll from "#client/dice/roll.mjs";
+import { ElevatedPoint, TokenPosition } from "#common/_types.mjs";
+import DataModel from "#common/abstract/data.mjs";
+import { RegionMovementSegmentType, TokenShapeType } from "#common/constants.mjs";
+import { EffectDurationData } from "#common/documents/active-effect.mjs";
+import { GridMeasurePathCostFunction3D, GridOffset3D } from "#common/grid/_types.mjs";
 import { Combat, Combatant, RegionDocument, TableResult, TokenDocument, User } from "./_module.mjs";
 
 /**
@@ -15,8 +15,10 @@ import { Combat, Combatant, RegionDocument, TableResult, TokenDocument, User } f
 export interface AdventureImportData {
     /** Arrays of document data to create, organized by document name */
     toCreate: Record<string, object[]>;
+
     /** Arrays of document data to update, organized by document name */
     toUpdate: Record<string, object[]>;
+
     /** The total count of documents to import */
     documentCount: number;
 }
@@ -34,10 +36,13 @@ export type AdventurePreImportCallback = (data: AdventureImportData, options: Ad
 export interface AdventureImportOptions {
     /** Display a warning dialog if existing documents would be overwritten */
     dialog?: boolean;
+
     /** A subset of adventure fields to import */
     importFields?: string[];
+
     /** An array of awaited pre-import callbacks */
     preImport?: AdventurePreImportCallback[];
+
     /** An array of awaited post-import callbacks */
     postImport?: AdventurePostImportCallback[];
 }
@@ -48,6 +53,7 @@ export interface AdventureImportOptions {
 export interface AdventureImportResult {
     /** Documents created as a result of the import, grouped by document name */
     created: Record<string, Document[]>;
+
     /** Documents updated as a result of the import, grouped by document name*/
     updated: Record<string, Document[]>;
 }
@@ -102,15 +108,18 @@ export interface CombatTurnEventContext {
 
 export type CombatRoundEventContext = Omit<CombatTurnEventContext, "turn">;
 
-export interface RegionEvent<TData extends object = object, TDocument extends RegionDocument = RegionDocument, TUser extends User = User> {
+export interface RegionEvent<TData extends object = object> {
     /** The name of the event */
     name: string;
+
     /** The data of the event */
     data: TData;
+
     /** The Region the event was triggered on */
-    region: TDocument;
+    region: RegionDocument;
+
     /** The User that triggered the event */
-    user: TUser;
+    user: User;
 }
 
 export type RegionRegionBoundaryEvent = RegionEvent;
@@ -247,11 +256,15 @@ export interface RegionSegmentizeMovementPathWaypoint {
 /**
  * An object containing the executed Roll and the produced results
  */
-export interface RollTableDraw<TParent extends RollTable = RollTable> {
-    /** The Dice roll which generated the draw */
+export interface RollTableDraw {
+    /**
+     * The Dice roll which generated the draw
+     */
     roll: Roll;
-    /** An array of drawn TableResult documents */
-    results: TableResult<TParent>[];
+    /**
+     * An array of drawn TableResult documents
+     */
+    results: TableResult[];
 }
 
 export interface SceneDimensions {

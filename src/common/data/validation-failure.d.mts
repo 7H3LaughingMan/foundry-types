@@ -1,27 +1,19 @@
-import { ElementValidationFailure } from "./_types.mjs";
-
 /** A class responsible for recording information about a validation failure. */
 export class DataModelValidationFailure {
-    /**
-     * @param [invalidValue]   The value that failed validation for this field.
-     * @param [fallback]       The value it was replaced by, if any.
-     * @param [dropped]        Whether the value was dropped from some parent collection.
-     * @param [message]        The validation error message.
-     * @param [unresolved]     Whether this failure was unresolved
-     */
-    constructor({
-        invalidValue,
-        fallback,
-        dropped,
-        message,
-        unresolved,
-    }?: {
-        invalidValue?: unknown;
-        fallback?: boolean;
-        dropped?: boolean;
-        message?: string;
-        unresolved?: boolean;
-    });
+    constructor(
+        message?: string,
+        {
+            invalidValue,
+            fallback,
+            dropped,
+            unresolved,
+        }?: {
+            invalidValue?: unknown;
+            fallback?: boolean;
+            dropped?: boolean;
+            unresolved?: boolean;
+        },
+    );
 
     /** The value that failed validation for this field. */
     invalidValue: unknown;
@@ -67,6 +59,15 @@ export class DataModelValidationFailure {
 
     /** Represent the DataModelValidationFailure as a string. */
     toString(): string;
+}
+
+interface ElementValidationFailure {
+    /** Either the element's index or some other identifier for it. */
+    id: string | number;
+    /** Optionally a user-friendly name for the element. */
+    name?: string;
+    /** The element's validation failure. */
+    failure: DataModelValidationFailure;
 }
 
 /** A specialised Error to indicate a model validation failure. */

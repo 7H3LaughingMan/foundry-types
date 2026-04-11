@@ -1,5 +1,5 @@
 /**
- * @import GridMesh from "./../../../../canvas/containers/elements/grid-mesh.mjs";
+ * @import GridMesh from "#client/canvas/containers/elements/grid-mesh.mjs";
  */
 /**
  * The grid shader used by {@link GridMesh}.

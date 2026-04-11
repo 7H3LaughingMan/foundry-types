@@ -1,6 +1,11 @@
-import { BaseUser } from "../_module.mjs";
-import CompendiumCollection from "../collections/compendium-collection.mjs";
-import { DocumentConstructionContext } from "./../../../common/_types.mjs";
+import { ToCompendiumOptions } from "#client/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import HTMLDocumentEmbedElement from "#client/applications/elements/document-embed.mjs";
+import { DocumentHTMLEmbedConfig, EnrichmentAnchorOptions, EnrichmentOptions } from "#client/applications/ux/text-editor.mjs";
+import Application from "#client/appv1/api/application-v1.mjs";
+import { DropCanvasData } from "#client/helpers/hooks.mjs";
+import { Collection, SortOptions } from "#client/utils/_module.mjs";
+import { DocumentConstructionContext } from "#common/_types.mjs";
 import {
     DatabaseCreateCallbackOptions,
     DatabaseCreateOperation,
@@ -8,15 +13,11 @@ import {
     DatabaseDeleteOperation,
     DatabaseUpdateCallbackOptions,
     DatabaseUpdateOperation,
-} from "./../../../common/abstract/_module.mjs";
-import Document from "./../../../common/abstract/document.mjs";
-import { DocumentOwnershipLevel } from "./../../../common/constants.mjs";
-import ApplicationV2 from "./../../applications/api/application.mjs";
-import HTMLDocumentEmbedElement from "./../../applications/elements/document-embed.mjs";
-import { DocumentHTMLEmbedConfig, EnrichmentAnchorOptions, EnrichmentOptions } from "./../../applications/ux/text-editor.mjs";
-import Application from "./../../appv1/api/application-v1.mjs";
-import { DropCanvasData } from "./../../helpers/hooks.mjs";
-import { Collection, SortOptions } from "./../../utils/_module.mjs";
+} from "#common/abstract/_module.mjs";
+import Document from "#common/abstract/document.mjs";
+import { DocumentOwnershipLevel } from "#common/constants.mjs";
+import { BaseUser } from "../_module.mjs";
+import CompendiumCollection from "../collections/compendium-collection.mjs";
 
 export default function ClientDocumentMixin<TParent extends Document | null, TDocument extends Document<TParent>>(
     Base: ConstructorOf<TDocument>,
@@ -525,21 +526,4 @@ export interface ClientDocumentStatic {
     ): Promise<T | null>;
 
     fromDropData<T extends ClientDocument>(this: ConstructorOf<T>, data: object, options?: object): Promise<T | null>;
-}
-
-export interface ToCompendiumOptions {
-    /** Clear the currently assigned sort order */
-    clearSort?: boolean;
-    /** Clear the currently assigned folder */
-    clearFolder?: boolean;
-    /** Clear the flags object */
-    clearFlags?: boolean;
-    /** Clear any prior source information */
-    clearSource?: boolean;
-    /** Clear document ownership */
-    clearOwnership?: boolean;
-    /** Clear fields which store document state */
-    clearState?: boolean;
-    /** Retain the current Document id */
-    keepId?: boolean;
 }

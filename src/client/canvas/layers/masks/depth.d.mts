@@ -1,4 +1,4 @@
-import { CachedContainer, SpriteMesh } from "./../../../canvas/containers/_module.mjs";
+import { CachedContainer, SpriteMesh } from "#client/canvas/containers/_module.mjs";
 
 /**
  * The depth mask which contains a mapping of elevation. Needed to know if we must render objects according to depth.

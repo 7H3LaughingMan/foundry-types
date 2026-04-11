@@ -1,4 +1,4 @@
-import * as fields from "./../../../common/data/fields.mjs";
+import * as fields from "#common/data/fields.mjs";
 import RegionBehaviorType, { EventsField } from "./base.mjs";
 
 /** The data model for a behavior that executes a script. */

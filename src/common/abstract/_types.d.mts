@@ -1,5 +1,5 @@
-import { DocumentUUID } from "./../../client/utils/helpers.mjs";
-import { DataField } from "./../data/fields.mjs";
+import { DocumentUUID } from "#client/utils/helpers.mjs";
+import { DataField } from "#common/data/fields.mjs";
 import { DataModel, Document } from "./_module.mjs";
 
 export type DataSchema = { [K in string]: DataField<JSONValue, unknown> };

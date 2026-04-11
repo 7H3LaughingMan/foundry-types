@@ -1,7 +1,7 @@
+import { ApplicationConfiguration } from "#client/applications/_types.mjs";
+import { ContextMenuEntry } from "#client/applications/ux/context-menu.mjs";
+import Cards from "#client/documents/cards.mjs";
 import DocumentDirectory from "../document-directory.mjs";
-import { ApplicationConfiguration } from "./../../../applications/_types.mjs";
-import { ContextMenuEntry } from "./../../../applications/ux/context-menu.mjs";
-import Cards from "./../../../documents/cards.mjs";
 
 /**
  * The World Cards directory listing.

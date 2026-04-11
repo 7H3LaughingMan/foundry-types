@@ -1,6 +1,6 @@
+import User from "#client/documents/user.mjs";
 import DocumentSheetV2, { DocumentSheetConfiguration, DocumentSheetRenderContext, DocumentSheetRenderOptions } from "../api/document-sheet.mjs";
 import HandlebarsApplicationMixin, { HandlebarsTemplatePart } from "../api/handlebars-application.mjs";
-import User from "./../../documents/user.mjs";
 
 /**
  * The Application responsible for configuring a single User document.

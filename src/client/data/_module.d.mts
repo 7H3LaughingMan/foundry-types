@@ -1,6 +1,6 @@
 /** @module data */
 
-export * from "./../../common/data/_module.mjs";
+export * from "#common/data/_module.mjs";
 export * from "./_types.mjs";
 export * from "./calendar.mjs";
 export { default as CalendarData } from "./calendar.mjs";

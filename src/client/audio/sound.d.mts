@@ -1,4 +1,4 @@
-import { EventEmitter } from "./../../common/utils/event-emitter.mjs";
+import { EventEmitter } from "#common/utils/event-emitter.mjs";
 import { SoundPlaybackOptions, SoundScheduleCallback } from "./_types.mjs";
 
 type SoundState = (typeof Sound.STATES)[keyof typeof Sound.STATES];

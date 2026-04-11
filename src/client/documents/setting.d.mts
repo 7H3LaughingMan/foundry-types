@@ -1,5 +1,5 @@
-import { DatabaseCreateCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
-import SettingsConfig from "./../applications/settings/config.mjs";
+import SettingsConfig from "#client/applications/settings/config.mjs";
+import { DatabaseCreateCallbackOptions, DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
 import { BaseSetting } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
@@ -9,6 +9,8 @@ interface ClientBaseSettingStatic extends BaseSettingStatic, ClientDocumentStati
 declare const ClientBaseSetting: {
     new (...args: any): BaseSetting & ClientDocument<null>;
 } & ClientBaseSettingStatic;
+
+interface ClientBaseSetting extends InstanceType<typeof ClientBaseSetting> {}
 
 /**
  * The client-side Setting document which extends the common BaseSetting model.

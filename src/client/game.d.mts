@@ -1,5 +1,4 @@
-import { ReleaseData } from "#common/config.mjs";
-import { Actor, Adventure, Cards, ChatMessage, Combat, Item, JournalEntry, Macro, Playlist, RollTable, Scene, User } from "./documents/_module.mjs";
+import { Actor, ChatMessage, Combat, Item, JournalEntry, Macro, Playlist, RollTable, Scene, User } from "./documents/_module.mjs";
 import WorldCollection from "./documents/abstract/world-collection.mjs";
 import * as collections from "./documents/collections/_module.mjs";
 import { CompendiumMetadata } from "./documents/collections/compendium-collection.mjs";
@@ -122,7 +121,16 @@ export default class Game<
     ready: boolean;
 
     /** The Release data for this version of Foundry */
-    release: ReleaseData;
+    release: {
+        build: number;
+        channel: string;
+        download: string;
+        generation: number;
+        node_version?: number;
+        notes: string;
+        suffix?: string;
+        time: number;
+    };
 
     /* -------------------------------------------- */
     /*  World Collections                           */
@@ -137,7 +145,7 @@ export default class Game<
     journal: collections.Journal;
     macros: collections.Macros<TMacro>;
     messages: collections.Messages<TChatMessage>;
-    packs: Collection<string, collections.CompendiumCollection<TActor | Adventure | Cards | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>>;
+    packs: Collection<string, collections.CompendiumCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>>;
     playlists: collections.Playlists;
     scenes: collections.Scenes<TScene>;
     tables: collections.RollTables;

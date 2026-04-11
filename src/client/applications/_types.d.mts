@@ -1,4 +1,3 @@
-import { DocumentOwnershipLevel } from "#common/constants.mjs";
 import { DataField } from "../../common/data/fields.mjs";
 import FormDataExtended from "./ux/form-data-extended.mjs";
 
@@ -12,16 +11,9 @@ export interface ApplicationConfiguration {
     /** The HTMLElement tag type used for the outer Application frame */
     tag: string;
     /** Configuration of the window behaviors for this Application */
-    window: ApplicationWindowConfiguration;
+    window: Partial<ApplicationWindowConfiguration>;
     /** Click actions supported by the Application and their event handler functions */
-    actions: Record<
-        string,
-        | ApplicationClickAction
-        | {
-              handler: ApplicationClickAction;
-              buttons: number[];
-          }
-    >;
+    actions: Record<string, ApplicationClickAction>;
     /** Configuration used if the application top-level element is a form */
     form?: ApplicationFormConfiguration;
     /** Default positioning data for the application */
@@ -44,11 +36,17 @@ export interface ApplicationPosition {
 }
 
 export interface ApplicationWindowConfiguration {
-    /** Is this Application rendered inside a window frame? */
-    frame?: boolean;
+    /**
+     * Is this Application rendered inside a window frame?
+     * @default true
+     */
+    frame: boolean;
 
-    /** Can this Application be positioned via JavaScript or only by CSS */
-    positioned?: boolean;
+    /**
+     * Can this Application be positioned via JavaScript or only by CSS
+     * @default true
+     */
+    positioned: boolean;
 
     /** The window title. Displayed only if the application is framed */
     title?: string;
@@ -57,19 +55,28 @@ export interface ApplicationWindowConfiguration {
     icon?: string | false;
 
     /** An array of window control entries */
-    controls?: ApplicationHeaderControlsEntry[];
+    controls: ApplicationHeaderControlsEntry[];
 
-    /** Can the window app be minimized by double-clicking on the title */
-    minimizable?: boolean;
+    /**
+     * Can the window app be minimized by double-clicking on the title
+     * @default true
+     */
+    minimizable: boolean;
 
-    /** Is this window resizable? */
-    resizable?: boolean;
+    /**
+     * Is this window resizable?
+     * @default false
+     */
+    resizable: boolean;
 
-    /** A specific tag name to use for the .window-content element */
-    contentTag?: string;
+    /**
+     * A specific tag name to use for the .window-content element
+     * @default "section"
+     */
+    contentTag: string;
 
     /** Additional CSS classes to apply to the .window-content element */
-    contentClasses?: string[];
+    contentClasses: string[];
 }
 
 export interface ApplicationFormConfiguration {
@@ -90,19 +97,22 @@ interface ApplicationTabsConfiguration {
     labelPrefix?: string;
 }
 
+/**
+ * @typedef ApplicationTabsConfiguration
+ * @property {{id: string; icon?: string; label?: string; tooltip?: string}[]} tabs
+ * @property {string} [initial]
+ * @property {string} [labelPrefix]
+ */
+
 export interface ApplicationHeaderControlsEntry {
     /** A font-awesome icon class which denotes the control button */
     icon: string;
-    /** The text label for the control button. This label will be automatically localized when the button is rendered */
+    /** The text label for the control button */
     label: string;
     /** The action name triggered by clicking the control button */
     action: string;
     /** Is the control button visible for the current client? */
-    visible?: boolean | (() => boolean);
-    /** A key or value in {@link CONST.DOCUMENT_OWNERSHIP_LEVELS} that restricts visibility of this option for the current user. This option only applies to DocumentSheetV2 instances. */
-    ownership?: DocumentOwnershipLevel;
-    /** A custom click handler function. Asynchronous functions are not awaited. */
-    onClick?: (event: PointerEvent) => void | Promise<void>;
+    visible: boolean;
 }
 
 export interface ApplicationConstructorParams {
@@ -181,12 +191,12 @@ export interface FormNode {
 }
 
 export interface FormFooterButton {
-    type: string;
+    type: "button" | "reset" | "submit";
     name?: string;
     icon?: string;
     label?: string;
+    tooltip?: string;
     action?: string;
     cssClass?: string;
-    /** @default false */
     disabled?: boolean;
 }

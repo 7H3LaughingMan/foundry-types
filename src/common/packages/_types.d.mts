@@ -1,4 +1,4 @@
-import { ModelPropsFromSchema } from "./../data/fields.mjs";
+import { ModelPropsFromSchema } from "#common/data/fields.mjs";
 import { BasePackageSchema, PackageAuthorSchema, PackageLanguageSchema } from "./base-package.mjs";
 
 export type PackageAuthorData = ModelPropsFromSchema<PackageAuthorSchema>;

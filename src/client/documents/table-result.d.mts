@@ -1,4 +1,4 @@
-import { DatabaseUpdateCallbackOptions } from "./../../common/abstract/_module.mjs";
+import { DatabaseUpdateCallbackOptions } from "#common/abstract/_module.mjs";
 import { BaseTableResult, BaseUser } from "./_module.mjs";
 import { ClientDocument } from "./abstract/client-document.mjs";
 import RollTable from "./roll-table.mjs";

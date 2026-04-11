@@ -1,4 +1,3 @@
-export * from "./_types.mjs";
 export { default as BitMask } from "./bitmask.mjs";
 export { default as Collection } from "./collection.mjs";
 export { default as Color } from "./color.mjs";
@@ -13,5 +12,7 @@ export { default as Semaphore } from "./semaphore.mjs";
 export { default as StringTree } from "./string-tree.mjs";
 export { default as WordTree } from "./word-tree.mjs";
 
-/** The constructor of an async function. */
-export const AsyncFunction: new <T = unknown>(...args: string[]) => (...args: any[]) => Promise<T>;
+/**
+ * The constructor of an async function.
+ */
+export const AsyncFunction: Function;

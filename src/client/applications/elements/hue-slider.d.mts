@@ -1,5 +1,5 @@
-import { HexColorString } from "./../../../common/constants.mjs";
-import { FormInputConfig } from "./../../../common/data/_types.mjs";
+import { HexColorString } from "#common/constants.mjs";
+import { FormInputConfig } from "#common/data/_types.mjs";
 import AbstractFormInputElement from "./form-element.mjs";
 
 /**

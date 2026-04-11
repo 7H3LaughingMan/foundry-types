@@ -1,8 +1,7 @@
-import { JournalEntryPageHeading } from "#client/_types.mjs";
+import Note from "#client/canvas/placeables/note.mjs";
+import { DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
+import { DocumentOwnershipLevel } from "#common/constants.mjs";
 import { JournalPageSheet } from "../appv1/sheets/journal-page-sheet.mjs";
-import { DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
-import { DocumentOwnershipLevel } from "./../../common/constants.mjs";
-import Note from "./../canvas/placeables/note.mjs";
 import { BaseJournalEntryPage } from "./_module.mjs";
 import { ClientDocument } from "./abstract/client-document.mjs";
 import JournalEntry from "./journal-entry.mjs";
@@ -72,6 +71,19 @@ export default class JournalEntryPage<TParent extends JournalEntry | null = Jour
 export default interface JournalEntryPage<TParent extends JournalEntry | null = JournalEntry | null> extends ClientBaseJournalEntryPage<TParent> {
     get documentName(): "JournalEntryPage";
     get sheet(): JournalPageSheet<this>;
+}
+
+export interface JournalEntryPageHeading {
+    /** The heading level, 1-6. */
+    level: 1 | 2 | 3 | 4 | 5 | 6;
+    /** The raw heading text with any internal tags omitted. */
+    text: string;
+    /** The generated slug for this heading. */
+    slug: string;
+    /** The currently rendered element for this heading, if it exists. */
+    element?: HTMLHeadingElement;
+    /** Any child headings of this one. */
+    children: string[];
 }
 
 export {};

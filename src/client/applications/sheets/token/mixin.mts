@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
-import { DataSchema } from "./../../../../common/abstract/_types.mjs";
-import { PrototypeToken } from "./../../../../common/data/_module.mjs";
 import {
     ApplicationConfiguration,
     ApplicationFormConfiguration,
     ApplicationRenderContext,
     ApplicationTabsConfiguration,
     FormFooterButton,
-} from "./../../../applications/_types.mjs";
-import ApplicationV2 from "./../../../applications/api/application.mjs";
-import Actor from "./../../../documents/actor.mjs";
-import TokenDocument from "./../../../documents/token.mjs";
+} from "#client/applications/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import Actor from "#client/documents/actor.mjs";
+import TokenDocument from "#client/documents/token.mjs";
+import { DataSchema } from "#common/abstract/_types.mjs";
+import { PrototypeToken } from "#common/data/_module.mjs";
+import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
 
 /**
  * A mixin for UI shared between TokenDocument and PrototypeToken sheets

@@ -1,4 +1,4 @@
-import Collection from "./../../common/utils/collection.mjs";
+import Collection from "#common/utils/collection.mjs";
 import Tour from "./tour.mjs";
 
 /**

@@ -1,6 +1,6 @@
 /** @module documents */
 
-export * from "./../../common/documents/_module.mjs";
+export * from "#common/documents/_module.mjs";
 export * from "./_types.mjs";
 
 // Abstract Classes
@@ -45,7 +45,6 @@ export { default as TableResult } from "./table-result.mjs";
 export { default as AmbientLightDocument } from "./ambient-light.mjs";
 export { default as AmbientSoundDocument } from "./ambient-sound.mjs";
 export { default as DrawingDocument } from "./drawing.mjs";
-export { default as MeasuredTemplateDocument } from "./measured-template.mjs";
 export { default as NoteDocument } from "./note.mjs";
 export { default as RegionDocument } from "./region.mjs";
 export { default as TileDocument } from "./tile.mjs";

@@ -1,5 +1,5 @@
-import { RulerWaypoint } from "./../../../_types.mjs";
-import User from "./../../../documents/user.mjs";
+import { RulerWaypoint } from "#client/_types.mjs";
+import User from "#client/documents/user.mjs";
 import BaseRuler from "./base-ruler.mjs";
 
 /**

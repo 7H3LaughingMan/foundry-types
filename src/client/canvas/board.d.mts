@@ -1,7 +1,8 @@
-import { AmbientLightDocument, MeasuredTemplateDocument, RegionDocument, Scene, TokenDocument, User } from "../documents/_module.mjs";
-import { Point } from "./../../common/_types.mjs";
-import { GridlessGrid, HexagonalGrid, SquareGrid } from "./../../common/grid/_module.mjs";
-import { CanvasDimensions, CanvasPerformanceSettings, CanvasSupportedComponents } from "./../_types.mjs";
+import { CanvasDimensions } from "#client/_types.mjs";
+import { Point } from "#common/_types.mjs";
+import { CanvasPerformanceMode } from "#common/constants.mjs";
+import { GridlessGrid, HexagonalGrid, SquareGrid } from "#common/grid/_module.mjs";
+import { AmbientLightDocument, RegionDocument, Scene, TokenDocument, User } from "../documents/_module.mjs";
 import { CanvasEdges } from "./geometry/edges/edges.mjs";
 import {
     CanvasVisibility,
@@ -22,17 +23,17 @@ import {
     InteractionLayer,
     NotesLayer,
     PlaceablesLayer,
+    RegionLayer,
     SoundsLayer,
     TilesLayer,
     WallsLayer,
 } from "./layers/_module.mjs";
 import { FogManager, PerceptionManager } from "./perception/_module.mjs";
-import { AmbientLight, MeasuredTemplate, Region, Token } from "./placeables/_module.mjs";
+import { AmbientLight, Region, Token } from "./placeables/_module.mjs";
 
 export default class Canvas<
     TScene extends Scene = Scene,
     TAmbientLight extends AmbientLight<AmbientLightDocument<TScene>> = AmbientLight<AmbientLightDocument<TScene>>,
-    TMeasuredTemplate extends MeasuredTemplate<MeasuredTemplateDocument<TScene>> = MeasuredTemplate<MeasuredTemplateDocument<TScene>>,
     TToken extends Token<TokenDocument<TScene>> = Token<TokenDocument<TScene>>,
     TEffectsCanvasGroup extends EffectsCanvasGroup = EffectsCanvasGroup,
     TRegion extends Region<RegionDocument<TScene>> = Region<RegionDocument<TScene>>,
@@ -170,9 +171,8 @@ export default class Canvas<
     drawings: DrawingsLayer;
     lighting: TAmbientLight["layer"];
     notes: NotesLayer;
-    regions: TRegion["layer"];
+    regions: RegionLayer<TRegion>;
     sounds: SoundsLayer;
-    templates: TMeasuredTemplate["layer"];
     tiles: TilesLayer;
     tokens: TToken["layer"];
     walls: WallsLayer;
@@ -409,5 +409,33 @@ export default class Canvas<
      * Pan the canvas view when the cursor position gets close to the edge of the frame
      * @param event The originating mouse movement event
      */
-    _onDragCanvasPan(event: PointerEvent): void;
+    _onDragCanvasPan(event: PointerEvent | PIXI.FederatedPointerEvent): void;
+}
+
+export interface CanvasPerformanceSettings {
+    mode: CanvasPerformanceMode;
+    blur: {
+        enabled: boolean;
+        illumination: boolean;
+    };
+    mipmap: "ON" | "OFF";
+    msaa: boolean;
+    fps: number;
+    tokenAnimation: boolean;
+    lightAnimation: boolean;
+    textures: {
+        enabled: boolean;
+        maxSize: number;
+        p2Steps: number;
+        p2StepsMax: number;
+    };
+}
+
+export interface CanvasSupportedComponents {
+    /** Is WebGL2 supported? */
+    webGL2: boolean;
+    /** Is reading pixels in RED format supported? */
+    readPixelsRED: boolean;
+    /** Is the OffscreenCanvas supported? */
+    offscreenCanvas: boolean;
 }

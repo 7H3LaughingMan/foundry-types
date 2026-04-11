@@ -1,4 +1,4 @@
-import { KeybindingAction, KeyboardEventContext, ModifierKey } from "./../../_types.mjs";
+import { KeybindingAction, KeyboardEventContext, ModifierKey } from "#client/_types.mjs";
 
 /**
  * A set of helpers and management functions for dealing with user input from keyboard events.

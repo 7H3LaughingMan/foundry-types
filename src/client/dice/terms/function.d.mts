@@ -36,7 +36,7 @@ export default class FunctionTerm<TFunctionName extends MathFunctionName = MathF
     /*  Math Term Methods                           */
     /* -------------------------------------------- */
 
-    protected _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
+    protected override _evaluateSync({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Evaluated<this>;
 
     protected override _evaluate({ minimize, maximize }?: { minimize?: boolean; maximize?: boolean }): Promise<Evaluated<this>>;
 }

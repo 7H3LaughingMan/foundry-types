@@ -1,4 +1,4 @@
-import CategoryBrowser, { CategoryBrowserConfiguration } from "./../../../applications/api/category-browser.mjs";
+import CategoryBrowser, { CategoryBrowserConfiguration } from "#client/applications/api/category-browser.mjs";
 
 /**
  * A management app for configuring which Tours are available or have been completed.

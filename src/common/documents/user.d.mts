@@ -1,6 +1,6 @@
+import { DocumentOwnershipLevel, ImageFilePath, UserAction, UserPermission, UserRole, UserRoleName } from "#common/constants.mjs";
 import Document, { DocumentMetadata } from "../abstract/document.mjs";
 import * as fields from "../data/fields.mjs";
-import { DocumentOwnershipLevel, ImageFilePath, UserAction, UserPermission, UserRole, UserRoleName } from "./../constants.mjs";
 import { BaseActor } from "./_module.mjs";
 
 /**

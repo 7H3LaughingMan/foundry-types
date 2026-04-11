@@ -1,6 +1,6 @@
+import { ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
 import AbstractSidebarTab from "../sidebar-tab.mjs";
-import { ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
 
 /**
  * The sidebar settings tab.

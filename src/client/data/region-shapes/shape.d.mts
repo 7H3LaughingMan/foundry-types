@@ -1,4 +1,4 @@
-import { BaseShapeData, CircleShapeData, EllipseShapeData, PolygonShapeData, RectangleShapeData } from "./../../../common/data/data.mjs";
+import { BaseShapeData, CircleShapeData, EllipseShapeData, PolygonShapeData, RectangleShapeData } from "#common/data/data.mjs";
 
 /**
  * A shape of a {@link RegionDocument}.

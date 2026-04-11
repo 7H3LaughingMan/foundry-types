@@ -21,56 +21,90 @@ export const WEBSITE_API_URL: "https://api.foundryvtt.com";
 export const ASCII: string;
 
 /**
- * Define the allowed ActiveEffect application modes.
- * Other arbitrary mode numbers can be used by systems and modules to identify special behaviors and are ignored
+ * Time-based units in which an ActiveEffect's duration can be expressed
  */
-export const ACTIVE_EFFECT_MODES: Readonly<{
-    /** Used to denote that the handling of the effect is programmatically provided by a system or module. */
-    CUSTOM: 0;
+export const ACTIVE_EFFECT_TIME_DURATION_UNITS: readonly ["years", "months", "days", "hours", "minutes", "seconds"];
+
+/**
+ * All units in which an ActiveEffect's duration can be expressed
+ */
+export const ACTIVE_EFFECT_DURATION_UNITS: readonly ["years", "months", "days", "hours", "minutes", "seconds", "rounds", "turns"];
+
+export type ActiveEffectDurationUnit = (typeof ACTIVE_EFFECT_DURATION_UNITS)[number];
+
+/**
+ * Define the core ActiveEffect expiry events.
+ * Other events can be defined by systems and modules, with their handling also left to them.
+ */
+export const ACTIVE_EFFECT_EXPIRY_EVENTS: readonly ["combatStart", "roundStart", "turnStart", "combatEnd", "roundEnd", "turnEnd"];
+
+/**
+ * Define the core ActiveEffect change-application phases.
+ * Additional phases can be registered by systems and modules, with the registering package also responsible for
+ * calling `Actor#applyActiveEffects("myNewPhase")` at the desired time.
+ */
+export const ACTIVE_EFFECT_CHANGE_PHASES: readonly ["initial", "final"];
+
+/**
+ * Define the core ActiveEffect change types and their default priorities. Other arbitrary string types can be used by
+ * systems and modules to identify special behaviors and are ignored.
+ */
+export const ACTIVE_EFFECT_CHANGE_TYPES: Readonly<{
+    /**
+     * Used to denote that the handling of the effect is programmatically provided by a system or module.
+     */
+    custom: 0;
 
     /**
      * Multiplies a numeric base value by the numeric effect value
      * @example
      * 2 (base value) * 3 (effect value) = 6 (derived value)
      */
-    MULTIPLY: 1;
+    multiply: 10;
 
     /**
-     * Adds a numeric base value to a numeric effect value, or concatenates strings
+     * Sums two values, concatenates strings, pushes onto Arrays, or adds to Sets.
      * @example
      * 2 (base value) + 3 (effect value) = 5 (derived value)
      * @example
      * "Hello" (base value) + " World" (effect value) = "Hello World"
      */
-    ADD: 2;
+    add: 20;
 
     /**
-     * Keeps the lower value of the base value and the effect value
+     * Subtracts a numeric change values from target values, splices values from Arrays, or deletes an element from Sets.
+     * @example
+     * 3 (base value) - 2 (effect value) = 1 (derived value)
+     * @example
+     * Set<"hello"|"world"> - "world" = Set<"hello">
+     */
+    subtract: 20;
+
+    /**
+     * Keeps the lower value of the base value and the effect value. The lower value of a Set is a subset.
      * @example
      * 2 (base value), 0 (effect value) = 0 (derived value)
      * @example
      * 2 (base value), 3 (effect value) = 2 (derived value)
      */
-    DOWNGRADE: 3;
+    downgrade: 30;
 
     /**
-     * Keeps the greater value of the base value and the effect value
+     * Keeps the greater value of the base value and the effect value. The higher value of a Set is a superset.
      * @example
      * 2 (base value), 4 (effect value) = 4 (derived value)
      * @example
      * 2 (base value), 1 (effect value) = 2 (derived value)
      */
-    UPGRADE: 4;
+    upgrade: 40;
 
     /**
-     * Directly replaces the base value with the effect value
+     * Directly replaces the base value with the effect value.
      * @example
      * 2 (base value), 4 (effect value) = 4 (derived value)
      */
-    OVERRIDE: 5;
+    override: 50;
 }>;
-
-export type ActiveEffectChangeMode = (typeof ACTIVE_EFFECT_MODES)[keyof typeof ACTIVE_EFFECT_MODES];
 
 /**
  * Define the string name used for the base document type when specific sub-types are not defined by the system
@@ -377,31 +411,6 @@ export const DOCUMENT_META_OWNERSHIP_LEVELS: Readonly<{
  * Define the allowed Document types which may be dynamically linked in chat
  */
 export const DOCUMENT_LINK_TYPES: readonly ["Actor", "Cards", "Item", "Scene", "JournalEntry", "Macro", "RollTable", "PlaylistSound"];
-
-/**
- * The supported dice roll visibility modes
- * @see https://foundryvtt.com/article/dice/
- */
-export const DICE_ROLL_MODES: Readonly<{
-    /**
-     * This roll is visible to all players.
-     */
-    PUBLIC: "publicroll";
-    /**
-     * Rolls of this type are only visible to the player that rolled and any Game Master users.
-     */
-    PRIVATE: "gmroll";
-    /**
-     * A private dice roll only visible to Game Master users. The rolling player will not see the result of their own roll.
-     */
-    BLIND: "blindroll";
-    /**
-     * A private dice roll which is only visible to the user who rolled it.
-     */
-    SELF: "selfroll";
-}>;
-
-export type RollMode = (typeof DICE_ROLL_MODES)[keyof typeof DICE_ROLL_MODES];
 
 /**
  * The allowed fill types which a Drawing object may display
@@ -1102,31 +1111,6 @@ export const USER_ROLE_NAMES: {
 export type UserRole = keyof typeof USER_ROLE_NAMES;
 
 /**
- * An enumeration of the allowed types for a MeasuredTemplate embedded document
- * @see https://foundryvtt.com/article/measurement/
- */
-export const MEASURED_TEMPLATE_TYPES: Readonly<{
-    /**
-     * Circular templates create a radius around the starting point.
-     */
-    CIRCLE: "circle";
-    /**
-     * Cones create an effect in the shape of a triangle or pizza slice from the starting point.
-     */
-    CONE: "cone";
-    /**
-     * A rectangle uses the origin point as one of the corners, treating the origin as being inside of the rectangle's area.
-     */
-    RECTANGLE: "rect";
-    /**
-     * A ray creates a single line that is one square in width and as long as you want it to be.
-     */
-    RAY: "ray";
-}>;
-
-export type MeasuredTemplateType = (typeof MEASURED_TEMPLATE_TYPES)[keyof typeof MEASURED_TEMPLATE_TYPES];
-
-/**
  * Define the recognized User capabilities which individual Users or role levels may be permitted to perform
  */
 export const USER_PERMISSIONS: Readonly<{
@@ -1279,25 +1263,82 @@ export const USER_PERMISSIONS: Readonly<{
 export type UserPermission = keyof typeof USER_PERMISSIONS;
 
 /**
- * The allowed directions of effect that a Wall can have
- * @see https://foundryvtt.com/article/walls/
+ * The edge properties which restrict the way interaction occurs with a specific edge
+ * @see {@link https://foundryvtt.com/article/walls/}
  */
-export const WALL_DIRECTIONS: Readonly<{
+export const EDGE_RESTRICTION_TYPES: readonly ["light", "darkness", "sight", "sound", "move"];
+
+export type EdgeRestrictionType = (typeof EDGE_RESTRICTION_TYPES)[number];
+
+/**
+ * The types of sensory collision which an Edge may impose
+ * @see {@link https://foundryvtt.com/article/walls/}
+ */
+export const EDGE_SENSE_TYPES: Readonly<{
     /**
-     * The wall collides from both directions.
+     * Senses do not collide with this edge.
+     */
+    NONE: 0;
+    /**
+     * Senses collide with this edge.
+     */
+    LIMITED: 10;
+    /**
+     * Senses collide with the second intersection, bypassing the first.
+     */
+    NORMAL: 20;
+    /**
+     * Senses bypass the edge within a certain proximity threshold.
+     */
+    PROXIMITY: 30;
+    /**
+     * Senses bypass the edge outside a certain proximity threshold.
+     */
+    DISTANCE: 40;
+}>;
+
+export type EdgeSenseType = (typeof EDGE_SENSE_TYPES)[keyof typeof EDGE_SENSE_TYPES];
+
+/**
+ * The allowed directions of effect that a Edge can have
+ * @see {@link https://foundryvtt.com/article/walls/}
+ */
+export const EDGE_DIRECTIONS: Readonly<{
+    /**
+     * The edge collides from both directions.
      */
     BOTH: 0;
     /**
-     * The wall collides only when a ray strikes its left side.
+     * The edge collides only when a ray strikes its left side.
      */
     LEFT: 1;
     /**
-     * The wall collides only when a ray strikes its right side.
+     * The edge collides only when a ray strikes its right side.
      */
     RIGHT: 2;
 }>;
 
-export type WallDirection = (typeof WALL_DIRECTIONS)[keyof typeof WALL_DIRECTIONS];
+export type EdgeDirection = (typeof EDGE_DIRECTIONS)[keyof typeof EDGE_DIRECTIONS];
+
+/**
+ * The possible direction modes.
+ */
+export const EDGE_DIRECTION_MODES: Readonly<{
+    /**
+     * The edge direction applies normally.
+     */
+    NORMAL: 0;
+    /**
+     * The edge direction applies reversed.
+     */
+    REVERSED: 1;
+    /**
+     * The edge blocks in both directions always.
+     */
+    BOTH: 2;
+}>;
+
+export type EdgeDirectionMode = (typeof EDGE_DIRECTION_MODES)[keyof typeof EDGE_DIRECTION_MODES];
 
 /**
  * The allowed door types which a Wall may contain
@@ -1352,35 +1393,6 @@ export const WALL_DOOR_INTERACTIONS: readonly ["open", "close", "lock", "unlock"
 export const WALL_RESTRICTION_TYPES: readonly ["light", "sight", "sound", "move"];
 
 export type WallRestrictionType = (typeof WALL_RESTRICTION_TYPES)[number];
-
-/**
- * The types of sensory collision which a Wall may impose
- * @see https://foundryvtt.com/article/walls/
- */
-export const WALL_SENSE_TYPES: Readonly<{
-    /**
-     * Senses do not collide with this wall.
-     */
-    NONE: 0;
-    /**
-     * Senses collide with this wall.
-     */
-    LIMITED: 10;
-    /**
-     * Senses collide with the second intersection, bypassing the first.
-     */
-    NORMAL: 20;
-    /**
-     * Senses bypass the wall within a certain proximity threshold.
-     */
-    PROXIMITY: 30;
-    /**
-     * Senses bypass the wall outside a certain proximity threshold.
-     */
-    DISTANCE: 40;
-}>;
-
-export type WallSenseType = (typeof WALL_SENSE_TYPES)[keyof typeof WALL_SENSE_TYPES];
 
 /**
  * The types of movement collision which a Wall may impose
@@ -2003,6 +2015,8 @@ export const COMBAT_ANNOUNCEMENTS: readonly ["startEncounter", "nextUp", "yourTu
  */
 export const TEXTURE_DATA_FIT_MODES: readonly ["fill", "contain", "cover", "width", "height"];
 
+export type TextureDataFitMode = (typeof TEXTURE_DATA_FIT_MODES)[number];
+
 /**
  * The maximum depth to recurse to when embedding enriched text.
  */
@@ -2116,18 +2130,32 @@ export const REGION_EVENTS: Readonly<{
  */
 export const REGION_VISIBILITY: Readonly<{
     /**
-     * Only visible on the RegionLayer.
+     * Only visible on the RegionLayer to Users with Observer permissions when unlocked.
+     */
+    LAYER_UNLOCKED: 4;
+
+    /**
+     * Only visible on the RegionLayer to Users with Observer permissions.
      */
     LAYER: 0;
+
     /**
-     * Only visible to Gamemasters.
+     * Always visible to Gamemasters.
      */
     GAMEMASTER: 1;
+
     /**
-     * Visible to anyone.
+     * Always visible to Observers.
+     */
+    OBSERVER: 3;
+
+    /**
+     * Always visible to anyone.
      */
     ALWAYS: 2;
 }>;
+
+export type RegionVisibility = (typeof REGION_VISIBILITY)[keyof typeof REGION_VISIBILITY];
 
 /**
  * The types of a Region movement segment.

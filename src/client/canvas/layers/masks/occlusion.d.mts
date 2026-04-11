@@ -1,6 +1,6 @@
-import { CachedContainer, SpriteMesh } from "./../../../canvas/containers/_module.mjs";
-import { Token } from "./../../../canvas/placeables/_module.mjs";
-import { PrimaryCanvasObject } from "./../../../canvas/primary/primary-canvas-object.mjs";
+import { CachedContainer, SpriteMesh } from "#client/canvas/containers/_module.mjs";
+import { Token } from "#client/canvas/placeables/_module.mjs";
+import { PrimaryCanvasObject } from "#client/canvas/primary/primary-canvas-object.mjs";
 
 /**
  * The occlusion mask which contains radial occlusion and vision occlusion from tokens.

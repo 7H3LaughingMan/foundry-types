@@ -4,7 +4,7 @@
  * @fires {Event} input           An "input" event when the value of the input changes
  * @fires {Event} change          A "change" event when the value of the element changes
  */
-export default abstract class AbstractFormInputElement<TInternalValue, TSetValue = TInternalValue, TGetValue = TInternalValue> extends HTMLElement {
+export default abstract class AbstractFormInputElement<TInternalValue, TInputValue = TInternalValue> extends HTMLElement {
     /** The HTML tag name used by this element. */
     static tagName: string;
 
@@ -35,21 +35,21 @@ export default abstract class AbstractFormInputElement<TInternalValue, TSetValue
     set name(value);
 
     /** The value of the input element. */
-    get value(): TGetValue;
-    set value(value: string | TSetValue);
+    get value(): TInputValue;
+    set value(value: string | TInputValue);
 
     /** The underlying value of the element. */
     protected _value: TInternalValue;
 
     /** Return the value of the input element which should be submitted to the form. */
-    protected _getValue(): TGetValue;
+    protected _getValue(): TInternalValue;
 
     /**
      * Translate user-provided input value into the format that should be stored.
      * @param value A new value to assign to the element
      * @throws An error if the provided value is invalid
      */
-    protected _setValue(value: TSetValue): void;
+    protected _setValue(value: TInputValue): void;
 
     /** Is this element disabled? */
     get disabled(): boolean;

@@ -1,16 +1,16 @@
-import ApplicationV2 from "../../api/application.mjs";
-import { PrototypeToken, PrototypeTokenSchema } from "./../../../../common/data/data.mjs";
 import {
     ApplicationClosingOptions,
     ApplicationConfiguration,
     ApplicationRenderContext,
     ApplicationRenderOptions,
     FormFooterButton,
-} from "./../../../applications/_types.mjs";
-import { DocumentSheetRenderContext } from "./../../../applications/api/_module.mjs";
-import { HandlebarsRenderOptions } from "./../../../applications/api/handlebars-application.mjs";
-import FormDataExtended from "./../../../applications/ux/form-data-extended.mjs";
-import { Actor } from "./../../../documents/_module.mjs";
+} from "#client/applications/_types.mjs";
+import { DocumentSheetRenderContext } from "#client/applications/api/_module.mjs";
+import { HandlebarsRenderOptions } from "#client/applications/api/handlebars-application.mjs";
+import FormDataExtended from "#client/applications/ux/form-data-extended.mjs";
+import { Actor } from "#client/documents/_module.mjs";
+import { PrototypeToken, PrototypeTokenSchema } from "#common/data/data.mjs";
+import ApplicationV2 from "../../api/application.mjs";
 import TokenApplicationMixin from "./mixin.mjs";
 
 /**

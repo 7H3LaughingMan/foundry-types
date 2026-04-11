@@ -1,3 +1,5 @@
+import { CompendiumIndexData } from "#client/documents/collections/compendium-collection.mjs";
+import User from "#client/documents/user.mjs";
 import {
     DatabaseBackend,
     DatabaseCreateOperation,
@@ -5,10 +7,8 @@ import {
     DatabaseGetOperation,
     DatabaseUpdateOperation,
     Document,
-} from "./../../common/abstract/_module.mjs";
-import BaseUser from "./../../common/documents/user.mjs";
-import { CompendiumIndexData } from "./../documents/collections/compendium-collection.mjs";
-import User from "./../documents/user.mjs";
+} from "#common/abstract/_module.mjs";
+import BaseUser from "#common/documents/user.mjs";
 
 /**
  * The client-side database backend implementation which handles Document modification operations.

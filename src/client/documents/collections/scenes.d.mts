@@ -1,5 +1,4 @@
-import { FromCompendiumOptions } from "#client/_types.mjs";
-import WorldCollection from "../abstract/world-collection.mjs";
+import WorldCollection, { FromCompendiumOptions } from "../abstract/world-collection.mjs";
 import Scene from "../scene.mjs";
 
 /**

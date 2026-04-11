@@ -1,4 +1,4 @@
-import { PrimaryBaseSamplerShader } from "./../../../canvas/rendering/shaders/_module.mjs";
+import { PrimaryBaseSamplerShader } from "#client/canvas/rendering/shaders/_module.mjs";
 import { DynamicRingData, TokenRing } from "./_module.mjs";
 
 /**

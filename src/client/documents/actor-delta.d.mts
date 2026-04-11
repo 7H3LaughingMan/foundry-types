@@ -1,5 +1,5 @@
-import { DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
-import Document from "./../../common/abstract/document.mjs";
+import { DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
+import Document from "#common/abstract/document.mjs";
 import { Actor, BaseActorDelta, BaseToken, BaseUser, TokenDocument } from "./_module.mjs";
 import { ClientDocument } from "./abstract/client-document.mjs";
 
@@ -11,7 +11,7 @@ interface ClientBaseActorDelta<TParent extends BaseToken | null> extends Instanc
  * The client-side ActorDelta embedded document which extends the common BaseActorDelta document model.
  * @see {@link TokenDocument}  The TokenDocument document type which contains ActorDelta embedded documents.
  */
-export default class ActorDelta<TParent extends TokenDocument | null = TokenDocument | null> extends ClientBaseActorDelta<TParent> {
+export default class ActorDelta<TParent extends TokenDocument | null> extends ClientBaseActorDelta<TParent> {
     syntheticActor?: NonNullable<NonNullable<TParent>["actor"]> | undefined;
 
     protected override _configure(options?: { pack?: string | null; parentCollection?: string | null }): void;

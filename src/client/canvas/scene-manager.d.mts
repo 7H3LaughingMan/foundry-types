@@ -1,4 +1,4 @@
-import Scene from "./../documents/scene.mjs";
+import Scene from "#client/documents/scene.mjs";
 
 /**
  * A framework for imbuing special scripted behaviors into a single specific Scene.

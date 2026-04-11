@@ -1,5 +1,3 @@
-import Document from "./../../common/abstract/document.mjs";
-import { COMPENDIUM_DOCUMENT_TYPES } from "./../../common/constants.mjs";
 import {
     Actor,
     ActorUUID,
@@ -11,9 +9,11 @@ import {
     User,
     UserUUID,
     WorldDocumentUUID,
-} from "./../documents/_module.mjs";
-import { ClientDocument } from "./../documents/abstract/client-document.mjs";
-import { CompendiumIndexData } from "./../documents/collections/compendium-collection.mjs";
+} from "#client/documents/_module.mjs";
+import { ClientDocument } from "#client/documents/abstract/client-document.mjs";
+import { CompendiumIndexData } from "#client/documents/collections/compendium-collection.mjs";
+import Document from "#common/abstract/document.mjs";
+import { COMPENDIUM_DOCUMENT_TYPES } from "#common/constants.mjs";
 
 /**
  * Clean a provided HTML fragment, closing unbalanced tags and stripping some undesirable properties

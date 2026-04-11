@@ -1,5 +1,5 @@
 /**
- * @import RegionMesh from "./../../../../canvas/placeables/regions/mesh.mjs";
+ * @import RegionMesh from "#client/canvas/placeables/regions/mesh.mjs";
  */
 /**
  * The shader used by {@link RegionMesh}.

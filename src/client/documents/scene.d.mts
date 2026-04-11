@@ -1,23 +1,21 @@
-import { BaseGrid } from "#common/grid/base.mjs";
-import SceneConfig from "../applications/sheets/scene-config.mjs";
+import { TokenAnimationOptions } from "#client/_types.mjs";
 import {
     DatabaseCreateCallbackOptions,
     DatabaseCreateOperation,
     DatabaseDeleteCallbackOptions,
     DatabaseUpdateCallbackOptions,
     DatabaseUpdateOperation,
-} from "./../../common/abstract/_types.mjs";
-import Document from "./../../common/abstract/document.mjs";
-import EmbeddedCollection from "./../../common/abstract/embedded-collection.mjs";
-import { ImageFilePath } from "./../../common/constants.mjs";
-import { TokenAnimationOptions } from "./../_types.mjs";
+} from "#common/abstract/_types.mjs";
+import Document from "#common/abstract/document.mjs";
+import EmbeddedCollection from "#common/abstract/embedded-collection.mjs";
+import { ImageFilePath } from "#common/constants.mjs";
+import SceneConfig from "../applications/sheets/scene-config.mjs";
 import {
     AmbientLightDocument,
     AmbientSoundDocument,
     BaseScene,
     BaseUser,
     DrawingDocument,
-    MeasuredTemplateDocument,
     NoteDocument,
     NoteSource,
     RegionDocument,
@@ -55,8 +53,6 @@ export default class Scene extends ClientBaseScene {
 
     /** Track whether the scene is the active view */
     protected _view: boolean;
-
-    grid: BaseGrid;
 
     /** Determine the canvas dimensions this Scene would occupy, if rendered */
     dimensions: SceneDimensions;
@@ -159,7 +155,6 @@ export default interface Scene extends ClientBaseScene {
     readonly notes: EmbeddedCollection<NoteDocument<this>>;
     readonly regions: EmbeddedCollection<RegionDocument<this>>;
     readonly sounds: EmbeddedCollection<AmbientSoundDocument<this>>;
-    readonly templates: EmbeddedCollection<MeasuredTemplateDocument<this>>;
     readonly tokens: EmbeddedCollection<TokenDocument<this>>;
     readonly tiles: EmbeddedCollection<TileDocument<this>>;
     readonly walls: EmbeddedCollection<WallDocument<this>>;

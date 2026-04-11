@@ -1,9 +1,9 @@
+import { ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
+import { ContextMenuEntry } from "#client/applications/ux/context-menu.mjs";
+import { Token } from "#client/canvas/placeables/_module.mjs";
+import { Combat, Combatant } from "#client/documents/_module.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
 import AbstractSidebarTab from "../sidebar-tab.mjs";
-import { ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
-import { ContextMenuEntry } from "./../../../applications/ux/context-menu.mjs";
-import { Token } from "./../../../canvas/placeables/_module.mjs";
-import { Combat, Combatant } from "./../../../documents/_module.mjs";
 
 /**
  * An Application that manages switching between Combats and tracking the Combatants in those Combats.
@@ -77,7 +77,7 @@ export default class CombatTracker<TCombat extends Combat | null = Combat | null
      * @param combatant The Combatant whose turn is being prepared.
      * @param index The index of this entry in the turn order.
      */
-    protected _prepareTurnContext(combat: NonNullable<TCombat>, combatant: Combatant, index: number): Promise<object>;
+    protected _prepareTurnContext(combat: NonNullable<TCombat>, combatant: Combatant, index: number): Promise<TurnContext>;
 
     /* -------------------------------------------- */
     /*  Event Listeners & Handlers                  */
@@ -147,7 +147,7 @@ export default class CombatTracker<TCombat extends Combat | null = Combat | null
      * Handle pinging a combatant's token.
      * @param combatant The combatant.
      */
-    protected _onPingCombatant(combatant: Combatant): Promise<boolean>;
+    protected _onPingCombatant(combatant: Combatant): Promise<boolean | void>;
 
     /**
      * Handle rolling initiative for a single combatant.
@@ -195,4 +195,19 @@ export default class CombatTracker<TCombat extends Combat | null = Combat | null
      * Scroll to the current combatant in the combat log.
      */
     scrollToTurn(): void;
+}
+
+export interface TurnContext {
+    active: boolean;
+    canPing: boolean;
+    css: string;
+    effects: unknown[];
+    hasDecimals: boolean;
+    hidden: boolean;
+    id: string;
+    img: string;
+    initiative: number | null;
+    isOwner: boolean;
+    name: string;
+    resource: null;
 }

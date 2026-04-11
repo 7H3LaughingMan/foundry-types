@@ -1,10 +1,9 @@
-import { ReleaseData } from "#common/config.mjs";
+import { CompendiumDocumentType } from "#client/utils/helpers.mjs";
+import { DataModelConstructionContext } from "#common/abstract/_types.mjs";
+import { DocumentOwnershipLevel, PackageAvailabilityCode, PackageType, UserRole } from "#common/constants.mjs";
+import { DataFieldOptions, DataModelCleaningOptions, DataModelUpdateState, ObjectFieldOptions } from "#common/data/_module.mjs";
 import type DataModel from "../abstract/data.mjs";
 import type * as fields from "../data/fields.mjs";
-import { CompendiumDocumentType } from "./../../client/utils/helpers.mjs";
-import { DataModelConstructionContext } from "./../abstract/_types.mjs";
-import { DocumentOwnershipLevel, PackageAvailabilityCode, PackageType, UserRole } from "./../constants.mjs";
-import { DataFieldOptions, ObjectFieldOptions } from "./../data/_module.mjs";
 import { PackageManifestData } from "./_types.mjs";
 
 /** A custom SchemaField for defining package compatibility versions. */
@@ -74,7 +73,7 @@ export class CompendiumOwnershipField extends fields.ObjectField<Record<UserRole
 
 /** A special SetField which provides additional validation and initialization behavior specific to compendium packs. */
 export class PackageCompendiumPacks<TSchema extends PackageCompendiumSchema> extends fields.SetField<fields.SchemaField<TSchema>> {
-    protected override _cleanType(value: Record<string, unknown>[], options?: Record<string, unknown>): void;
+    protected override _cleanType(value: Record<string, unknown>[], options: DataModelCleaningOptions, _state: DataModelUpdateState): void;
 
     override initialize(
         value: fields.SourceFromSchema<TSchema>[],
@@ -295,3 +294,4 @@ type PackageLanguageSchema = {
     module: fields.StringField<string, string, false, false, false>;
     flags: fields.ObjectField<Record<string, JSONValue | undefined>, Record<string, unknown>>;
 };
+export type ReleaseData = object;

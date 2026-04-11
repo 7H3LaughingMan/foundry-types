@@ -1,5 +1,5 @@
-import Color from "./../../../common/utils/color.mjs";
-import { TokenAnimationData } from "./../../_types.mjs";
+import { TokenAnimationData } from "#client/_types.mjs";
+import Color from "#common/utils/color.mjs";
 
 export interface CanvasAnimationAttribute {
     /** The attribute name being animated */

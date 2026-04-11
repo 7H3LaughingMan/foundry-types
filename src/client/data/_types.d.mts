@@ -1,4 +1,4 @@
-import { ModelPropsFromSchema } from "./../../common/data/fields.mjs";
+import { ModelPropsFromSchema } from "#common/data/fields.mjs";
 import CalendarData, { CalendarDataSchema } from "./calendar.mjs";
 
 /**

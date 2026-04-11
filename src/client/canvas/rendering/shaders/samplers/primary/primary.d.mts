@@ -1,5 +1,5 @@
 /**
- * @import PrimarySpriteMesh from "./../../../../../canvas/primary/primary-sprite-mesh.mjs";
+ * @import PrimarySpriteMesh from "#client/canvas/primary/primary-sprite-mesh.mjs";
  */
 /**
  * The base shader class of {@link PrimarySpriteMesh}.

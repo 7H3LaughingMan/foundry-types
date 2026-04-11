@@ -1,10 +1,10 @@
+import { ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
+import AVMaster from "#client/av/master.mjs";
+import { AVSettingsData } from "#client/av/settings.mjs";
+import User from "#client/documents/user.mjs";
+import { DataField } from "#common/data/fields.mjs";
 import ApplicationV2 from "../../api/application.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
-import { DataField } from "./../../../../common/data/fields.mjs";
-import { ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
-import AVMaster from "./../../../av/master.mjs";
-import { AVSettingsData } from "./../../../av/settings.mjs";
-import User from "./../../../documents/user.mjs";
 import CameraPopout from "./camera-popout.mjs";
 
 interface CameraViewUserContext {

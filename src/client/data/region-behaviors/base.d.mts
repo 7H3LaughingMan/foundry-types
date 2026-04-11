@@ -1,10 +1,11 @@
-import { DataSchema } from "./../../../common/abstract/_types.mjs";
-import TypeDataModel from "./../../../common/abstract/type-data.mjs";
-import { REGION_EVENTS } from "./../../../common/constants.mjs";
-import * as fields from "./../../../common/data/fields.mjs";
-import { RegionEvent, TokenMovementWaypoint } from "./../../documents/_types.mjs";
-import RegionBehavior from "./../../documents/region-behavior.mjs";
-import TokenDocument from "./../../documents/token.mjs";
+import { TokenMovementWaypoint } from "#client/documents/_types.mjs";
+import RegionBehavior from "#client/documents/region-behavior.mjs";
+import { RegionEvent } from "#client/documents/region.mjs";
+import TokenDocument from "#client/documents/token.mjs";
+import { DataSchema } from "#common/abstract/_types.mjs";
+import TypeDataModel from "#common/abstract/type-data.mjs";
+import { REGION_EVENTS } from "#common/constants.mjs";
+import * as fields from "#common/data/fields.mjs";
 
 /**
  * The data model for a behavior that receives Region events. *
@@ -15,11 +16,11 @@ export default abstract class RegionBehaviorType<
 > extends TypeDataModel<TParent, TSchema> {
     /**
      * Create the events field.
-     * @param [options] Options which configure how the events field is declared
-     * @param [options.events] The event names to restrict to.
-     * @param [options.initial] The initial set of events that should be default for the field
+     * @param options Options which configure how the events field is declared
+     * @param options.events The event names to restrict to.
+     * @param options.initial The initial set of events that should be default for the field
      */
-    protected static _createEventsField({ events, initial }?: { events?: string[]; initial?: string[] }): EventsField;
+    protected static _createEventsField({ events, initial }?: { events: string[]; initial: string[] }): EventsField;
 
     /**
      * A RegionBehaviorType may register to always receive certain events by providing a record of handler functions.

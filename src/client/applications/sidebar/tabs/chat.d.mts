@@ -1,10 +1,10 @@
+import { ApplicationClosingOptions, ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
+import { ContextMenuEntry } from "#client/applications/ux/context-menu.mjs";
+import ChatMessage from "#client/documents/chat-message.mjs";
+import Messages from "#client/documents/collections/chat-messages.mjs";
+import { ChatSpeakerData } from "#common/documents/chat-message.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
 import AbstractSidebarTab from "../sidebar-tab.mjs";
-import { ChatSpeakerData } from "./../../../../common/documents/chat-message.mjs";
-import { ApplicationClosingOptions, ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
-import { ContextMenuEntry } from "./../../../applications/ux/context-menu.mjs";
-import ChatMessage from "./../../../documents/chat-message.mjs";
-import Messages from "./../../../documents/collections/chat-messages.mjs";
 
 /**
  * The sidebar chat tab.

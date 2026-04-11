@@ -1,10 +1,11 @@
+import { FromCompendiumOptions, ToCompendiumOptions } from "#client/_types.mjs";
+import { CompendiumDocumentType, CompendiumUUID } from "#client/utils/helpers.mjs";
+import { DatabaseAction, DatabaseCreateOperation, DatabaseOperation, DatabaseUpdateOperation } from "#common/abstract/_module.mjs";
+import { DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath } from "#common/constants.mjs";
+import Collection from "#common/utils/collection.mjs";
 import { ApplicationRenderOptions } from "../../applications/_types.mjs";
 import { CompendiumDocument, User } from "../_module.mjs";
 import DocumentCollection from "../abstract/document-collection.mjs";
-import { DatabaseAction, DatabaseCreateOperation, DatabaseOperation, DatabaseUpdateOperation } from "./../../../common/abstract/_module.mjs";
-import { DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath } from "./../../../common/constants.mjs";
-import Collection from "./../../../common/utils/collection.mjs";
-import { CompendiumDocumentType, CompendiumUUID } from "./../../utils/helpers.mjs";
 
 /**
  * A singleton Collection of Compendium-level Document objects within the Foundry Virtual Tabletop.
@@ -83,12 +84,7 @@ export default abstract class CompendiumCollection<TDocument extends CompendiumD
      */
     getDocuments(query?: Record<string, unknown>): Promise<TDocument[]>;
 
-    /**
-     * Import a Document into this Compendium Collection.
-     * @param document The existing Document you wish to import
-     * @return The imported Document instance
-     */
-    importDocument(document: TDocument): Promise<TDocument>;
+    override importDocument(document: TDocument, options?: ToCompendiumOptions | FromCompendiumOptions): Promise<TDocument>;
 
     /**
      * Fully import the contents of a Compendium pack into a World folder.

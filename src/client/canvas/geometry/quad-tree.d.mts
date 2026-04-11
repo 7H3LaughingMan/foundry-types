@@ -1,4 +1,10 @@
-import { QuadtreeObject } from "./_types.mjs";
+import { Rectangle } from "#common/_types.mjs";
+
+export interface QuadtreeObject<TObject extends object = object, TQuadtree extends Quadtree<TObject> = Quadtree<TObject>> {
+    r: Rectangle;
+    t: TObject;
+    n: Set<TQuadtree>;
+}
 
 export interface QuadtreeOptions<TObject extends object> {
     maxObjects?: number;
@@ -19,7 +25,7 @@ export interface QuadtreeOptions<TObject extends object> {
  */
 export default class Quadtree<TObject extends object> {
     /** The bounding rectangle of the region */
-    bounds: PIXI.Rectangle;
+    bounds: Rectangle;
 
     /** The maximum number of objects allowed within this node before it must split */
     maxObjects: number;
@@ -39,7 +45,7 @@ export default class Quadtree<TObject extends object> {
     /** The root Quadtree */
     root: this;
 
-    constructor(bounds: PIXI.Rectangle, options?: QuadtreeOptions<TObject>);
+    constructor(bounds: Rectangle, options?: QuadtreeOptions<TObject>);
 
     /**
      * A constant that enumerates the index order of the quadtree nodes from top-left to bottom-right.
@@ -108,9 +114,9 @@ export default class Quadtree<TObject extends object> {
      * @returns   The objects in the Quadtree which represent potential collisions
      */
     getObjects(
-        rect: PIXI.Rectangle,
+        rect: Rectangle,
         options?: {
-            collisionTest?: (obj: QuadtreeObject, rect: PIXI.Rectangle) => boolean;
+            collisionTest?: (obj: QuadtreeObject, rect: Rectangle) => boolean;
             _s: Set<TObject>;
         },
     ): Set<TObject>;
@@ -121,7 +127,7 @@ export default class Quadtree<TObject extends object> {
      * @param rect  The target rectangle.
      * @returns     The Quadtree nodes to which the target rectangle belongs
      */
-    getLeafNodes(rect: PIXI.Rectangle): this[];
+    getLeafNodes(rect: Rectangle): this[];
 
     /**
      * Obtain the child nodes within the current node which a rectangle belongs to.
@@ -129,7 +135,7 @@ export default class Quadtree<TObject extends object> {
      * @param rect  The target rectangle.
      * @returns     The Quadtree nodes to which the target rectangle belongs
      */
-    getChildNodes(rect: PIXI.Rectangle): this[];
+    getChildNodes(rect: Rectangle): this[];
 
     /** Identify all nodes which are adjacent to this one within the parent Quadtree. */
     getAdjacentNodes(): this[];

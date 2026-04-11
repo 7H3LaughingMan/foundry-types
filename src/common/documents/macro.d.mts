@@ -1,7 +1,7 @@
+import { ImageFilePath, MacroScope, MacroType } from "#common/constants.mjs";
 import { Document, DocumentMetadata, MetadataPermission } from "../abstract/_module.mjs";
 import { DatabaseCreateCallbackOptions } from "../abstract/_types.mjs";
 import * as fields from "../data/fields.mjs";
-import { ImageFilePath, MacroScope, MacroType } from "./../constants.mjs";
 import BaseUser from "./user.mjs";
 
 /**
@@ -58,29 +58,17 @@ interface MacroMetadata extends DocumentMetadata {
 }
 
 type MacroSchema = {
-    /** The _id which uniquely identifies this Macro document */
     _id: fields.DocumentIdField;
-    /** The name of this Macro */
     name: fields.StringField<string, string, true, false, false>;
-    /** A Macro subtype from CONST.MACRO_TYPES */
     type: fields.StringField<MacroType, MacroType, true, false, true>;
-    /** The _id of a User document which created this Macro */
     author: fields.ForeignDocumentField<BaseUser>;
-    /** An image file path which provides the thumbnail artwork for this Macro */
     img: fields.FilePathField<ImageFilePath>;
-    /** The scope of this Macro application from CONST.MACRO_SCOPES */
     scope: fields.StringField<MacroScope, MacroScope, true, false, true>;
-    /** The string content of the macro command */
     command: fields.StringField<string, string, true, false, true>;
-    /** The _id of a Folder which contains this Macro */
     folder: fields.ForeignDocumentField;
-    /** The numeric sort value which orders this Macro relative to its siblings */
     sort: fields.IntegerSortField;
-    /** An object which configures ownership of this Macro */
     ownership: fields.DocumentOwnershipField;
-    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
-    /** An object of creation and access information */
     _stats: fields.DocumentStatsField;
 };
 

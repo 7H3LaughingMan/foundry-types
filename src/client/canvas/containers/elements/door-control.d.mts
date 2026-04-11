@@ -1,5 +1,5 @@
-import { Wall } from "./../../../canvas/placeables/_module.mjs";
-import WallDocument from "./../../../documents/wall.mjs";
+import { Wall } from "#client/canvas/placeables/_module.mjs";
+import WallDocument from "#client/documents/wall.mjs";
 
 /**
  * An icon representing a Door Control

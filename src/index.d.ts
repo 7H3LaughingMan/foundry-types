@@ -18,7 +18,6 @@ declare global {
             foundry.applications.ui.Hotbar<foundry.documents.Macro>,
             foundry.documents.Item<foundry.documents.Actor | null>,
             foundry.documents.Macro,
-            foundry.documents.MeasuredTemplateDocument<foundry.documents.Scene | null>,
             foundry.documents.RegionDocument<foundry.documents.Scene | null>,
             foundry.documents.RegionBehavior<foundry.documents.RegionDocument | null>,
             foundry.documents.TileDocument<foundry.documents.Scene | null>,
@@ -69,7 +68,6 @@ declare global {
             JournalEntryCategory: typeof foundry.documents.JournalEntryCategory;
             JournalEntryPage: typeof foundry.documents.JournalEntryPage;
             Macro: typeof foundry.documents.Macro;
-            MeasuredTemplate: typeof foundry.documents.MeasuredTemplateDocument;
             Note: typeof foundry.documents.NoteDocument;
             Playlist: typeof foundry.documents.Playlist;
             PlaylistSound: typeof foundry.documents.PlaylistSound;

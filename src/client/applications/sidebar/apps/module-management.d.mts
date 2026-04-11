@@ -1,7 +1,7 @@
+import { ApplicationClosingOptions, ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_module.mjs";
+import Module from "#client/packages/module.mjs";
 import ApplicationV2 from "../../api/application.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
-import { ApplicationClosingOptions, ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_module.mjs";
-import Module from "./../../../packages/module.mjs";
 
 /**
  * The Module Management Application.

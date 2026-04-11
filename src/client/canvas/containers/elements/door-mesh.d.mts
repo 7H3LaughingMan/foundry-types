@@ -1,6 +1,6 @@
+import { CanvasAnimationAttribute } from "#client/canvas/animation/_types.mjs";
+import { WallDoorAnimationConfig } from "#client/config.mjs";
 import PrimarySpriteMesh, { PrimarySpriteMeshConstructorOptions } from "../../primary/primary-sprite-mesh.mjs";
-import { CanvasAnimationAttribute } from "./../../../canvas/animation/_types.mjs";
-import { WallDoorAnimationConfig } from "./../../../config.mjs";
 
 interface DoorAnimationConfiguration {
     direction?: number;

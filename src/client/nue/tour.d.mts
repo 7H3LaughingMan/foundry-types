@@ -1,4 +1,4 @@
-import { TooltipDirection } from "./../helpers/interaction/tooltip-manager.mjs";
+import { TooltipDirection } from "#client/helpers/interaction/tooltip-manager.mjs";
 
 /**
  * A step in a Tour
@@ -141,7 +141,7 @@ export default abstract class Tour {
      */
     get id(): string;
 
-    set id(value: string);
+    set id(value);
 
     /**
      * The human-readable title for the tour.
@@ -158,7 +158,7 @@ export default abstract class Tour {
      */
     get namespace(): string;
 
-    set namespace(value: string);
+    set namespace(value);
 
     /**
      * The key the Tour is stored under in game.tours, of the form `${namespace}.${id}`

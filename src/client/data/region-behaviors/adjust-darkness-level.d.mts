@@ -1,4 +1,4 @@
-import * as fields from "./../../../common/data/fields.mjs";
+import * as fields from "#common/data/fields.mjs";
 import RegionBehaviorType from "./base.mjs";
 
 /**

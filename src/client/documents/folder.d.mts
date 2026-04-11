@@ -1,5 +1,5 @@
-import { DatabaseCreateCallbackOptions, DatabaseCreateOperation, DatabaseDeleteCallbackOptions } from "./../../common/abstract/_types.mjs";
-import Document from "./../../common/abstract/document.mjs";
+import { DatabaseCreateCallbackOptions, DatabaseCreateOperation, DatabaseDeleteCallbackOptions } from "#common/abstract/_types.mjs";
+import Document from "#common/abstract/document.mjs";
 import { Actor, BaseFolder, BaseUser, Item, JournalEntry, Macro, RollTable, Scene } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 import WorldCollection from "./abstract/world-collection.mjs";

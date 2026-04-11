@@ -1,4 +1,4 @@
-import { KeyboardEventContext } from "./../_types.mjs";
+import { KeyboardEventContext } from "#client/_types.mjs";
 
 /**
  * The master Audio/Video controller instance.

@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { TextureData } from "./../../../common/data/data.mjs";
-import type * as fields from "./../../../common/data/fields.mjs";
+import { TextureData } from "#common/data/data.mjs";
+import type * as fields from "#common/data/fields.mjs";
 
 export interface PrimaryCanvasObjectData {
     /** The x-coordinate of the PCO location */
@@ -34,6 +33,7 @@ export interface PrimaryCanvasObjectData {
  * @returns A DisplayObject subclass mixed with PrimaryCanvasObject features
  * @mixin
  */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 export default function PrimaryCanvasObjectMixin<TBase extends ConstructorOf<PIXI.DisplayObject>>(DisplayObject: TBase) {
     /**

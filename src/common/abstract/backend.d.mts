@@ -1,5 +1,5 @@
-import { CompendiumIndexData } from "./../../client/documents/collections/compendium-collection.mjs";
-import BaseUser from "./../documents/user.mjs";
+import { CompendiumIndexData } from "#client/documents/collections/compendium-collection.mjs";
+import BaseUser from "#common/documents/user.mjs";
 import { DatabaseCreateOperation, DatabaseDeleteOperation, DatabaseGetOperation, DatabaseOperation, DatabaseUpdateOperation, Document } from "./_module.mjs";
 
 /**

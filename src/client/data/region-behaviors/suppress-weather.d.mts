@@ -1,5 +1,5 @@
-import { DataSchema } from "./../../../common/abstract/_types.mjs";
-import * as fields from "./../../../common/data/fields.mjs";
+import { DataSchema } from "#common/abstract/_types.mjs";
+import * as fields from "#common/data/fields.mjs";
 import RegionBehaviorType from "./base.mjs";
 
 /** The data model for a behavior that allows to suppress weather effects within the Region */

@@ -1,8 +1,7 @@
-import { ActivityData } from "#client/_module.mjs";
+import { DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
+import { UserPermission } from "#common/constants.mjs";
 import Token from "../canvas/placeables/token.mjs";
 import UserTargets from "../canvas/placeables/tokens/targets.mjs";
-import { DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../common/abstract/_types.mjs";
-import { UserPermission } from "./../../common/constants.mjs";
 import { BaseUser, Macro, TokenDocument, UserUUID } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
@@ -23,16 +22,22 @@ interface ClientBaseUser extends InstanceType<typeof ClientBaseUser> {}
  * @see {@link UserConfig} The User configuration application
  */
 export default class User extends ClientBaseUser {
-    /** Track whether the user is currently active in the game */
+    /**
+     * Track whether the user is currently active in the game
+     */
     active: boolean;
 
-    /** Track references to the current set of Tokens which are targeted by the User */
+    /**
+     * Track references to the current set of Tokens which are targeted by the User
+     */
     targets: UserTargets<Token>;
 
     /** Track the ID of the Scene that is currently being viewed by the User */
     viewedScene: string | null;
 
-    /** Track the Token documents that this User is currently moving. */
+    /**
+     * Track the Token documents that this User is currently moving.
+     */
     readonly movingTokens: ReadonlySet<TokenDocument>;
 
     /** A flag for whether the current User is a Trusted Player */
@@ -41,16 +46,22 @@ export default class User extends ClientBaseUser {
     /** A flag for whether this User is the connected client */
     get isSelf(): boolean;
 
-    /** Is this User the active GM? */
+    /**
+     * Is this User the active GM?
+     */
     get isActiveGM(): boolean;
 
-    /** A localized label for this User's role. */
+    /**
+     * A localized label for this User's role.
+     */
     get roleLabel(): string;
 
-    /** The timestamp of the last observed activity for the user. */
+    /**
+     * The timestamp of the last observed activity for the user.
+     */
     get lastActivityTime(): number;
 
-    set lastActivityTime(timestamp: number);
+    set lastActivityTime(timestamp);
 
     override prepareDerivedData(): void;
 
@@ -99,7 +110,7 @@ export default class User extends ClientBaseUser {
      * @param activityData.sceneId The id of the Scene currently being viewed by the User
      * @param activityData.targets An id of Token ids which are targeted by the User
      */
-    broadcastActivity(activityData?: ActivityData): void;
+    broadcastActivity(activityData?: UserActivity): void;
 
     /**
      * Get an Array of Macro Entities on this User's Hotbar by page

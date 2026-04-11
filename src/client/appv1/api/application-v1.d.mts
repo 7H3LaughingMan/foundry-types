@@ -1,8 +1,8 @@
+import { Tabs } from "#client/applications/ux/_module.mjs";
+import DragDrop from "#client/applications/ux/drag-drop.mjs";
+import { TabsConfiguration } from "#client/applications/ux/tabs.mjs";
+import { UserAction } from "#common/constants.mjs";
 import SearchFilter, { SearchFilterConfiguration } from "../../applications/ux/search-filter.mjs";
-import { UserAction } from "./../../../common/constants.mjs";
-import { Tabs } from "./../../applications/ux/_module.mjs";
-import DragDrop from "./../../applications/ux/drag-drop.mjs";
-import { TabsConfiguration } from "./../../applications/ux/tabs.mjs";
 
 interface ApplicationV1Options {
     /** A named "base application" which generates an additional hook */
@@ -85,7 +85,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     protected _element: JQuery;
 
     /** Track the current position and dimensions of the Application UI */
-    position: ApplicationV1Position;
+    position: ApplicationPosition;
 
     /** DragDrop workflow handlers which are active for this Application */
     protected _dragDrop: DragDrop[];
@@ -269,15 +269,6 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     protected _activateCoreListeners(html: JQuery): void;
 
     /**
-     * Change the currently active tab
-     * @param tabName                   The target tab name to switch to
-     * @param options                   Options which configure changing the tab
-     * @param options.group             A specific named tab group, useful if multiple sets of tabs are present
-     * @param options.triggerCallback   Whether to trigger tab-change callback functions
-     */
-    activateTab(tabName: string, options?: { group?: string; triggerCallback?: boolean }): boolean;
-
-    /**
      * After rendering, activate event listeners which provide interactivity for the Application.
      * This is where user-defined Application subclasses should attach their event-handling logic.
      */
@@ -363,7 +354,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     bringToTop(): void;
 
     /** Set the application position and store it's new location */
-    setPosition(options?: ApplicationV1Position): ApplicationV1Position | void;
+    setPosition(options?: ApplicationPosition): ApplicationPosition | void;
 
     /**
      * Handle application minimization behavior - collapsing content and reducing the size of the header
@@ -376,7 +367,7 @@ export default abstract class Application<TOptions extends ApplicationV1Options 
     protected _onResize(event: Event | JQuery.Event): void;
 }
 
-interface ApplicationV1Position {
+interface ApplicationPosition {
     width?: Maybe<number>;
     height?: Maybe<string | number>;
     left?: Maybe<number>;

@@ -1,4 +1,4 @@
-import { FormInputConfig } from "./../../../common/data/_module.mjs";
+import { FormInputConfig } from "#common/data/_module.mjs";
 import AbstractFormInputElement from "./form-element.mjs";
 
 /**
@@ -16,7 +16,7 @@ export default class HTMLRangePickerElement extends AbstractFormInputElement<num
     static create(config: RangePickerInputConfig): HTMLRangePickerElement;
 }
 
-export interface RangePickerInputConfig extends FormInputConfig<number> {
+export interface RangePickerInputConfig extends FormInputConfig<string> {
     min: number;
     max: number;
     step?: number;

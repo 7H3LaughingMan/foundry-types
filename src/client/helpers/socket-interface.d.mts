@@ -1,4 +1,4 @@
-import { SocketResponse } from "./../../common/_types.mjs";
+import { SocketResponse } from "#common/_types.mjs";
 
 /**
  * A standardized way socket messages are dispatched and their responses are handled

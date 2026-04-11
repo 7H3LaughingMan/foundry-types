@@ -1,7 +1,7 @@
+import { DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath, TextAnchorPoint } from "#common/constants.mjs";
 import { Document, DocumentMetadata, MetadataPermission } from "../abstract/_module.mjs";
 import * as data from "../data/data.mjs";
 import * as fields from "../data/fields.mjs";
-import { DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath, TextAnchorPoint } from "./../constants.mjs";
 import { BaseScene, BaseUser } from "./_module.mjs";
 
 /**
@@ -49,33 +49,24 @@ interface NoteMetadata extends DocumentMetadata {
 }
 
 type NoteSchema = {
-    /** The _id which uniquely identifies this BaseNote embedded document */
     _id: fields.DocumentIdField;
-    /** The _id of a JournalEntry document which this Note represents */
+    author: fields.ForeignDocumentField<BaseUser>;
     entryId: fields.ForeignDocumentField<string>;
-    /** The _id of a specific JournalEntryPage document which this Note represents */
     pageId: fields.ForeignDocumentField<string>;
-    /** The x-coordinate position of the center of the note icon */
     x: fields.NumberField<number, number, true, false, true>;
-    /** The y-coordinate position of the center of the note icon */
     y: fields.NumberField<number, number, true, false, true>;
-    /** An image icon used to represent this note */
+    elevation: fields.NumberField<number, number, true, false, true>;
+    levels: fields.SceneLevelsSetField;
+    sort: fields.NumberField<number, number, true, false, true>;
+    locked: fields.BooleanField;
     texture: data.TextureData;
-    /** The pixel size of the map note icon */
     iconSize: fields.NumberField<number, number, true, false, true>;
-    /** Optional text which overrides the title of the linked Journal Entry */
     text: fields.StringField<string, string, false, false, true>;
-    /** The font family used to display the text label on this note, defaults to CONFIG.defaultFontFamily */
     fontFamily: fields.StringField<string, string, true, false, true>;
-    /** The font size used to display the text label on this note */
     fontSize: fields.NumberField<number, number, true, true, true>;
-    /** A value in CONST.TEXT_ANCHOR_POINTS which defines where the text label anchors to the note icon. */
     textAnchor: fields.NumberField<TextAnchorPoint, TextAnchorPoint, true, false, true>;
-    /** The string that defines the color with which the note text is rendered */
     textColor: fields.ColorField;
-    /** Whether this map pin is globally visible or requires LoS to see. */
     global: fields.BooleanField;
-    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
 };
 

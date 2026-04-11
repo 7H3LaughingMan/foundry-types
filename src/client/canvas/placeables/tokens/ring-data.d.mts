@@ -1,7 +1,7 @@
-import DataModel from "./../../../../common/abstract/data.mjs";
-import { FilePath } from "./../../../../common/constants.mjs";
-import { DataFieldOptions } from "./../../../../common/data/_module.mjs";
-import * as fields from "./../../../../common/data/fields.mjs";
+import DataModel from "#common/abstract/data.mjs";
+import { FilePath } from "#common/constants.mjs";
+import { DataFieldOptions } from "#common/data/_module.mjs";
+import * as fields from "#common/data/fields.mjs";
 
 /**
  * A special subclass of DataField used to reference a class definition.

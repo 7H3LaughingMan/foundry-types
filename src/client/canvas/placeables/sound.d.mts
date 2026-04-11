@@ -1,10 +1,10 @@
+import Sound from "#client/audio/sound.mjs";
+import AmbientSoundDocument from "#client/documents/ambient-sound.mjs";
+import Scene from "#client/documents/scene.mjs";
+import User from "#client/documents/user.mjs";
+import { DatabaseCreateCallbackOptions, DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
 import { ControlIcon } from "../containers/_module.mjs";
 import PointSoundSource from "../sources/point-sound-source.mjs";
-import { DatabaseCreateCallbackOptions, DatabaseDeleteCallbackOptions, DatabaseUpdateCallbackOptions } from "./../../../common/abstract/_types.mjs";
-import Sound from "./../../audio/sound.mjs";
-import AmbientSoundDocument from "./../../documents/ambient-sound.mjs";
-import Scene from "./../../documents/scene.mjs";
-import User from "./../../documents/user.mjs";
 import PlaceableObject from "./placeable-object.mjs";
 
 export default class AmbientSound<

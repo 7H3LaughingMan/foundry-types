@@ -1,5 +1,5 @@
-import { SceneControl } from "./../../../applications/ui/scene-controls.mjs";
-import User from "./../../../documents/user.mjs";
+import { SceneControl } from "#client/applications/ui/scene-controls.mjs";
+import User from "#client/documents/user.mjs";
 import CanvasLayer, { CanvasLayerOptions } from "./canvas-layer.mjs";
 
 /**

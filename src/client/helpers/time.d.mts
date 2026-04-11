@@ -1,4 +1,4 @@
-import { CalendarData, TimeComponents } from "./../data/_module.mjs";
+import { CalendarData, TimeComponents } from "#client/data/_module.mjs";
 
 /**
  * A singleton class at which keeps the official Server and World time stamps.

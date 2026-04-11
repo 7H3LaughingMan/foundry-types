@@ -1,6 +1,6 @@
-import { ApplicationConfiguration, ApplicationRenderContext } from "./../../../applications/_types.mjs";
-import ApplicationV2 from "./../../../applications/api/application.mjs";
-import HandlebarsApplicationMixin, { HandlebarsTemplatePart } from "./../../../applications/api/handlebars-application.mjs";
+import { ApplicationConfiguration, ApplicationRenderContext } from "#client/applications/_types.mjs";
+import ApplicationV2 from "#client/applications/api/application.mjs";
+import HandlebarsApplicationMixin, { HandlebarsTemplatePart } from "#client/applications/api/handlebars-application.mjs";
 
 /**
  * The application responsible for configuring methods of DiceTerm resolution.

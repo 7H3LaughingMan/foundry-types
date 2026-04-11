@@ -1,7 +1,7 @@
+import { ApplicationConfiguration, ApplicationPosition, ApplicationRenderContext } from "#client/applications/_types.mjs";
+import User from "#client/documents/user.mjs";
 import ApplicationV2 from "../../api/application.mjs";
 import HandlebarsApplicationMixin, { HandlebarsRenderOptions, HandlebarsTemplatePart } from "../../api/handlebars-application.mjs";
-import { ApplicationConfiguration, ApplicationPosition, ApplicationRenderContext } from "./../../../applications/_types.mjs";
-import User from "./../../../documents/user.mjs";
 
 interface CameraPopoutConfiguration extends ApplicationConfiguration {
     user: User;

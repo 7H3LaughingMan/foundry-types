@@ -41,7 +41,7 @@ export default abstract class CategoryBrowser extends HandlebarsApplicationMixin
      */
     search(query: string): void;
 
-    override render(options?: boolean | DeepPartial<HandlebarsRenderOptions>): Promise<this>;
+    override render(options: HandlebarsRenderOptions): Promise<this>;
 
     protected override _prepareContext(options: HandlebarsRenderOptions): Promise<ApplicationRenderContext>;
 

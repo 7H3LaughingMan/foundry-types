@@ -1,21 +1,12 @@
+import { ElevatedPoint, Point } from "#common/_types.mjs";
 import { PointSourcePolygonConfig } from "../_types.mjs";
 import PolygonVertex from "../edges/vertex.mjs";
-import { ElevatedPoint, Point } from "./../../../../common/_types.mjs";
 import Ray from "./ray.mjs";
 
 /**
  * An extension of Polygon which is used to represent the line of sight for a point source.
  */
 export default abstract class PointSourcePolygon<TConfig extends PointSourcePolygonConfig = PointSourcePolygonConfig> extends PIXI.Polygon {
-    /**
-     * Customize how wall direction of one-way walls is applied
-     */
-    static WALL_DIRECTION_MODES: Readonly<{
-        NORMAL: 0;
-        REVERSED: 1;
-        BOTH: 2;
-    }>;
-
     /**
      * The rectangular bounds of this polygon
      */

@@ -1,5 +1,5 @@
 /**
- * @import WeatherEffects from "./../../../canvas/layers/effects/weather-effects.mjs";
+ * @import WeatherEffects from "#client/canvas/layers/effects/weather-effects.mjs";
  */
 /**
  * The filter used by the weather layer to mask weather above occluded roofs.
