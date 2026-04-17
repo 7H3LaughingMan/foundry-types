@@ -8,7 +8,6 @@
             "DOM"
         ],
         "noEmit": true,
-        "skipLibCheck": true,
         "strict": true,
         "allowImportingTsExtensions": true,
         "types": [
