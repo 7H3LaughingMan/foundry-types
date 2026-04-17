@@ -236,6 +236,15 @@ export function getProperty(object: object, key: string): unknown;
 export function setProperty(object: object, key: string, value: unknown): boolean;
 
 /**
+ * A helper function which searches through an object to delete a value by a string key.
+ * The string key supports the notation a.b.c which would delete object[a][b][c]
+ * @param object The object to traverse
+ * @param key An object property with notation a.b.c
+ * @returns Was the property deleted?
+ */
+export function deleteProperty(object: object, key: string): boolean;
+
+/**
  * Encode a url-like string by replacing any characters which need encoding
  * @param path     A fully-qualified URL or url component (like a relative path)
  * @return         An encoded URL string
