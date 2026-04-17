@@ -1,6 +1,6 @@
 import { CompendiumDocumentType } from "#client/utils/helpers.mjs";
 import { DataModelConstructionContext } from "#common/abstract/_types.mjs";
-import { DocumentOwnershipLevel, PackageAvailabilityCode, PackageType, UserRole } from "#common/constants.mjs";
+import { DocumentOwnershipString, PackageAvailabilityCode, PackageType, UserRoleName } from "#common/constants.mjs";
 import { DataFieldOptions, DataModelCleaningOptions, DataModelUpdateState, ObjectFieldOptions } from "#common/data/_module.mjs";
 import type DataModel from "../abstract/data.mjs";
 import type * as fields from "../data/fields.mjs";
@@ -65,8 +65,8 @@ type PackageCompendiumFolderSchema = {
 };
 
 /** A special ObjectField which captures a mapping of USER_ROLES to DOCUMENT_OWNERSHIP_LEVELS. */
-export class CompendiumOwnershipField extends fields.ObjectField<Record<UserRole, DocumentOwnershipLevel>> {
-    static override get _defaults(): ObjectFieldOptions<Record<UserRole, DocumentOwnershipLevel>, boolean, boolean, boolean>;
+export class CompendiumOwnershipField extends fields.ObjectField<Record<UserRoleName, DocumentOwnershipString>> {
+    static override get _defaults(): ObjectFieldOptions<Record<UserRoleName, DocumentOwnershipString>, boolean, boolean, boolean>;
 
     protected override _validateType(value: unknown, options?: Record<string, unknown>): void;
 }

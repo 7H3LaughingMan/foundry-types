@@ -695,7 +695,7 @@ export default interface Config<
     defaultFontFamily: string;
 
     /** An array of status effect icons which can be applied to Tokens */
-    statusEffects: StatusEffectConfig[];
+    statusEffects: Record<string, StatusEffectConfig>;
 
     /** A mapping of status effect IDs which provide some additional mechanical integration. */
     specialStatusEffects: {
@@ -795,10 +795,6 @@ export default interface Config<
     /* -------------------------------------------- */
     /*  Integrations                                */
     /* -------------------------------------------- */
-
-    /** Default configuration options for TinyMCE editors */
-    // See https://www.tiny.cloud/docs/configure/content-appearance/
-    TinyMCE: TinyMCE.EditorOptions;
 
     ui: {
         actors: ConstructorOf<foundry.applications.sidebar.tabs.ActorDirectory<documents.Actor<null>>>;

@@ -1,13 +1,5 @@
 import { DatabaseUpdateOperation, DataModelConstructionContext } from "#common/abstract/_types.mjs";
-import {
-    DocumentOwnershipLevel,
-    DocumentOwnershipString,
-    ImageFilePath,
-    ShapeDataType,
-    TileOcclusionMode,
-    TokenShapeType,
-    VideoFilePath,
-} from "#common/constants.mjs";
+import { DocumentOwnershipLevel, ImageFilePath, ShapeDataType, TileOcclusionMode, TokenShapeType, VideoFilePath } from "#common/constants.mjs";
 import DataModel from "../abstract/data.mjs";
 import * as documents from "../documents/_module.mjs";
 import { TokenSchema } from "../documents/token.mjs";
@@ -531,7 +523,7 @@ export class PrototypeToken<TParent extends documents.BaseActor | null> extends 
      * @see {@link foundry.abstract.Document#testUserPermission}
      * @ignore
      */
-    testUserPermission(user: documents.BaseUser, permission: DocumentOwnershipString | DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
+    testUserPermission(user: documents.BaseUser, permission: DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
 
     /**
      * @see {@link foundry.documents.BaseActor#isOwner}

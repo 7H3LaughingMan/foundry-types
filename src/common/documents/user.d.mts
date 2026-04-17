@@ -1,4 +1,4 @@
-import { DocumentOwnershipLevel, ImageFilePath, UserAction, UserPermission, UserRole, UserRoleName } from "#common/constants.mjs";
+import { DocumentOwnershipNumber, ImageFilePath, UserAction, UserPermission, UserRole, UserRoleName } from "#common/constants.mjs";
 import Document, { DocumentMetadata } from "../abstract/document.mjs";
 import * as fields from "../data/fields.mjs";
 import { BaseActor } from "./_module.mjs";
@@ -33,7 +33,7 @@ export default class BaseUser<TCharacter extends BaseActor<null> = BaseActor<nul
      */
     can(action: UserAction | UserPermission): boolean;
 
-    getUserLevel(user: this): DocumentOwnershipLevel;
+    override getUserLevel(user: this): DocumentOwnershipNumber;
 
     /**
      * Test whether the User has at least a specific permission

@@ -1,3 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Region from "#client/canvas/placeables/region.mjs";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import RegionDocument from "#client/documents/region.mjs";
 import { BaseShapeData, CircleShapeData, EllipseShapeData, PolygonShapeData, RectangleShapeData } from "#common/data/data.mjs";
 
 /**
@@ -30,7 +34,7 @@ export abstract class RegionShape<TShapeData extends BaseShapeData = BaseShapeDa
      * The winding numbers are 1 or 0.
      * @type {}
      */
-    get clipperPaths(): ReadonlyArray<ReadonlyArray<ClipperLib.IntPoint>>;
+    get clipperPaths(): readonly (readonly ClipperLib.IntPoint[])[];
 
     /**
      * The Clipper polygon tree of this shape.

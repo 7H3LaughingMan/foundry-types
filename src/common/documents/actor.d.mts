@@ -70,18 +70,31 @@ export interface ActorMetadata extends DocumentMetadata {
 }
 
 type ActorSchema<TType extends string = string, TSystemSource extends object = object, TItemSource extends ItemSource = ItemSource> = {
+    /** The _id which uniquely identifies this Actor document */
     _id: fields.DocumentIdField;
+    /** The name of this Actor */
     name: fields.StringField<string, string, true, false, false>;
-    img: fields.FilePathField<ImageFilePath, ImageFilePath, false, false, true>;
+    /** An Actor subtype which configures the system data model applied */
     type: fields.StringField<TType, TType, true, false, false>;
+    /** An image file path which provides the artwork for this Actor */
+    img: fields.FilePathField<ImageFilePath, ImageFilePath, false, false, true>;
+    /** The system data object which is defined by the system template.json model */
     system: fields.TypeDataField<TSystemSource>;
+    /** Default Token settings which are used for Tokens created from this Actor */
     prototypeToken: fields.EmbeddedDataField<data.PrototypeToken<BaseActor>>;
+    /** A Collection of Item embedded Documents */
     items: fields.EmbeddedCollectionField<BaseItem<BaseActor<BaseToken | null>>, TItemSource[]>;
+    /** A Collection of ActiveEffect embedded Documents */
     effects: fields.EmbeddedCollectionField<BaseActiveEffect<BaseActor<BaseToken | null>>>;
+    /** The _id of a Folder which contains this Actor */
     folder: fields.ForeignDocumentField<BaseFolder>;
+    /** The numeric sort value which orders this Actor relative to its siblings */
     sort: fields.IntegerSortField;
+    /** An object which configures ownership of this Actor */
     ownership: fields.DocumentOwnershipField;
+    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
+    /** An object of creation and access information. */
     _stats: fields.DocumentStatsField<ActorUUID>;
 };
 

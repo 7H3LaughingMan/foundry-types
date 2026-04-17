@@ -37,7 +37,7 @@ export default class RenderFlags extends Set<string> {
  * This mixin standardizes the interface for such functionality.
  * @param Base The base class being mixed: defaults to an anonymous empty class.
  */
-export function RenderFlagsMixin<TBase extends object>(Base?: AbstractConstructorOf<TBase>): ConstructorOf<RenderFlagsObject> & TBase;
+export function RenderFlagsMixin<TBase extends object>(Base?: AbstractConstructorOf<TBase>): typeof RenderFlagsObject & AbstractConstructorOf<TBase>;
 
 export class RenderFlagsObject {
     constructor(...args: any[]);
@@ -51,7 +51,7 @@ export class RenderFlagsObject {
      * The ticker priority when RenderFlags of this class are handled.
      * Valid values are OBJECTS or PERCEPTION.
      */
-    static RENDER_FLAG_PRIORITY: "OBJECTS" | "PERCEPTION";
+    static RENDER_FLAG_PRIORITY: "INTERFACE" | "OBJECTS" | "PERCEPTION";
 
     /**
      * Status flags which are applied at render-time to update the PlaceableObject.

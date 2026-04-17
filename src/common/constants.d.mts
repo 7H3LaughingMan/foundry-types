@@ -5,30 +5,42 @@
 
 import * as data from "./data/data.mjs";
 
-/** The shortened software name */
+/**
+ * The shortened software name
+ */
 export const vtt: "Foundry VTT";
 
-/** The full software name */
+/**
+ * The full software name
+ */
 export const VTT: "Foundry Virtual Tabletop";
 
-/** The software website URL */
+/**
+ * The software website URL
+ */
 export const WEBSITE_URL: "https://foundryvtt.com";
 
-/** The serverless API URL */
+/**
+ * The serverless API URL
+ */
 export const WEBSITE_API_URL: "https://api.foundryvtt.com";
 
-/** An ASCII greeting displayed to the client */
+/**
+ * An ASCII greeting displayed to the client
+ */
 export const ASCII: string;
 
 /**
  * Time-based units in which an ActiveEffect's duration can be expressed
  */
-export const ACTIVE_EFFECT_TIME_DURATION_UNITS: readonly ["years", "months", "days", "hours", "minutes", "seconds"];
+export const ACTIVE_EFFECT_TIME_DURATION_UNITS: ["years", "months", "days", "hours", "minutes", "seconds"];
+
+export type ActiveEffectTimeDurationUnit = (typeof ACTIVE_EFFECT_TIME_DURATION_UNITS)[number];
 
 /**
  * All units in which an ActiveEffect's duration can be expressed
  */
-export const ACTIVE_EFFECT_DURATION_UNITS: readonly ["years", "months", "days", "hours", "minutes", "seconds", "rounds", "turns"];
+export const ACTIVE_EFFECT_DURATION_UNITS: [...typeof ACTIVE_EFFECT_TIME_DURATION_UNITS, "rounds", "turns"];
 
 export type ActiveEffectDurationUnit = (typeof ACTIVE_EFFECT_DURATION_UNITS)[number];
 
@@ -36,14 +48,18 @@ export type ActiveEffectDurationUnit = (typeof ACTIVE_EFFECT_DURATION_UNITS)[num
  * Define the core ActiveEffect expiry events.
  * Other events can be defined by systems and modules, with their handling also left to them.
  */
-export const ACTIVE_EFFECT_EXPIRY_EVENTS: readonly ["combatStart", "roundStart", "turnStart", "combatEnd", "roundEnd", "turnEnd"];
+export const ACTIVE_EFFECT_EXPIRY_EVENTS: ["combatStart", "roundStart", "turnStart", "combatEnd", "roundEnd", "turnEnd"];
+
+export type ActiveEffectExpiryEvent = (typeof ACTIVE_EFFECT_EXPIRY_EVENTS)[number];
 
 /**
  * Define the core ActiveEffect change-application phases.
  * Additional phases can be registered by systems and modules, with the registering package also responsible for
  * calling `Actor#applyActiveEffects("myNewPhase")` at the desired time.
  */
-export const ACTIVE_EFFECT_CHANGE_PHASES: readonly ["initial", "final"];
+export const ACTIVE_EFFECT_CHANGE_PHASES: ["initial", "final"];
+
+export type ActiveEffectChangePhase = (typeof ACTIVE_EFFECT_CHANGE_PHASES)[number];
 
 /**
  * Define the core ActiveEffect change types and their default priorities. Other arbitrary string types can be used by
@@ -106,6 +122,31 @@ export const ACTIVE_EFFECT_CHANGE_TYPES: Readonly<{
     override: 50;
 }>;
 
+export type ActiveEffectChangeType = keyof typeof ACTIVE_EFFECT_CHANGE_TYPES;
+
+/**
+ * Possible values for ActiveEffectData#showIcon: the default is CONDITIONAL, dependent on whether the ActiveEffect has
+ * a temporary duration.
+ */
+export const ACTIVE_EFFECT_SHOW_ICON: {
+    /**
+     * The icon is never shown.
+     */
+    NEVER: 0;
+
+    /**
+     * The icon is showed if the ActiveEffect has a temporary duration.
+     */
+    CONDITIONAL: 1;
+
+    /**
+     * The icon is always shown.
+     */
+    ALWAYS: 2;
+};
+
+export type ActiveEffectShowIcon = (typeof ACTIVE_EFFECT_SHOW_ICON)[keyof typeof ACTIVE_EFFECT_SHOW_ICON];
+
 /**
  * Define the string name used for the base document type when specific sub-types are not defined by the system
  */
@@ -117,29 +158,35 @@ export const BASE_DOCUMENT_TYPE: "base";
 export const CARD_DRAW_MODES: Readonly<{
     /**
      * Draw the first card from the stack
-     * Synonymous with {@link CARD_DRAW_MODES.TOP}
+     * Synonymous with `TOP`
      */
     FIRST: 0;
+
     /**
      * Draw the top card from the stack
-     * Synonymous with {@link CARD_DRAW_MODES.FIRST}
+     * Synonymous with `FIRST`
      */
     TOP: 0;
+
     /**
      * Draw the last card from the stack
-     * Synonymous with {@link CARD_DRAW_MODES.BOTTOM}
+     * Synonymous with `BOTTOM`
      */
     LAST: 1;
+
     /**
      * Draw the bottom card from the stack
-     * Synonymous with {@link CARD_DRAW_MODES.LAST}
+     * Synonymous with `LAST`
      */
     BOTTOM: 1;
+
     /**
      * Draw a random card from the stack
      */
     RANDOM: 2;
 }>;
+
+export type CardDrawMode = (typeof CARD_DRAW_MODES)[keyof typeof CARD_DRAW_MODES];
 
 /**
  * An enumeration of canvas performance modes.
@@ -161,15 +208,18 @@ export const CHAT_MESSAGE_STYLES: Readonly<{
      * An uncategorized chat message
      */
     OTHER: 0;
+
     /**
      * The message is spoken out of character (OOC).
      * OOC messages will be outlined by the player's color to make them more easily recognizable.
      */
     OOC: 1;
+
     /**
      * The message is spoken by an associated character.
      */
     IC: 2;
+
     /**
      * The message is an emote performed by the selected character.
      * Entering "/emote waves his hand." while controlling a character named Simon will send the message, "Simon waves his hand."
@@ -180,9 +230,9 @@ export const CHAT_MESSAGE_STYLES: Readonly<{
 export type ChatMessageStyle = (typeof CHAT_MESSAGE_STYLES)[keyof typeof CHAT_MESSAGE_STYLES];
 
 /**
- * Define the set of languages which have built-in support in the core software
+ * Define the set of languages which have built-in support in the core software.
  */
-export const C: readonly ["en"];
+export const CORE_SUPPORTED_LANGUAGES: readonly ["en"];
 
 /**
  * Configure the severity of compatibility warnings.
@@ -192,14 +242,17 @@ export const COMPATIBILITY_MODES: Readonly<{
      * Nothing will be logged
      */
     SILENT: 0;
+
     /**
      * A message will be logged at the "warn" level
      */
     WARNING: 1;
+
     /**
      * A message will be logged at the "error" level
      */
     ERROR: 2;
+
     /**
      * An Error will be thrown
      */
@@ -254,6 +307,7 @@ export const DEFAULT_TOKEN: "icons/svg/mystery-man.svg";
  * The primary Document types.
  */
 export const PRIMARY_DOCUMENT_TYPES: readonly [
+    "ActiveEffect",
     "Actor",
     "Adventure",
     "Cards",
@@ -271,6 +325,8 @@ export const PRIMARY_DOCUMENT_TYPES: readonly [
     "User",
 ];
 
+export type PrimaryDocumentType = (typeof PRIMARY_DOCUMENT_TYPES)[number];
+
 /**
  * The embedded Document types.
  */
@@ -286,16 +342,18 @@ export const EMBEDDED_DOCUMENT_TYPES: readonly [
     "Item",
     "JournalEntryCategory",
     "JournalEntryPage",
-    "MeasuredTemplate",
     "Note",
     "PlaylistSound",
     "Region",
     "RegionBehavior",
+    "Level",
     "TableResult",
     "Tile",
     "Token",
     "Wall",
 ];
+
+export type EmbeddedDocumentType = (typeof EMBEDDED_DOCUMENT_TYPES)[number];
 
 /**
  * A listing of all valid Document types, both primary and embedded.
@@ -321,7 +379,6 @@ export const ALL_DOCUMENT_TYPES: readonly [
     "JournalEntryCategory",
     "JournalEntryPage",
     "Macro",
-    "MeasuredTemplate",
     "Note",
     "Playlist",
     "PlaylistSound",
@@ -329,6 +386,7 @@ export const ALL_DOCUMENT_TYPES: readonly [
     "RegionBehavior",
     "RollTable",
     "Scene",
+    "Level",
     "Setting",
     "TableResult",
     "Tile",
@@ -363,41 +421,83 @@ export type WorldDocumentType = (typeof WORLD_DOCUMENT_TYPES)[number];
 
 /**
  * The allowed primary Document types which may exist within a Compendium pack.
- * @type {string[]}
  */
-export const COMPENDIUM_DOCUMENT_TYPES: readonly ["Actor", "Adventure", "Cards", "Item", "JournalEntry", "Macro", "Playlist", "RollTable", "Scene"];
+export const COMPENDIUM_DOCUMENT_TYPES: readonly [
+    "ActiveEffect",
+    "Actor",
+    "Adventure",
+    "Cards",
+    "Item",
+    "JournalEntry",
+    "Macro",
+    "Playlist",
+    "RollTable",
+    "Scene",
+];
+
+export type CompendiumDocumentType = (typeof COMPENDIUM_DOCUMENT_TYPES)[number];
+
+/**
+ * Define the Fog Exploration modes available for a given scene.
+ */
+
+export const FOG_EXPLORATION_MODES: Readonly<{
+    /**
+     * The fog of war exploration is disabled.
+     */
+    DISABLED: 0;
+
+    /**
+     * The fog of war exploration is enabled for this scene and each user has its own personal fog of war.
+     */
+    INDIVIDUAL: 1;
+
+    /**
+     * The fog of war exploration is enabled for this scene and shared among all users.
+     */
+    SHARED: 2;
+}>;
+
+export type FogExplorationMode = (typeof FOG_EXPLORATION_MODES)[keyof typeof FOG_EXPLORATION_MODES];
 
 /**
  * Define the allowed ownership levels for a Document.
  * Each level is assigned a value in ascending order.
  * Higher levels grant more permissions.
- * @see https://foundryvtt.com/article/users/
+ * @see {@link https://foundryvtt.com/article/users/}
  */
 export const DOCUMENT_OWNERSHIP_LEVELS: Readonly<{
     /**
      * The User inherits permissions from the parent Folder.
      */
     INHERIT: -1;
+
     /**
      * Restricts the associated Document so that it may not be seen by this User.
      */
     NONE: 0;
+
     /**
-     * Allows the User to interact with the Document in basic ways, allowing them to see it in sidebars and see only limited aspects of its contents. The limits of this interaction are defined by the game system being used.
+     * Allows the User to interact with the Document in basic ways, allowing them to see it in sidebars and see only
+     * limited aspects of its contents. The limits of this interaction are defined by the game system being used.
      */
     LIMITED: 1;
+
     /**
      * Allows the User to view this Document as if they were owner, but prevents them from making any changes to it.
      */
     OBSERVER: 2;
+
     /**
-     * Allows the User to view and make changes to the Document as its owner. Owned documents cannot be deleted by anyone other than a gamemaster level User.
+     * Allows the User to view and make changes to the Document as its owner. Owned documents cannot be deleted by anyone
+     * other than a gamemaster level User.
      */
     OWNER: 3;
 }>;
 
+export type DocumentOwnershipNumber = (typeof DOCUMENT_OWNERSHIP_LEVELS)[keyof typeof DOCUMENT_OWNERSHIP_LEVELS];
 export type DocumentOwnershipString = keyof typeof DOCUMENT_OWNERSHIP_LEVELS;
-export type DocumentOwnershipLevel = (typeof DOCUMENT_OWNERSHIP_LEVELS)[DocumentOwnershipString];
+export type DocumentOwnershipLevel = DocumentOwnershipString | DocumentOwnershipNumber;
 
 /**
  * Meta ownership levels that are used in the UI but never stored.
@@ -414,17 +514,19 @@ export const DOCUMENT_LINK_TYPES: readonly ["Actor", "Cards", "Item", "Scene", "
 
 /**
  * The allowed fill types which a Drawing object may display
- * @see https://foundryvtt.com/article/drawings/
+ * @see {@link https://foundryvtt.com/article/drawings/}
  */
 export const DRAWING_FILL_TYPES: Readonly<{
     /**
      * The drawing is not filled
      */
     NONE: 0;
+
     /**
      * The drawing is filled with a solid color
      */
     SOLID: 1;
+
     /**
      * The drawing is filled with a tiled image pattern
      */
@@ -436,7 +538,19 @@ export type DrawingFillType = (typeof DRAWING_FILL_TYPES)[keyof typeof DRAWING_F
 /**
  * Define the allowed Document types which Folders may contain
  */
-export const FOLDER_DOCUMENT_TYPES: readonly ["Actor", "Adventure", "Item", "Scene", "JournalEntry", "Playlist", "RollTable", "Cards", "Macro", "Compendium"];
+export const FOLDER_DOCUMENT_TYPES: readonly [
+    "ActiveEffect",
+    "Actor",
+    "Adventure",
+    "Item",
+    "Scene",
+    "JournalEntry",
+    "Playlist",
+    "RollTable",
+    "Cards",
+    "Macro",
+    "Compendium",
+];
 
 export type FolderDocumentType = (typeof FOLDER_DOCUMENT_TYPES)[number];
 
@@ -444,6 +558,7 @@ export type FolderDocumentType = (typeof FOLDER_DOCUMENT_TYPES)[number];
  * The maximum allowed level of depth for Folder nesting
  */
 export const FOLDER_MAX_DEPTH: 4;
+
 /**
  * A list of allowed game URL names
  */
@@ -453,16 +568,16 @@ export const GAME_VIEWS: readonly ["game", "stream"];
  * The directions of movement.
  */
 export const MOVEMENT_DIRECTIONS: Readonly<{
-    UP: 1;
-    DOWN: 2;
-    LEFT: 4;
-    RIGHT: 8;
-    UP_LEFT: 5;
-    UP_RIGHT: 5;
-    DOWN_LEFT: 9;
-    DOWN_RIGHT: 10;
-    DESCEND: 16;
-    ASCEND: 32;
+    UP: 0x1;
+    DOWN: 0x2;
+    LEFT: 0x4;
+    RIGHT: 0x8;
+    UP_LEFT: 0x1 | 0x4;
+    UP_RIGHT: 0x1 | 0x8;
+    DOWN_LEFT: 0x2 | 0x4;
+    DOWN_RIGHT: 0x2 | 0x8;
+    DESCEND: 0x10;
+    ASCEND: 0x20;
 }>;
 
 export type MovementDirection = (typeof MOVEMENT_DIRECTIONS)[keyof typeof MOVEMENT_DIRECTIONS];
@@ -481,22 +596,27 @@ export const GRID_TYPES: Readonly<{
      * No fixed grid is used on this Scene allowing free-form point-to-point measurement without grid lines.
      */
     GRIDLESS: 0;
+
     /**
      * A square grid is used with width and height of each grid space equal to the chosen grid size.
      */
     SQUARE: 1;
+
     /**
      * A row-wise hexagon grid (pointy-topped) where odd-numbered rows are offset.
      */
     HEXODDR: 2;
+
     /**
      * A row-wise hexagon grid (pointy-topped) where even-numbered rows are offset.
      */
     HEXEVENR: 3;
+
     /**
      * A column-wise hexagon grid (flat-topped) where odd-numbered columns are offset.
      */
     HEXODDQ: 4;
+
     /**
      * A column-wise hexagon grid (flat-topped) where even-numbered columns are offset.
      */
@@ -514,18 +634,22 @@ export const GRID_DIAGONALS: Readonly<{
      * The diagonal distance is 1. Diagonal movement costs the same as horizontal/vertical movement.
      */
     EQUIDISTANT: 0;
+
     /**
      * The diagonal distance is √2. Diagonal movement costs √2 times as much as horizontal/vertical movement.
      */
     EXACT: 1;
+
     /**
      * The diagonal distance is 1.5. Diagonal movement costs 1.5 times as much as horizontal/vertical movement.
      */
     APPROXIMATE: 2;
+
     /**
      * The diagonal distance is 2. Diagonal movement costs 2 times as much as horizontal/vertical movement.
      */
     RECTILINEAR: 3;
+
     /**
      * The diagonal distance alternates between 1 and 2 starting at 1.
      * The first diagonal movement costs the same as horizontal/vertical movement
@@ -533,6 +657,7 @@ export const GRID_DIAGONALS: Readonly<{
      * And so on...
      */
     ALTERNATING_1: 4;
+
     /**
      * The diagonal distance alternates between 2 and 1 starting at 2.
      * The first diagonal movement costs 2 times as much as horizontal/vertical movement.
@@ -540,6 +665,7 @@ export const GRID_DIAGONALS: Readonly<{
      * And so on...
      */
     ALTERNATING_2: 5;
+
     /**
      * The diagonal distance is ∞. Diagonal movement is not allowed/possible.
      */
@@ -555,74 +681,90 @@ export const GRID_SNAPPING_MODES: Readonly<{
     /**
      * Nearest center point.
      */
-    CENTER: 1;
+    CENTER: 0x1;
+
     /**
      * Nearest edge midpoint.
      */
-    EDGE_MIDPOINT: 2;
+    EDGE_MIDPOINT: 0x2;
+
     /**
      * Nearest top-left vertex.
      */
-    TOP_LEFT_VERTEX: 16;
+    TOP_LEFT_VERTEX: 0x10;
+
     /**
      * Nearest top-right vertex.
      */
-    TOP_RIGHT_VERTEX: 32;
+    TOP_RIGHT_VERTEX: 0x20;
+
     /**
      * Nearest bottom-left vertex.
      */
-    BOTTOM_LEFT_VERTEX: 64;
+    BOTTOM_LEFT_VERTEX: 0x40;
+
     /**
      * Nearest bottom-right vertex.
      */
-    BOTTOM_RIGHT_VERTEX: 128;
+    BOTTOM_RIGHT_VERTEX: 0x80;
+
     /**
      * Nearest vertex.
      * Alias for `TOP_LEFT_VERTEX | TOP_RIGHT_VERTEX | BOTTOM_LEFT_VERTEX | BOTTOM_RIGHT_VERTEX`.
      */
-    VERTEX: 240;
+    VERTEX: 0xf0;
+
     /**
      * Nearest top-left corner.
      */
-    TOP_LEFT_CORNER: 256;
+    TOP_LEFT_CORNER: 0x100;
+
     /**
      * Nearest top-right corner.
      */
-    TOP_RIGHT_CORNER: 512;
+    TOP_RIGHT_CORNER: 0x200;
+
     /**
      * Nearest bottom-left corner.
      */
-    BOTTOM_LEFT_CORNER: 1024;
+    BOTTOM_LEFT_CORNER: 0x400;
+
     /**
      * Nearest bottom-right corner.
      */
-    BOTTOM_RIGHT_CORNER: 2048;
+    BOTTOM_RIGHT_CORNER: 0x800;
+
     /**
      * Nearest corner.
      * Alias for `TOP_LEFT_CORNER | TOP_RIGHT_CORNER | BOTTOM_LEFT_CORNER | BOTTOM_RIGHT_CORNER`.
      */
-    CORNER: 3840;
+    CORNER: 0xf00;
+
     /**
      * Nearest top side midpoint.
      */
-    TOP_SIDE_MIDPOINT: 4096;
+    TOP_SIDE_MIDPOINT: 0x1000;
+
     /**
      * Nearest bottom side midpoint.
      */
-    BOTTOM_SIDE_MIDPOINT: 8192;
+    BOTTOM_SIDE_MIDPOINT: 0x2000;
+
     /**
      * Nearest left side midpoint.
      */
-    LEFT_SIDE_MIDPOINT: 16384;
+    LEFT_SIDE_MIDPOINT: 0x4000;
+
     /**
      * Nearest right side midpoint.
      */
-    RIGHT_SIDE_MIDPOINT: 32768;
+    RIGHT_SIDE_MIDPOINT: 0x8000;
+
     /**
      * Nearest side midpoint.
      * Alias for `TOP_SIDE_MIDPOINT | BOTTOM_SIDE_MIDPOINT | LEFT_SIDE_MIDPOINT | RIGHT_SIDE_MIDPOINT`.
      */
-    SIDE_MIDPOINT: 61440;
+    SIDE_MIDPOINT: 0xf000;
 }>;
 
 export type GridSnappingMode = (typeof GRID_SNAPPING_MODES)[keyof typeof GRID_SNAPPING_MODES];
@@ -630,7 +772,7 @@ export type GridSnappingMode = (typeof GRID_SNAPPING_MODES)[keyof typeof GRID_SN
 /**
  * A list of supported setup URL names
  */
-export const SETUP_VIEWS: readonly ["auth", "license", "setup", "players", "join", "update"];
+export const SETUP_VIEWS: readonly ["auth", "license", "setup", "players", "join", "create", "update"];
 
 /**
  * An Array of valid MacroAction scope values
@@ -645,11 +787,14 @@ export type MacroScope = (typeof MACRO_SCOPES)[number];
  */
 export const MACRO_TYPES: Readonly<{
     /**
-     * Complex and powerful macros which leverage the FVTT API through plain JavaScript to perform functions as simple or as advanced as you can imagine.
+     * Complex and powerful macros which leverage the FVTT API through plain JavaScript to perform functions as simple or
+     * as advanced as you can imagine.
      */
     SCRIPT: "script";
+
     /**
-     * Simple and easy to use, chat macros post pre-defined chat messages to the chat log when executed. All users can execute chat macros by default.
+     * Simple and easy to use, chat macros post pre-defined chat messages to the chat log when executed. All users can
+     * execute chat macros by default.
      */
     CHAT: "chat";
 }>;
@@ -674,14 +819,17 @@ export const PLAYLIST_MODES: Readonly<{
      * The playlist does not play on its own, only individual Sound tracks played as a soundboard.
      */
     DISABLED: -1;
+
     /**
      * The playlist plays sounds one at a time in sequence.
      */
     SEQUENTIAL: 0;
+
     /**
      * The playlist plays sounds one at a time in randomized order.
      */
     SHUFFLE: 1;
+
     /**
      * The playlist plays all contained sounds at the same time.
      */
@@ -697,16 +845,16 @@ export type PlaylistMode = (typeof PLAYLIST_MODES)[keyof typeof PLAYLIST_MODES];
 export const PLAYLIST_SORT_MODES: Readonly<{
     /**
      * Sort sounds alphabetically.
-     * @defaultValue
      */
     ALPHABETICAL: "a";
+
     /**
      * Sort sounds by manual drag-and-drop.
      */
     MANUAL: "m";
 }>;
 
-export type PlaylistSortMode = "a" | "m";
+export type PlaylistSortMode = (typeof PLAYLIST_SORT_MODES)[keyof typeof PLAYLIST_SORT_MODES];
 
 /**
  * The available modes for searching within a DirectoryCollection
@@ -716,7 +864,7 @@ export const DIRECTORY_SEARCH_MODES: Readonly<{
     NAME: "name";
 }>;
 
-export type DirectorySearchMode = "full" | "name";
+export type DirectorySearchMode = (typeof DIRECTORY_SEARCH_MODES)[keyof typeof DIRECTORY_SEARCH_MODES];
 
 /**
  * The allowed package types
@@ -733,46 +881,64 @@ export const PACKAGE_AVAILABILITY_CODES: Readonly<{
      * Package availability could not be determined
      */
     UNKNOWN: 0;
+
     /**
      * The Package is verified to be compatible with the current core software build
      */
     VERIFIED: 1;
+
     /**
      * Package is available for use, but not verified for the current core software build
      */
     UNVERIFIED_BUILD: 2;
+
     /**
      * One or more installed system is incompatible with the Package.
      */
     UNVERIFIED_SYSTEM: 3;
+
     /**
      * Package is available for use, but not verified for the current core software generation
      */
     UNVERIFIED_GENERATION: 4;
+
     /**
      * The System that the Package relies on is not available
      */
     MISSING_SYSTEM: 5;
+
     /**
      * A dependency of the Package is not available
      */
     MISSING_DEPENDENCY: 6;
+
     /**
      * The Package is compatible with an older version of Foundry than the currently installed version
      */
     REQUIRES_CORE_DOWNGRADE: 7;
+
     /**
-     * The Package is compatible with a newer version of Foundry than the currently installed version, and that version is Stable
+     * The Package is compatible with a newer version of Foundry than the currently installed version, and that version is
+     * Stable
      */
     REQUIRES_CORE_UPGRADE_STABLE: 8;
+
     /**
-     * The Package is compatible with a newer version of Foundry than the currently installed version, and that version is not yet Stable
+     * The Package is compatible with a newer version of Foundry than the currently installed version, and that version is
+     * not yet Stable
      */
     REQUIRES_CORE_UPGRADE_UNSTABLE: 9;
+
+    /**
+     * The Package is compatible with a newer version of Foundry than the currently installed version, and it is not known
+     * whether that version is Stable
+     */
+    REQUIRES_CORE_UPGRADE_UNKNOWN: 10;
+
     /**
      * A required dependency is not compatible with the current version of Foundry
      */
-    REQUIRES_DEPENDENCY_UPDATE: 10;
+    REQUIRES_DEPENDENCY_UPDATE: 11;
 }>;
 
 export type PackageAvailabilityCode = (typeof PACKAGE_AVAILABILITY_CODES)[keyof typeof PACKAGE_AVAILABILITY_CODES];
@@ -790,14 +956,17 @@ export const SOFTWARE_UPDATE_CHANNELS: Readonly<{
      * The Stable release channel
      */
     stable: "SETUP.UpdateStable";
+
     /**
      * The User Testing release channel
      */
     testing: "SETUP.UpdateTesting";
+
     /**
      * The Development release channel
      */
     development: "SETUP.UpdateDevelopment";
+
     /**
      * The Prototype release channel
      */
@@ -810,6 +979,7 @@ export type SoftwareUpdateChannel = keyof typeof SOFTWARE_UPDATE_CHANNELS;
  * The default sorting density for manually ordering child objects within a parent
  */
 export const SORT_INTEGER_DENSITY: 100000;
+
 /**
  * The allowed types of a TableResult document
  * @see https://foundryvtt.com/article/roll-tables/
@@ -819,6 +989,7 @@ export const TABLE_RESULT_TYPES: Readonly<{
      *  Plain text or HTML scripted entries which will be output to Chat.
      */
     TEXT: "text";
+
     /**
      * An in-World Document reference which will be linked to in the chat message.
      */
@@ -836,6 +1007,7 @@ export const JOURNAL_ENTRY_PAGE_FORMATS: Readonly<{
      * The page is formatted as HTML.
      */
     HTML: 1;
+
     /**
      * The page is formatted as Markdown.
      */
@@ -853,18 +1025,22 @@ export const TEXT_ANCHOR_POINTS: Readonly<{
      * Anchor the tooltip to the center of the element.
      */
     CENTER: 0;
+
     /**
      * Anchor the tooltip to the bottom of the element.
      */
     BOTTOM: 1;
+
     /**
      * Anchor the tooltip to the top of the element.
      */
     TOP: 2;
+
     /**
      * Anchor the tooltip to the left of the element.
      */
     LEFT: 3;
+
     /**
      * Anchor the tooltip to the right of the element.
      */
@@ -882,49 +1058,38 @@ export const OCCLUSION_MODES: Readonly<{
      * Turns off occlusion, making the tile never fade while tokens are under it.
      */
     NONE: 0;
+
     /**
      * Causes the whole tile to fade when an actor token moves under it.
-     * @defaultValue
      */
     FADE: 1;
+
     /**
-     * Causes the tile to reveal the background in the vicinity of an actor token under it. The radius is determined by the token's size.
+     * Causes the tile to be partially revealed based on the occluded surfaces.
      */
-    RADIAL: 3;
+    SURFACE: 2;
+
     /**
-     * Causes the tile to be partially revealed based on the vision of the actor, which does not need to be under the tile to see what's beneath it.
-     *
-     * @remarks
-     * This is useful for rooves on buildings where players could see through a window or door, viewing only a portion of what is obscured by the roof itself.
+     * Causes the tile to reveal the background in the vicinity of an actor token under it. The radius is determined by
+     * the token's size.
      */
-    VISION: 4;
+    RADIAL: 4;
+
+    /**
+     * Causes the tile to be partially revealed based on the vision of the actor, which does not need to be under the tile
+     * to see what's beneath it.
+     * This is useful for rooves on buildings where players could see through a window or door, viewing only a portion of
+     * what is obscured by the roof itself.
+     */
+    VISION: 8;
 }>;
+
+export type OcclusionMode = (typeof OCCLUSION_MODES)[keyof typeof OCCLUSION_MODES];
 
 /**
  * Alias for old tile occlusion modes definition
  */
-export const TILE_OCCLUSION_MODES: Readonly<{
-    /**
-     * Turns off occlusion, making the tile never fade while tokens are under it.
-     */
-    NONE: 0;
-    /**
-     * Causes the whole tile to fade when an actor token moves under it.
-     * @defaultValue
-     */
-    FADE: 1;
-    /**
-     * Causes the tile to reveal the background in the vicinity of an actor token under it. The radius is determined by the token's size.
-     */
-    RADIAL: 3;
-    /**
-     * Causes the tile to be partially revealed based on the vision of the actor, which does not need to be under the tile to see what's beneath it.
-     *
-     * @remarks
-     * This is useful for rooves on buildings where players could see through a window or door, viewing only a portion of what is obscured by the roof itself.
-     */
-    VISION: 4;
-}>;
+export const TILE_OCCLUSION_MODES: typeof OCCLUSION_MODES;
 
 export type TileOcclusionMode = (typeof TILE_OCCLUSION_MODES)[keyof typeof TILE_OCCLUSION_MODES];
 
@@ -935,23 +1100,27 @@ export const TOKEN_OCCLUSION_MODES: Readonly<{
     /**
      * Owned tokens that aren't hidden.
      */
-    OWNED: 1;
+    OWNED: 0x1;
+
     /**
      * Controlled tokens.
      */
-    CONTROLLED: 2;
+    CONTROLLED: 0x2;
+
     /**
      * Hovered tokens that are visible.
      */
-    HOVERED: 4;
+    HOVERED: 0x4;
+
     /**
      * Highlighted tokens that are visible.
      */
-    HIGHLIGHTED: 8;
+    HIGHLIGHTED: 0x8;
+
     /**
      * All visible tokens.
      */
-    VISIBLE: 16;
+    VISIBLE: 0x10;
 }>;
 
 /**
@@ -963,22 +1132,27 @@ export const TOKEN_DISPLAY_MODES: Readonly<{
      * No information is displayed.
      */
     NONE: 0;
+
     /**
      * Displayed when the token is controlled.
      */
     CONTROL: 10;
+
     /**
      * Displayed when hovered by a GM or a user who owns the actor.
      */
     OWNER_HOVER: 20;
+
     /**
      * Displayed when hovered by any user.
      */
     HOVER: 30;
+
     /**
      * Always displayed for a GM or for a user who owns the actor.
      */
     OWNER: 40;
+
     /**
      * Always displayed for everyone.
      */
@@ -996,14 +1170,17 @@ export const TOKEN_DISPOSITIONS: Readonly<{
      * Displayed with a purple borders for owners and with no borders for others (and no pointer change).
      */
     SECRET: -2;
+
     /**
      * Displayed as an enemy with a red border.
      */
     HOSTILE: -1;
+
     /**
      * Displayed as neutral with a yellow border.
      */
     NEUTRAL: 0;
+
     /**
      * Displayed as an ally with a cyan border.
      */
@@ -1020,10 +1197,12 @@ export const TOKEN_TURN_MARKER_MODES: Readonly<{
      * The turn marker is disabled for this token.
      */
     DISABLED: 0;
+
     /**
      * The turn marker for this token is using the combat tracker settings (which could be disabled).
      */
     DEFAULT: 1;
+
     /**
      * The turn marker is using the token settings (unless the combat tracker turn marker setting is disabled)
      */
@@ -1038,22 +1217,27 @@ export const TOKEN_SHAPES: Readonly<{
      * Ellipse (Variant 1)
      */
     ELLIPSE_1: 0;
+
     /**
      * Ellipse (Variant 2)
      */
     ELLIPSE_2: 1;
+
     /**
      * Trapezoid (Variant 1)
      */
     TRAPEZOID_1: 2;
+
     /**
      * Trapezoid (Variant 2)
      */
     TRAPEZOID_2: 3;
+
     /**
      * Rectangle (Variant 1)
      */
     RECTANGLE_1: 4;
+
     /**
      * Rectangle (Variant 2)
      */
@@ -1073,22 +1257,30 @@ export const USER_ROLES: Readonly<{
      * You can use this role to temporarily or permanently ban a user from joining the game.
      */
     NONE: 0;
+
     /**
      * The User is able to join the game with permissions available to a standard player.
-     * They cannot take some more advanced actions which require Trusted permissions, but they have the basic functionalities needed to operate in the virtual tabletop.
+     * They cannot take some more advanced actions which require Trusted permissions, but they have the basic
+     * functionalities needed to operate in the virtual tabletop.
      */
     PLAYER: 1;
+
     /**
-     * Similar to the Player role, except a Trusted User has the ability to perform some more advanced actions like create drawings, measured templates, or even to (optionally) upload media files to the server.
+     * Similar to the Player role, except a Trusted User has the ability to perform some more advanced actions like create
+     * drawings or even to (optionally) upload media files to the server.
      */
     TRUSTED: 2;
+
     /**
-     * A special User who has many of the same in-game controls as a Game Master User, but does not have the ability to perform administrative actions like changing User roles or modifying World-level settings.
+     * A special User who has many of the same in-game controls as a Game Master User, but does not have the ability to
+     * perform administrative actions like changing User roles or modifying World-level settings.
      */
     ASSISTANT: 3;
+
     /**
-     *  A special User who has administrative control over this specific World.
-     *  Game Masters behave quite differently than Players in that they have the ability to see all Documents and Objects within the world as well as the capability to configure World settings.
+     * A special User who has administrative control over this specific World.
+     * Game Masters behave quite differently than Players in that they have the ability to see all Documents and Objects
+     * within the world as well as the capability to configure World settings.
      */
     GAMEMASTER: 4;
 }>;
@@ -1114,150 +1306,150 @@ export type UserRole = keyof typeof USER_ROLE_NAMES;
  * Define the recognized User capabilities which individual Users or role levels may be permitted to perform
  */
 export const USER_PERMISSIONS: Readonly<{
-    ACTOR_CREATE: {
+    ACTOR_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    BROADCAST_AUDIO: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    BROADCAST_AUDIO: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    BROADCAST_VIDEO: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    BROADCAST_VIDEO: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    CARDS_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    CARDS_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    DRAWING_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    DRAWING_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    ITEM_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    ITEM_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    FILES_BROWSE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    FILES_BROWSE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    FILES_UPLOAD: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    FILES_UPLOAD: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    JOURNAL_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    JOURNAL_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    MACRO_SCRIPT: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    MACRO_SCRIPT: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    MANUAL_ROLLS: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    MANUAL_ROLLS: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    MESSAGE_WHISPER: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    MESSAGE_WHISPER: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    NOTE_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    NOTE_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    PING_CANVAS: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    PING_CANVAS: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    PLAYLIST_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    PLAYLIST_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    SETTINGS_MODIFY: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    REGION_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    SHOW_CURSOR: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    SETTINGS_MODIFY: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    SHOW_RULER: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    SHOW_CURSOR: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    TEMPLATE_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    SHOW_RULER: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    TOKEN_CREATE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    TOKEN_CREATE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    TOKEN_DELETE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    TOKEN_DELETE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 3;
-    };
-    TOKEN_CONFIGURE: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    TOKEN_CONFIGURE: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 2;
-    };
-    WALL_DOORS: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    WALL_DOORS: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
-    QUERY_USER: {
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
+    QUERY_USER: Readonly<{
         label: string;
         hint: string;
-        disableGM: boolean;
-        defaultRole: 1;
-    };
+        requiredRoles: UserRole[];
+        defaultRole: UserRole;
+    }>;
 }>;
 
 export type UserPermission = keyof typeof USER_PERMISSIONS;
@@ -1279,18 +1471,22 @@ export const EDGE_SENSE_TYPES: Readonly<{
      * Senses do not collide with this edge.
      */
     NONE: 0;
+
     /**
      * Senses collide with this edge.
      */
     LIMITED: 10;
+
     /**
      * Senses collide with the second intersection, bypassing the first.
      */
     NORMAL: 20;
+
     /**
      * Senses bypass the edge within a certain proximity threshold.
      */
     PROXIMITY: 30;
+
     /**
      * Senses bypass the edge outside a certain proximity threshold.
      */
@@ -1308,10 +1504,12 @@ export const EDGE_DIRECTIONS: Readonly<{
      * The edge collides from both directions.
      */
     BOTH: 0;
+
     /**
      * The edge collides only when a ray strikes its left side.
      */
     LEFT: 1;
+
     /**
      * The edge collides only when a ray strikes its right side.
      */
@@ -1328,10 +1526,12 @@ export const EDGE_DIRECTION_MODES: Readonly<{
      * The edge direction applies normally.
      */
     NORMAL: 0;
+
     /**
      * The edge direction applies reversed.
      */
     REVERSED: 1;
+
     /**
      * The edge blocks in both directions always.
      */
@@ -1349,10 +1549,12 @@ export const WALL_DOOR_TYPES: Readonly<{
      * The wall does not contain a door.
      */
     NONE: 0;
+
     /**
      *  The wall contains a regular door.
      */
     DOOR: 1;
+
     /**
      * The wall contains a secret door.
      */
@@ -1370,10 +1572,12 @@ export const WALL_DOOR_STATES: Readonly<{
      * The door is closed.
      */
     CLOSED: 0;
+
     /**
      * The door is open.
      */
     OPEN: 1;
+
     /**
      * The door is closed and locked.
      */
@@ -1403,6 +1607,7 @@ export const WALL_MOVEMENT_TYPES: Readonly<{
      * Movement does not collide with this wall.
      */
     NONE: 0;
+
     /**
      * Movement collides with this wall.
      */
@@ -1420,15 +1625,22 @@ export const KEYBINDING_PRECEDENCE: Readonly<{
      * Runs in the first group along with other PRIORITY keybindings.
      */
     PRIORITY: 0;
+
     /**
      * Runs after the PRIORITY group along with other NORMAL keybindings.
      */
     NORMAL: 1;
+
     /**
      * Runs in the last group along with other DEFERRED keybindings.
      */
     DEFERRED: 2;
 }>;
+
+/**
+ * Directories in the public storage path.
+ */
+export const FILE_PICKER_PUBLIC_DIRS: readonly ["cards", "css", "fonts", "icons", "lang", "scripts", "sounds", "ui"];
 
 /**
  * The allowed set of HTML template extensions
@@ -1438,6 +1650,8 @@ export const HTML_FILE_EXTENSIONS: Readonly<{
     hbs: "text/x-handlebars-template";
     html: "text/html";
 }>;
+
+export type HtmlFileExtension = keyof typeof HTML_FILE_EXTENSIONS;
 
 /**
  * The supported file extensions for image-type files, and their corresponding mime types.
@@ -1501,6 +1715,8 @@ export const TEXT_FILE_EXTENSIONS: Readonly<{
     yaml: "application/yaml";
 }>;
 
+export type TextFileExtension = keyof typeof TEXT_FILE_EXTENSIONS;
+
 /**
  * Supported file extensions for font files, and their corresponding mime types.
  */
@@ -1510,6 +1726,8 @@ export const FONT_FILE_EXTENSIONS: Readonly<{
     woff: "font/woff";
     woff2: "font/woff2";
 }>;
+
+export type FontFileExtension = keyof typeof FONT_FILE_EXTENSIONS;
 
 /**
  * Supported file extensions for 3D files, and their corresponding mime types.
@@ -1523,6 +1741,8 @@ export const GRAPHICS_FILE_EXTENSIONS: Readonly<{
     stl: "model/stl";
     usdz: "model/vnd.usdz+zip";
 }>;
+
+export type GraphicsFileExtension = keyof typeof GRAPHICS_FILE_EXTENSIONS;
 
 /**
  * A consolidated mapping of all extensions permitted for upload.
@@ -1578,66 +1798,13 @@ export type FileExtension = keyof typeof UPLOADABLE_FILE_EXTENSIONS;
  * An enumeration of file type categories which can be selected.
  */
 export const FILE_CATEGORIES: Readonly<{
-    HTML: Readonly<{
-        handlebars: "text/x-handlebars-template";
-        hbs: "text/x-handlebars-template";
-        html: "text/html";
-    }>;
-    IMAGE: Readonly<{
-        apng: "image/apng";
-        avif: "image/avif";
-        bmp: "image/bmp";
-        gif: "image/gif";
-        jpeg: "image/jpeg";
-        jpg: "image/jpeg";
-        png: "image/png";
-        svg: "image/svg+xml";
-        tiff: "image/tiff";
-        webp: "image/webp";
-    }>;
-    VIDEO: Readonly<{
-        m4v: "video/mp4";
-        mp4: "video/mp4";
-        ogv: "video/ogg";
-        webm: "video/webm";
-    }>;
-    AUDIO: Readonly<{
-        aac: "audio/aac";
-        flac: "audio/flac";
-        m4a: "audio/mp4";
-        mid: "audio/midi";
-        mp3: "audio/mpeg";
-        ogg: "audio/ogg";
-        opus: "audio/opus";
-        wav: "audio/wav";
-        webm: "audio/webm";
-    }>;
-    TEXT: Readonly<{
-        csv: "text/csv";
-        json: "application/json";
-        md: "text/markdown";
-        pdf: "application/pdf";
-        tsv: "text/tab-separated-values";
-        txt: "text/plain";
-        xml: "application/xml";
-        yml: "application/yaml";
-        yaml: "application/yaml";
-    }>;
-    FONT: Readonly<{
-        otf: "font/otf";
-        ttf: "font/ttf";
-        woff: "font/woff";
-        woff2: "font/woff2";
-    }>;
-    GRAPHICS: Readonly<{
-        fbx: "application/octet-stream";
-        glb: "model/gltf-binary";
-        gltf: "model/gltf+json";
-        mtl: "model/mtl";
-        obj: "model/obj";
-        stl: "model/stl";
-        usdz: "model/vnd.usdz+zip";
-    }>;
+    HTML: typeof HTML_FILE_EXTENSIONS;
+    IMAGE: typeof IMAGE_FILE_EXTENSIONS;
+    VIDEO: typeof VIDEO_FILE_EXTENSIONS;
+    AUDIO: typeof AUDIO_FILE_EXTENSIONS;
+    TEXT: typeof TEXT_FILE_EXTENSIONS;
+    FONT: typeof FONT_FILE_EXTENSIONS;
+    GRAPHICS: typeof GRAPHICS_FILE_EXTENSIONS;
 }>;
 
 export type FileCategory = keyof typeof FILE_CATEGORIES;
@@ -1717,10 +1884,12 @@ export const TIMEOUTS: Readonly<{
      * The default timeout for interacting with the foundryvtt.com API.
      */
     FOUNDRY_WEBSITE: 10000;
+
     /**
      * The specific timeout for loading the list of packages from the foundryvtt.com API.
      */
     PACKAGE_REPOSITORY: 5000;
+
     /**
      * The specific timeout for the IP address lookup service.
      */
@@ -1730,7 +1899,7 @@ export const TIMEOUTS: Readonly<{
 /**
  * A subset of Compendium types which require a specific system to be designated
  */
-export const SYSTEM_SPECIFIC_COMPENDIUM_TYPES: readonly ["Actor", "Item"];
+export const SYSTEM_SPECIFIC_COMPENDIUM_TYPES: readonly ["ActiveEffect", "Actor", "Item"];
 
 /**
  * The configured showdown bi-directional HTML <-> Markdown converter options.
@@ -1756,7 +1925,7 @@ export const ALLOWED_HTML_TAGS: readonly [
     "nav",
     "footer",
     "div",
-    "address",
+    "address", // Structural Elements
     "h1",
     "h2",
     "h3",
@@ -1764,7 +1933,7 @@ export const ALLOWED_HTML_TAGS: readonly [
     "h5",
     "h6",
     "hr",
-    "br",
+    "br", // Headers and Dividers
     "p",
     "blockquote",
     "summary",
@@ -1784,6 +1953,8 @@ export const ALLOWED_HTML_TAGS: readonly [
     "small",
     "time",
     "var",
+    "kbd",
+    "samp", // Text Types
     "dfn",
     "sub",
     "sup",
@@ -1794,14 +1965,14 @@ export const ALLOWED_HTML_TAGS: readonly [
     "u",
     "s",
     "del",
-    "ins",
+    "ins", // Text Styles
     "ol",
     "ul",
     "li",
     "dl",
     "dd",
     "dt",
-    "menu",
+    "menu", // Lists
     "table",
     "thead",
     "tbody",
@@ -1810,7 +1981,7 @@ export const ALLOWED_HTML_TAGS: readonly [
     "th",
     "td",
     "col",
-    "colgroup",
+    "colgroup", // Tables
     "form",
     "input",
     "select",
@@ -1823,7 +1994,7 @@ export const ALLOWED_HTML_TAGS: readonly [
     "optgroup",
     "progress",
     "textarea",
-    "output",
+    "output", // Forms
     "figure",
     "figcaption",
     "caption",
@@ -1834,8 +2005,8 @@ export const ALLOWED_HTML_TAGS: readonly [
     "track",
     "picture",
     "source",
-    "audio",
-    "iframe",
+    "audio", // Media
+    "iframe", // Embedded content
     "color-picker",
     "code-mirror",
     "document-embed",
@@ -1849,6 +2020,7 @@ export const ALLOWED_HTML_TAGS: readonly [
     "secret-block",
     "string-tags",
     "prose-mirror",
+    "formula-input", // Custom elements
 ];
 
 /**
@@ -2002,6 +2174,7 @@ export const SETUP_PACKAGE_PROGRESS: Readonly<{
         SNAPSHOT_MODULES: "snapshotModules";
         SNAPSHOT_SYSTEMS: "snapshotSystems";
         SNAPSHOT_WORLDS: "snapshotWorlds";
+        IMPORT_ADVENTURE: "importAdventure";
     }>;
 }>;
 
@@ -2021,109 +2194,167 @@ export type TextureDataFitMode = (typeof TEXTURE_DATA_FIT_MODES)[number];
  * The maximum depth to recurse to when embedding enriched text.
  */
 export const TEXT_ENRICH_EMBED_MAX_DEPTH: 5;
+
 /**
  * The Region events that are supported by core.
  */
 export const REGION_EVENTS: Readonly<{
     /**
-     * Triggered when the shapes or bottom/top elevation of the Region are changed.
+     * Triggered when the shapes, bottom/top elevation, levels, or restriction of the Region are changed.
+     *
+     * @see {@link foundry.documents.types.RegionRegionBoundaryEvent}
      */
     REGION_BOUNDARY: "regionBoundary";
     /**
-     * Triggered when the Region Behavior becomes active, i.e. is enabled or created without being disabled.
+     * Triggered when the animation state of the Region is changed.
+     *
+     * @see {@link foundry.documents.types.RegionRegionAnimationEvent}
+     */
+    REGION_ANIMATION: "regionAnimation";
+
+    /**
+     * Triggered when the Region Behavior becomes active, i.e. is enabled or created without being disabled
+     * while its Region isn't hidden, or its Region becomes unhidden while it's enabled.
      *
      * The event is triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionBehaviorActivatedEvent}
      */
     BEHAVIOR_ACTIVATED: "behaviorActivated";
+
     /**
-     * Triggered when the Region Behavior becomes inactive, i.e. is disabled or deleted without being disabled.
+     * Triggered when the Region Behavior becomes inactive, i.e. is disabled or deleted without being disabled
+     * while its Region isn't hidden, or its Region becomes hidden while it's enabled.
      *
      * The event is triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionBehaviorDeactivatedEvent}
      */
     BEHAVIOR_DEACTIVATED: "behaviorDeactivated";
+
     /**
      * Triggered when the Region Behavior becomes viewed, i.e. active and the Scene of its Region is viewed.
      *
      * The event is triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionBehaviorViewedEvent}
      */
     BEHAVIOR_VIEWED: "behaviorViewed";
+
     /**
      * Triggered when the Region Behavior becomes unviewed, i.e. inactive or the Scene of its Region is unviewed.
      *
      * The event is triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionBehaviorUnviewedEvent}
      */
     BEHAVIOR_UNVIEWED: "behaviorUnviewed";
+
     /**
      * Triggered when a Token enters a Region.
      *
      * A Token enters a Region whenever ...
      *   - it is created within the Region,
      *   - the boundary of the Region has changed such that the Token is now inside the Region,
-     *   - the Token moves into the Region (the Token's x, y, elevation, width, height, or shape
+     *   - the Token moves into the Region (the Token's x, y, elevation, width, height, depth, shape, or level
      *     has changed such that it is now inside the Region), or
      *   - a Region Behavior becomes active (i.e., is enabled or created while enabled), in which case
      *     the event it triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionTokenEnterEvent}
      */
     TOKEN_ENTER: "tokenEnter";
+
     /**
      * Triggered when a Token exits a Region.
      *
      * A Token exits a Region whenever ...
      *   - it is deleted while inside the Region,
      *   - the boundary of the Region has changed such that the Token is no longer inside the Region,
-     *   - the Token moves out of the Region (the Token's x, y, elevation, width, height, or shape
+     *   - the Token moves out of the Region (the Token's x, y, elevation, width, height, depth, shape, or level
      *     has changed such that it is no longer inside the Region), or
      *   - a Region Behavior becomes inactive (i.e., is disabled or deleted while enabled), in which case
      *     the event it triggered only for this Region Behavior.
+     *
+     * @see {@link foundry.documents.types.RegionTokenExitEvent}
      */
     TOKEN_EXIT: "tokenExit";
+
     /**
      * Triggered when a Token moves into a Region.
      *
-     * A Token moves whenever its x, y, elevation, width, height, or shape is changed.
+     * A Token moves whenever its x, y, elevation, width, height, depth, shape, or level is changed.
+     *
+     * @see {@link foundry.documents.types.RegionTokenMoveInEvent}
      */
     TOKEN_MOVE_IN: "tokenMoveIn";
+
     /**
      * Triggered when a Token moves out of a Region.
      *
-     * A Token moves whenever its x, y, elevation, width, height, or shape is changed.
+     * A Token moves whenever its x, y, elevation, width, height, depth, shape, or level is changed.
+     *
+     * @see {@link foundry.documents.types.RegionTokenMoveOutEvent}
      */
     TOKEN_MOVE_OUT: "tokenMoveOut";
+
     /**
      * Triggered when a Token moves within a Region.
      *
-     * A token moves whenever its x, y, elevation, width, height, or shape is changed.
+     * A token moves whenever its x, y, elevation, width, height, depth, shape, or level is changed.
+     *
+     * @see {@link foundry.documents.types.RegionTokenMoveWithinEvent}
      */
     TOKEN_MOVE_WITHIN: "tokenMoveWithin";
+
     /**
      * Triggered when a Token animates into a Region.
      *
      * This event is only triggered only if the Scene the Token is in is viewed.
+     *
+     * @see {@link foundry.documents.types.RegionTokenAnimateInEvent}
      */
     TOKEN_ANIMATE_IN: "tokenAnimateIn";
+
     /**
      * Triggered when a Token animates out of a Region.
      *
      * This event is triggered only if the Scene the Token is in is viewed.
+     *
+     * @see {@link foundry.documents.types.RegionTokenAnimateOutEvent}
      */
     TOKEN_ANIMATE_OUT: "tokenAnimateOut";
+
     /**
      * Triggered when a Token starts its Combat turn in a Region.
+     *
+     * @see {@link foundry.documents.types.RegionTokenTurnStartEvent}
      */
     TOKEN_TURN_START: "tokenTurnStart";
+
     /**
      * Triggered when a Token ends its Combat turn in a Region.
+     *
+     * @see {@link foundry.documents.types.RegionTokenTurnEndEvent}
      */
     TOKEN_TURN_END: "tokenTurnEnd";
+
     /**
      * Triggered when a Token starts the Combat round in a Region.
+     *
+     * @see {@link foundry.documents.types.RegionTokenRoundStartEvent}
      */
     TOKEN_ROUND_START: "tokenRoundStart";
+
     /**
      * Triggered when a Token ends the Combat round in a Region.
+     *
+     * @see {@link foundry.documents.types.RegionTokenRoundEndEvent}
      */
     TOKEN_ROUND_END: "tokenRoundEnd";
 }>;
+
+export type RegionEventType = (typeof REGION_EVENTS)[keyof typeof REGION_EVENTS];
 
 /**
  * The possible visibility state of Region.
@@ -2155,7 +2386,7 @@ export const REGION_VISIBILITY: Readonly<{
     ALWAYS: 2;
 }>;
 
-export type RegionVisibility = (typeof REGION_VISIBILITY)[keyof typeof REGION_VISIBILITY];
+export type RegionVisibilityType = (typeof REGION_VISIBILITY)[keyof typeof REGION_VISIBILITY];
 
 /**
  * The types of a Region movement segment.
@@ -2165,10 +2396,12 @@ export const REGION_MOVEMENT_SEGMENTS: Readonly<{
      * The segment crosses the boundary of the Region and exits it.
      */
     EXIT: -1;
+
     /**
      * The segment does not cross the boundary of the Region and is contained within it.
      */
     MOVE: 0;
+
     /**
      * The segment crosses the boundary of the Region and enters it.
      */
@@ -2185,10 +2418,12 @@ export const SETTING_SCOPES: Readonly<{
      * Settings scoped to the client device. Stored in localStorage.
      */
     CLIENT: "client";
+
     /**
      * Settings scoped to the game World. Applies to all Users in the World. Stored in the Settings database.
      */
     WORLD: "world";
+
     /**
      * Settings scoped to an individual User in the World. Stored in the Settings database.
      */
@@ -2200,6 +2435,11 @@ export const SETTING_SCOPES: Readonly<{
  * @type {number}
  */
 export const CLIPPER_SCALING_FACTOR: 100;
+
+/**
+ * A threshold of time in milliseconds after which a player is considered idle if they have no observed activity.
+ */
+export const IDLE_THRESHOLD_MS: 300000; // 5 minutes
 
 export type DrawingShapeType = "r" | "e" | "t" | "p" | "f";
 export type ShapeDataType = keyof typeof data.BaseShapeData.TYPES;

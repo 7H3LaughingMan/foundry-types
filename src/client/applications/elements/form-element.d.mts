@@ -32,7 +32,8 @@ export default abstract class AbstractFormInputElement<TInternalValue, TInputVal
 
     /** The input element name. */
     get name(): string;
-    set name(value);
+
+    set name(value: string);
 
     /** The value of the input element. */
     get value(): TInputValue;

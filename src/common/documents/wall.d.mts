@@ -1,4 +1,4 @@
-import { EdgeDirection, EdgeSenseType, WallDoorState, WallDoorType, WallMovementType } from "#common/constants.mjs";
+import { EdgeDirection, WallDoorState, WallDoorType, WallMovementType, WallSenseType } from "#common/constants.mjs";
 import { Document, DocumentMetadata } from "../abstract/_module.mjs";
 import * as fields from "../data/fields.mjs";
 import BaseScene from "./scene.mjs";
@@ -33,32 +33,40 @@ interface WallMetadata extends DocumentMetadata {
 }
 
 type WallSchema = {
+    /** The _id which uniquely identifies the embedded Wall document */
     _id: fields.DocumentIdField;
+    /** The wall coordinates, a length-4 array of finite numbers [x0,y0,x1,y1] */
     c: fields.ArrayField<fields.NumberField<number, number, true, false, true>, [number, number, number, number], [number, number, number, number]>;
-    levels: fields.SceneLevelsSetField;
-    light: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
+    /** The illumination restriction type of this wall */
+    light: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
+    /** The movement restriction type of this wall */
     move: fields.NumberField<WallMovementType, WallMovementType, true, true, true>;
-    sight: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
-    sound: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
+    /** The visual restriction type of this wall */
+    sight: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
+    /** The auditory restriction type of this wall */
+    sound: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
+    /** The direction of effect imposed by this wall */
     dir: fields.NumberField<EdgeDirection, EdgeDirection, true, true, true>;
+    /** The type of door which this wall contains, if any */
     door: fields.NumberField<WallDoorType, WallDoorType, true, true, true>;
+    /** The state of the door this wall contains, if any */
     ds: fields.NumberField<WallDoorState, WallDoorState, true, true, true>;
     doorSound: fields.StringField<string, string, false, false, false>;
-    threshold: fields.SchemaField<{
-        light: fields.NumberField<number, number, true, true, true>;
-        sight: fields.NumberField<number, number, true, true, true>;
-        sound: fields.NumberField<number, number, true, true, true>;
-        attenuation: fields.BooleanField;
-    }>;
-    animation: fields.SchemaField<{
-        direction: fields.NumberField<-1 | 1, -1 | 1, false, false, true>;
-        double: fields.BooleanField;
-        duration: fields.NumberField<number, number, false, false, true>;
-        flip: fields.BooleanField;
-        strength: fields.NumberField<number, number, false, false, true>;
-        type: fields.StringField<string, string, false, false, true>;
-    }>;
+    /** Configuration of threshold data for this wall */
+    threshold: fields.SchemaField<WallThresholdSchema>;
+    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
+};
+
+type WallThresholdSchema = {
+    /** Minimum distance from a light source for which this wall blocks light */
+    light: fields.NumberField<number, number, true, true, true>;
+    /** Minimum distance from a vision source for which this wall blocks vision */
+    sight: fields.NumberField<number, number, true, true, true>;
+    /** Minimum distance from a sound source for which this wall blocks sound */
+    sound: fields.NumberField<number, number, true, true, true>;
+    /** Whether to attenuate the source radius when passing through the wall */
+    attenuation: fields.BooleanField;
 };
 
 export type WallSource = fields.SourceFromSchema<WallSchema>;

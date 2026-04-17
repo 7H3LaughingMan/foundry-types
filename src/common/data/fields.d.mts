@@ -1,5 +1,5 @@
 import { DocumentUUID } from "#client/utils/helpers.mjs";
-import { DocumentOwnershipLevel, FilePath, HexColorString } from "#common/constants.mjs";
+import { DocumentOwnershipNumber, FilePath, HexColorString } from "#common/constants.mjs";
 import * as abstract from "../abstract/_module.mjs";
 import { EffectChangeData } from "../documents/active-effect.mjs";
 import Collection from "../utils/collection.mjs";
@@ -1141,8 +1141,8 @@ export class HueField<TRequired extends boolean = true, TNullable extends boolea
 }
 
 /** A special `ObjectField` which captures a mapping of User IDs to Document permission levels. */
-export class DocumentOwnershipField extends ObjectField<{ [K in string]?: DocumentOwnershipLevel }> {
-    protected static override get _defaults(): ObjectFieldOptions<Record<string, DocumentOwnershipLevel | undefined>, true, false, true>;
+export class DocumentOwnershipField extends ObjectField<{ [K in string]?: DocumentOwnershipNumber }> {
+    protected static override get _defaults(): ObjectFieldOptions<Record<string, DocumentOwnershipNumber | undefined>, true, false, true>;
 
     protected override _validateType(value: object): boolean | void;
 }

@@ -23,21 +23,25 @@ interface CombatantMetadata extends DocumentMetadata {
 
 /** The data schema for a Combat document. */
 type CombatantSchema = {
+    /** The _id which uniquely identifies this Combatant embedded document */
     _id: fields.DocumentIdField;
-    type: fields.DocumentTypeField<string, string, true, false, true, BaseCombatant>;
-    system: fields.TypeDataField;
+    /** The _id of an Actor associated with this Combatant */
     actorId: fields.ForeignDocumentField<string>;
+    /** The _id of a Token associated with this Combatant */
     tokenId: fields.ForeignDocumentField<string>;
     sceneId: fields.ForeignDocumentField<string>;
+    /** A customized name which replaces the name of the Token in the tracker */
     name: fields.StringField<string, string, false, false, true>;
+    /** A customized image which replaces the Token image in the tracker */
     img: fields.FilePathField<ImageFilePath>;
+    /** The initiative score for the Combatant which determines its turn order */
     initiative: fields.NumberField;
+    /** Is this Combatant currently hidden? */
     hidden: fields.BooleanField;
+    /** Has this Combatant been defeated? */
     defeated: fields.BooleanField;
-    group: fields.DocumentIdField;
-    roundJoints: fields.NumberField;
+    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
-    _stats: fields.DocumentStatsField;
 };
 
 export type CombatantSource = fields.SourceFromSchema<CombatantSchema>;

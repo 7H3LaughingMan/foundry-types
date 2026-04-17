@@ -31,7 +31,6 @@ type PlaylistSchema = {
     name: fields.StringField<string, string, true, false, false>;
     description: fields.StringField;
     sounds: fields.EmbeddedCollectionField<BasePlaylistSound<BasePlaylist>>;
-    channel: fields.StringField<string, string, true, false, true>;
     mode: fields.NumberField<PlaylistMode, PlaylistMode, true>;
     playing: fields.BooleanField;
     fade: fields.NumberField;

@@ -1,4 +1,4 @@
-import { DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath, UserAction } from "#common/constants.mjs";
+import { DocumentOwnershipLevel, ImageFilePath, UserAction } from "#common/constants.mjs";
 import * as abstract from "../abstract/_module.mjs";
 import * as fields from "../data/fields.mjs";
 import { BaseActiveEffect, BaseActor, BaseFolder, BaseUser, ItemUUID } from "./_module.mjs";
@@ -35,7 +35,7 @@ export default class BaseItem<TParent extends BaseActor | null = BaseActor | nul
 
     override canUserModify(user: BaseUser, action: UserAction, data?: Record<string, unknown>): boolean;
 
-    override testUserPermission(user: BaseUser, permission: DocumentOwnershipString | DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
+    override testUserPermission(user: BaseUser, permission: DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
 }
 
 export default interface BaseItem<TParent extends BaseActor | null = BaseActor | null>
@@ -59,16 +59,27 @@ interface ItemMetadata extends abstract.DocumentMetadata {
 }
 
 export type ItemSchema<TType extends string = string, TSystemSource extends object = object> = {
+    /** The _id which uniquely identifies this Item document */
     _id: fields.DocumentIdField;
+    /** The name of this Item */
     name: fields.StringField<string, string, true, false, false>;
+    /** An Item subtype which configures the system data model applied */
     type: fields.StringField<TType, TType, true, false, false>;
+    /** An image file path which provides the artwork for this Item */
     img: fields.FilePathField<ImageFilePath, ImageFilePath, false, true, true>;
+    /** The system data object which is defined by the system template.json model */
     system: fields.TypeDataField<TSystemSource>;
+    /** A collection of ActiveEffect embedded Documents */
     effects: fields.EmbeddedCollectionField<BaseActiveEffect<BaseItem<BaseActor | null>>>;
+    /** The _id of a Folder which contains this Item */
     folder: fields.ForeignDocumentField<BaseFolder>;
+    /** The numeric sort value which orders this Item relative to its siblings */
     sort: fields.IntegerSortField;
+    /** An object which configures ownership of this Item */
     ownership: fields.DocumentOwnershipField;
+    /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
+    /** An object of creation and access information */
     _stats: fields.DocumentStatsField<ItemUUID>;
 };
 

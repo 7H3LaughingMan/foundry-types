@@ -21,13 +21,14 @@ import { default as FogExploration } from "./fog-exploration.mjs";
 import { default as Folder } from "./folder.mjs";
 import { default as Item } from "./item.mjs";
 import { default as JournalEntry } from "./journal-entry.mjs";
+import { default as Level } from "./level.d.mjs";
 import { default as Macro } from "./macro.mjs";
 import { default as Playlist } from "./playlist.mjs";
 import { default as RollTable } from "./roll-table.mjs";
 import { default as Scene } from "./scene.mjs";
 import { default as User } from "./user.mjs";
 
-export { Actor, Cards, ChatMessage, Combat, FogExploration, Folder, Item, JournalEntry, Macro, Playlist, RollTable, Scene, User };
+export { Actor, Cards, ChatMessage, Combat, FogExploration, Folder, Item, JournalEntry, Level, Macro, Playlist, RollTable, Scene, User };
 
 // Embedded Documents
 export { default as ActiveEffect } from "./active-effect.mjs";

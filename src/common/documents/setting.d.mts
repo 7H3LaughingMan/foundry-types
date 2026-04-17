@@ -43,7 +43,6 @@ type SettingSchema = {
     _id: fields.DocumentIdField;
     key: fields.StringField<string, string, true>;
     value: fields.JSONField<NonNullable<JSONValue>, true, true, false>;
-    user: fields.ForeignDocumentField<string, true, true, false>;
     _stats: fields.DocumentStatsField;
 };
 

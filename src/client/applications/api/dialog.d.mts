@@ -69,7 +69,19 @@ export default class DialogV2<
      *             or the value returned by that button's callback. If the dialog was
      *             dismissed, and rejectClose is false, the Promise resolves to null.
      */
-    static prompt({ ok, ...options }: { ok: Partial<DialogV2Button> } & DeepPartial<DialogV2Configuration & DialogV2WaitOptions>): Promise<unknown>;
+    static prompt({ ok, ...config }: { ok: Partial<DialogV2Button> } & DeepPartial<DialogV2Configuration & DialogV2WaitOptions>): Promise<unknown>;
+
+    /**
+     * A utility helper to generate a dialog for user input.
+     * @param [ok]   Options to overwrite the default confirmation button configuration.
+     * @returns     Resolves to the data of the form if the ok button was pressed,
+     *              or the value returned by that button's callback. If additional
+     *              buttons were provided, the Promise resolves to the identifier of
+     *              the one that was pressed, or the value returned by its callback.
+     *              If the dialog was dismissed, and rejectClose is false, the Promise
+     *              resolves to null.
+     */
+    static input<T>({ ok, ...config }: { ok: Partial<DialogV2Button<T>> } & DeepPartial<DialogV2Configuration & DialogV2WaitOptions>): Promise<T>;
 
     /**
      * Spawn a dialog and wait for it to be dismissed or submitted.
@@ -115,7 +127,7 @@ export default class DialogV2<
     static _handleQuery: (options: { type: "prompt" | "confirm" | "input" | "wait"; config: object }) => unknown;
 }
 
-export interface DialogV2Button {
+export interface DialogV2Button<T = unknown> {
     /** The button action identifier. */
     action: string;
 
@@ -147,7 +159,7 @@ export interface DialogV2Button {
      * A function to invoke when the button is clicked. The value returned from this function will be used as the
      * dialog's submitted value. Otherwise, the button's identifier is used.
      */
-    callback?: DialogV2ButtonCallback;
+    callback?: DialogV2ButtonCallback<T>;
 }
 
 export interface DialogV2Configuration extends ApplicationConfiguration {
@@ -191,7 +203,7 @@ export interface DialogV2WaitOptions {
  * @param button If the form was submitted via keyboard, this will be the default
  * @param dialog The dialog element.
  */
-export type DialogV2ButtonCallback = (event: PointerEvent | SubmitEvent, button: HTMLButtonElement, dialog: DialogV2) => Promise<unknown> | unknown;
+export type DialogV2ButtonCallback<T = unknown> = (event: PointerEvent | SubmitEvent, button: HTMLButtonElement, dialog: DialogV2) => Promise<T> | T;
 
 /**
  * A dialog render handler method.

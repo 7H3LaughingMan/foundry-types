@@ -31,7 +31,7 @@ export default class CombatTracker<TCombat extends Combat | null = Combat | null
      */
     get viewed(): TCombat;
 
-    set viewed(combat);
+    set viewed(combat: TCombat);
 
     /* -------------------------------------------- */
     /*  Rendering                                   */

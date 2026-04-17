@@ -14,6 +14,7 @@ import { Actor, ChatMessage, Combat, Item, JournalEntry, JournalEntryPage, Macro
 import { DocumentUUID } from "#client/utils/helpers.mjs";
 import { DatabaseCreateOperation } from "#common/abstract/_types.mjs";
 import Document from "#common/abstract/document.mjs";
+import { ProseMirrorDropDownConfig } from "#common/prosemirror/_types.mjs";
 import type ApplicationV2 from "../applications/api/application.mjs";
 import type TokenHUD from "../applications/hud/token-hud.mjs";
 import { ChatLog, CompendiumDirectory, ItemDirectory, Settings } from "../applications/sidebar/tabs/_module.mjs";
@@ -159,7 +160,6 @@ export default class Hooks {
      * @param hook  The unique name of the hooked event
      * @param fn    The function, or ID number for the function, that should be turned off
      */
-
     static off(hook: string, fn: ((...args: any[]) => boolean | void | Promise<boolean | void>) | number): void;
 
     /**

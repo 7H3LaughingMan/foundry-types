@@ -166,11 +166,11 @@ declare namespace ChatMessage {
 export default ChatMessage;
 
 export interface ChatMessageCreateCallbackOptions extends DatabaseCreateCallbackOptions {
-    mode?: ChatMessageMode;
+    messageMode?: ChatMessageMode;
 }
 
 export interface ChatMessageCreateOperation extends DatabaseCreateOperation<null> {
-    mode?: ChatMessageMode;
+    messageMode?: ChatMessageMode;
 }
 
 export interface ChatMessageRenderData {

@@ -39,11 +39,12 @@ declare global {
         export import User = foundry.documents.User;
         export import WallDocument = foundry.documents.WallDocument;
 
-        export import Color = foundry.utils.Color;
-        export import Collection = foundry.utils.Collection;
-        export import fromUuid = foundry.utils.fromUuid;
-        export import fromUuidSync = foundry.utils.fromUuidSync;
         export import Roll = foundry.dice.Roll;
+
+        export import Collection = foundry.utils.Collection;
+        export import Color = foundry.utils.Color;
+        export import fromUuidSync = foundry.utils.fromUuidSync;
+        export import fromUuid = foundry.utils.fromUuid;
     }
 }
 

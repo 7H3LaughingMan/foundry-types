@@ -1,8 +1,8 @@
 import { DatabaseCreateCallbackOptions } from "#common/abstract/_types.mjs";
-import { ActiveEffectDurationUnit, DocumentOwnershipLevel, DocumentOwnershipString, ImageFilePath, UserAction } from "#common/constants.mjs";
+import { ActiveEffectDurationUnit, ActiveEffectShowIcon, DocumentOwnershipLevel, ImageFilePath, UserAction } from "#common/constants.mjs";
 import { Document, DocumentMetadata } from "../abstract/_module.mjs";
 import * as fields from "../data/fields.mjs";
-import { ActorUUID, BaseActor, BaseCombat, BaseFolder, BaseItem, BaseUser, ItemUUID } from "./_module.mjs";
+import { ActorUUID, BaseActor, BaseCombat, BaseItem, BaseUser, ItemUUID } from "./_module.mjs";
 
 /**
  * The ActiveEffect document model.
@@ -24,7 +24,7 @@ export default class BaseActiveEffect<TParent extends BaseActor | BaseItem<BaseA
 
     override canUserModify(user: BaseUser, action: UserAction, data?: object): boolean;
 
-    override testUserPermission(user: BaseUser, permission: DocumentOwnershipString | DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
+    override testUserPermission(user: BaseUser, permission: DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
 
     /* -------------------------------------------- */
     /*  Database Event Handlers                     */
@@ -48,42 +48,55 @@ export interface ActiveEffectMetadata extends DocumentMetadata {
 type ActiveEffectSchema = {
     _id: fields.DocumentIdField;
     name: fields.StringField<string, string, true, false, false>;
-    img: fields.FilePathField<ImageFilePath>;
-    type: fields.StringField<string, string, false, true, true>;
     system: fields.TypeDataField;
+    type: fields.StringField<string, string, false, true, true>;
     disabled: fields.BooleanField;
-    start: fields.SchemaField<EffectStartSchema>;
+    start: fields.SchemaField<EffectStartSchema, EffectStartSource, EffectStartData, true, true, true>;
     duration: fields.SchemaField<EffectDurationSchema>;
     description: fields.HTMLField;
-    origin: fields.StringField<ActorUUID | ItemUUID, ActorUUID | ItemUUID, false, true, true>;
+    img: fields.FilePathField<ImageFilePath>;
+    origin: fields.DocumentUUIDField<ActorUUID | ItemUUID>;
     tint: fields.ColorField;
     transfer: fields.BooleanField;
     statuses: fields.SetField<fields.StringField<string, string, true, false, false>>;
-    showIcon: fields.NumberField<0 | 1 | 2, 0 | 1 | 2, true, false, true>;
-    folder: fields.ForeignDocumentField<BaseFolder>;
-    sort: fields.IntegerSortField;
+    showIcon: fields.NumberField<ActiveEffectShowIcon, ActiveEffectShowIcon, true, false, true>;
     flags: fields.DocumentFlagsField;
     _stats: fields.DocumentStatsField;
+};
+
+type EffectChangeSchema = {
+    type: fields.StringField<string, string, true, false, true>;
+    value: fields.AnyField;
+    phase: fields.StringField<string, string, true, false, true>;
+    priority: fields.NumberField;
 };
 
 type EffectStartSchema = {
     combat: fields.ForeignDocumentField<BaseCombat>;
     combatant: fields.ForeignDocumentField<string>;
-    initiative: fields.NumberField<number, number, true, true, true>;
-    round: fields.NumberField<number, number, true, true, true>;
-    turn: fields.NumberField<number, number, true, true, true>;
-    time: fields.NumberField<number, number, true, false, true>;
+    initiative: fields.NumberField<number, number, true>;
+    round: fields.NumberField<number, number, true>;
+    turn: fields.NumberField<number, number, true>;
+    time: fields.NumberField<number, number, true, false>;
 };
+
+export type EffectStartSource = fields.SourceFromSchema<EffectStartSchema>;
+interface EffectStartData extends fields.ModelPropsFromSchema<EffectStartSchema> {
+    value: number;
+}
 
 type EffectDurationSchema = {
     value: fields.NumberField<number, number, true, true, true>;
-    units: fields.StringField<ActiveEffectDurationUnit, ActiveEffectDurationUnit, true, false, true>;
-    expiry: fields.StringField<string, string, true, false, true>;
+    units: fields.StringField<ActiveEffectDurationUnit, ActiveEffectDurationUnit, true, true, true>;
+    expiry: fields.StringField<string, string, true, true, true>;
     expired: fields.BooleanField;
 };
 
+export type EffectDurationSource = fields.SourceFromSchema<EffectDurationSchema>;
+export type EffectDurationData = fields.ModelPropsFromSchema<EffectDurationSchema>;
+
 export type ActiveEffectSource = fields.SourceFromSchema<ActiveEffectSchema>;
 
-export type EffectStartSource = fields.SourceFromSchema<EffectStartSchema>;
-export type EffectDurationSource = fields.SourceFromSchema<EffectDurationSchema>;
-export type EffectDurationData = BaseActiveEffect<null>["duration"];
+export type EffectChangeData = fields.SourceFromSchema<EffectChangeSchema>;
+
+export {};

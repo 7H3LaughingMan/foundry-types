@@ -27,7 +27,7 @@ export class RegionPolygonTreeNode {
     /**
      * The children of this node.
      */
-    get children(): ReadonlyArray<RegionPolygonTreeNode>;
+    get children(): readonly RegionPolygonTreeNode[];
 
     /**
      * The depth of this node.
@@ -46,7 +46,7 @@ export class RegionPolygonTreeNode {
      * It is empty in case of the root node.
      * @type {}
      */
-    get clipperPath(): ReadonlyArray<ClipperLib.IntPoint> | null;
+    get clipperPath(): readonly ClipperLib.IntPoint[] | null;
 
     /**
      * The polygon of this node.
@@ -58,7 +58,7 @@ export class RegionPolygonTreeNode {
      * The points of the polygon ([x0, y0, x1, y1, ...]).
      * They are `null` in case of the root node.
      */
-    get points(): ReadonlyArray<number> | null;
+    get points(): readonly number[] | null;
 
     /**
      * The bounds of the polygon.

@@ -1,6 +1,6 @@
 import { DocumentUUID } from "#client/utils/helpers.mjs";
 import { DocumentConstructionContext } from "#common/_types.mjs";
-import { DocumentOwnershipLevel, DocumentOwnershipString, UserAction, UserPermission, UserRoleName } from "#common/constants.mjs";
+import { DocumentOwnershipLevel, DocumentOwnershipNumber, UserAction, UserPermission, UserRoleName } from "#common/constants.mjs";
 import BaseUser from "#common/documents/user.mjs";
 import { AppV1RenderOptions } from "../../client/appv1/api/application-v1.mjs";
 import { DataField, SourceFromSchema } from "../data/fields.mjs";
@@ -122,7 +122,7 @@ export default abstract class Document<TParent extends Document | null = _Docume
      * @param user The User being tested
      * @returns A numeric permission level from CONST.DOCUMENT_OWNERSHIP_LEVELS
      */
-    getUserLevel(user: BaseUser): DocumentOwnershipLevel;
+    getUserLevel(user: BaseUser): DocumentOwnershipNumber;
 
     /**
      * Test whether a certain User has a requested permission level (or greater) over the Document
@@ -132,7 +132,7 @@ export default abstract class Document<TParent extends Document | null = _Docume
      * @param [options.exact=false] Require the exact permission level requested?
      * @return Does the user have this permission level over the Document?
      */
-    testUserPermission(user: BaseUser, permission: DocumentOwnershipString | DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
+    testUserPermission(user: BaseUser, permission: DocumentOwnershipLevel, { exact }?: { exact?: boolean }): boolean;
 
     /**
      * Test whether a given User has permission to perform some action on this Document
@@ -197,7 +197,6 @@ export default abstract class Document<TParent extends Document | null = _Docume
      * @param user The User being tested
      * @returns A numeric permission level from CONST.DOCUMENT_OWNERSHIP_LEVELS or null
      */
-    getUserLevel(user: BaseUser): DocumentOwnershipLevel | null;
 
     /* -------------------------------------------- */
     /*  Database Operations                         */

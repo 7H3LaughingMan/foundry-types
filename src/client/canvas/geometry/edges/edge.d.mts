@@ -1,6 +1,6 @@
 import PlaceableObject from "#client/canvas/placeables/placeable-object.mjs";
 import { Point } from "#common/_types.mjs";
-import { EdgeSenseType } from "#common/constants.mjs";
+import { WallSenseType } from "#common/constants.mjs";
 import PolygonVertex from "./vertex.mjs";
 
 /**
@@ -45,16 +45,16 @@ export default class Edge {
     id?: string;
 
     /** How this edge restricts light. */
-    light: EdgeSenseType;
+    light: WallSenseType;
 
     /** How this edge restricts movement. */
-    move: EdgeSenseType;
+    move: WallSenseType;
 
     /** How this edge restricts sight. */
-    sight: EdgeSenseType;
+    sight: WallSenseType;
 
     /** How this edge restricts sound. */
-    sound: EdgeSenseType;
+    sound: WallSenseType;
 
     /** Specialized threshold data for this edge. */
     threshold?: unknown;
@@ -127,13 +127,13 @@ interface EdgeOptions {
     object?: PlaceableObject;
     type?: EdgeTypes;
     /** How this edge restricts light */
-    light?: EdgeSenseType;
+    light?: WallSenseType;
     /** How this edge restricts movement */
-    move?: EdgeSenseType;
+    move?: WallSenseType;
     /** How this edge restricts sight */
-    sight?: EdgeSenseType;
+    sight?: WallSenseType;
     /** How this edge restricts sound */
-    sound?: EdgeSenseType;
+    sound?: WallSenseType;
     /** A direction of effect for the edge */
     direction?: number;
     /** Configuration of threshold data for this edge */

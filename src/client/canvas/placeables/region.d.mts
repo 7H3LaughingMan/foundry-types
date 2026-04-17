@@ -4,6 +4,7 @@ import RegionDocument from "#client/documents/region.mjs";
 import Scene from "#client/documents/scene.mjs";
 import User from "#client/documents/user.mjs";
 import { DatabaseUpdateCallbackOptions } from "#common/abstract/_types.mjs";
+import * as ClipperLib from "js-angusj-clipper";
 import { Point } from "../../../common/_types.mjs";
 import PlaceableObject from "./placeable-object.mjs";
 import RegionGeometry from "./regions/geometry.mjs";

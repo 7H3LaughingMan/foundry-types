@@ -7,7 +7,6 @@ import FormDataExtended from "../ux/form-data-extended.mjs";
 /**
  * The Application responsible for configuring a single Scene document.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default class SceneConfig<TDocument extends Scene> extends HandlebarsApplicationMixin(DocumentSheetV2) {
     static override DEFAULT_OPTIONS: DeepPartial<DocumentSheetConfiguration>;
 
@@ -15,13 +14,13 @@ export default class SceneConfig<TDocument extends Scene> extends HandlebarsAppl
 
     static override TABS: Record<string, ApplicationTabsConfiguration>;
 
-    protected override _prepareContext(options: HandlebarsRenderOptions): Promise<DocumentSheetRenderContext>;
+    protected override _prepareContext(options: HandlebarsRenderOptions): Promise<DocumentSheetRenderContext<TDocument>>;
 
     protected override _preparePartContext(
         partId: string,
-        context: DocumentSheetRenderContext,
+        context: DocumentSheetRenderContext<TDocument>,
         options: HandlebarsRenderOptions,
-    ): Promise<DocumentSheetRenderContext>;
+    ): Promise<DocumentSheetRenderContext<TDocument>>;
 
     override changeTab(tab: string, group: string, options?: { event?: Event; navElement?: HTMLElement; force?: boolean; updatePosition?: boolean }): void;
 

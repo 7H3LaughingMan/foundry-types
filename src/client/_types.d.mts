@@ -10,14 +10,7 @@ import { PingData } from "./canvas/interaction/_types.mjs";
 import AmbientLight from "./canvas/placeables/light.mjs";
 import Token, { TokenShape } from "./canvas/placeables/token.mjs";
 import PointVisionSource from "./canvas/sources/point-vision-source.mjs";
-import {
-    SceneDimensions,
-    TokenDocument,
-    TokenGetCompleteMovementPathWaypoint,
-    TokenMeasuredMovementWaypoint,
-    TokenMovementSegmentData,
-    TokenMovementWaypoint,
-} from "./documents/_module.mjs";
+import { SceneDimensions, TokenDocument, TokenMeasuredMovementWaypoint, TokenMovementSegmentData, TokenMovementWaypoint } from "./documents/_module.mjs";
 import { Color } from "./utils/_module.mjs";
 
 export interface HotReloadData {
@@ -68,6 +61,11 @@ export interface RulerWaypoint {
      * The next waypoint, if any.
      */
     next: RulerWaypoint | null;
+}
+
+interface TokenCreateTerrainMovementPathOptions {
+    /** Constrain a preview path? Default: `false`. */
+    preview?: boolean;
 }
 
 export interface TokenFindMovementPathWaypoint {
@@ -312,7 +310,7 @@ export interface TokenMovementContinuationData {
     /**
      * Resolve function of the wait promise
      */
-    resolveWaitPromise: () => {} | undefined;
+    resolveWaitPromise: () => object | undefined;
     /**
      * The promise that resolves after the update workflow
      */
@@ -323,7 +321,7 @@ export interface TokenMovementContinuationData {
     states: {
         [movementId: string]: {
             handles: Map<string | symbol, TokenMovementContinuationHandle>;
-            callbacks: Array<(continued: boolean) => void>;
+            callbacks: ((continued: boolean) => void)[];
             pending: Set<string>;
         };
     };
@@ -418,10 +416,6 @@ export interface TokenFindMovementPathJob {
      */
     cancel: () => void;
 }
-
-export interface TokenGetTerrainMovementPathWaypoint extends Omit<TokenGetCompleteMovementPathWaypoint, "terrain"> {}
-
-export interface TokenTerrainMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "cost"> {}
 
 export interface TokenRulerData {
     /** The waypoints that were already passed by the Token */
@@ -669,6 +663,25 @@ export interface TokenAnimationOptions {
 
     /** An on-tick callback. */
     ontick?: (elapsedMS: number, animation: CanvasAnimationData, data: TokenAnimationData) => void;
+}
+
+interface TokenPanningOptions {
+    /** The type of the transition animation. Default: `null` (no transition animation). */
+    transitionType?: string;
+    /**
+     * The duration of the pan or transition animation. Default: `250` for panning or the default duration of the
+     * given transition type.
+     */
+    duration?: number;
+    /** The speed of the panning animation in pixels per second; overrides `duration` if set.*/
+    speed?: number;
+    /** The easing function used for the panning animation. Default: `"easeInOutCosine"`. */
+    easing?: string | Function;
+    /**
+     * If false, the canvas is not panned to the token if the token is already onscreen. Otherwise the canvas is panned
+     * such that the token is in the center of the screen. Default: `false`.
+     */
+    force?: boolean;
 }
 
 export type TokenMovementActionCostFunction = (
@@ -985,8 +998,6 @@ export interface SettingConfig<TChoices extends Record<string, unknown> | undefi
     default?: number | string | boolean | object | (() => number | string | boolean | object);
     /** Executes when the value of this Setting changes */
     onChange?: (choice: TChoices extends object ? keyof TChoices : unknown) => void | Promise<void>;
-    /** The combination of `{namespace}.{key}` */
-    id?: string;
 }
 
 export interface SettingSubmenuConfig {
