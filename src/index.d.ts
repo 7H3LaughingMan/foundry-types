@@ -67,6 +67,7 @@ declare global {
             JournalEntry: typeof foundry.documents.JournalEntry;
             JournalEntryCategory: typeof foundry.documents.JournalEntryCategory;
             JournalEntryPage: typeof foundry.documents.JournalEntryPage;
+            Level: typeof foundry.documents.Level;
             Macro: typeof foundry.documents.Macro;
             Note: typeof foundry.documents.NoteDocument;
             Playlist: typeof foundry.documents.Playlist;
