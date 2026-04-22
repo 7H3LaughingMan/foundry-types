@@ -26,8 +26,6 @@ declare global {
         export import CONST = constants;
         export import Hooks = foundry.helpers.Hooks;
         export import PIXI = PixiJS;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         export import foundry = globalFoundry;
         export import io = SocketIO;
     }

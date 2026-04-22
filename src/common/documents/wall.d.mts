@@ -1,4 +1,4 @@
-import { EdgeDirection, EdgeSenseType, WallDoorState, WallDoorType, WallMovementType } from "#common/constants.mjs";
+import { EdgeDirection, WallDoorState, WallDoorType, WallMovementType, WallSenseType } from "#common/constants.mjs";
 import { Document, DocumentMetadata } from "../abstract/_module.mjs";
 import * as fields from "../data/fields.mjs";
 import BaseScene from "./scene.mjs";
@@ -38,13 +38,13 @@ type WallSchema = {
     /** The wall coordinates, a length-4 array of finite numbers [x0,y0,x1,y1] */
     c: fields.ArrayField<fields.NumberField<number, number, true, false, true>, [number, number, number, number], [number, number, number, number]>;
     /** The illumination restriction type of this wall */
-    light: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
+    light: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
     /** The movement restriction type of this wall */
     move: fields.NumberField<WallMovementType, WallMovementType, true, true, true>;
     /** The visual restriction type of this wall */
-    sight: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
+    sight: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
     /** The auditory restriction type of this wall */
-    sound: fields.NumberField<EdgeSenseType, EdgeSenseType, true, true, true>;
+    sound: fields.NumberField<WallSenseType, WallSenseType, true, true, true>;
     /** The direction of effect imposed by this wall */
     dir: fields.NumberField<EdgeDirection, EdgeDirection, true, true, true>;
     /** The type of door which this wall contains, if any */

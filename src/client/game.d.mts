@@ -1,3 +1,4 @@
+import { ReleaseData } from "#common/config.mjs";
 import { Actor, ChatMessage, Combat, Item, JournalEntry, Macro, Playlist, RollTable, Scene, User } from "./documents/_module.mjs";
 import WorldCollection from "./documents/abstract/world-collection.mjs";
 import * as collections from "./documents/collections/_module.mjs";
@@ -121,16 +122,7 @@ export default class Game<
     ready: boolean;
 
     /** The Release data for this version of Foundry */
-    release: {
-        build: number;
-        channel: string;
-        download: string;
-        generation: number;
-        node_version?: number;
-        notes: string;
-        suffix?: string;
-        time: number;
-    };
+    release: ReleaseData;
 
     /* -------------------------------------------- */
     /*  World Collections                           */

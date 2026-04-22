@@ -74,7 +74,7 @@ export function objectEntries<K extends string, V>(obj: Record<K, V>): Generator
 /**
  * Stream object entries.
  */
-export function iterateEntries<K extends string, V>(obj: Record<K, V>): IteratorObject<[K, V], void, unknown>;
+export function iterateEntries<T extends object>(obj: T): IteratorObject<[keyof T, T[keyof T]], void, unknown>;
 
 /**
  * Object keys generator.
@@ -234,15 +234,6 @@ export function getProperty(object: object, key: string): unknown;
  * @return A flag for whether or not the object was updated
  */
 export function setProperty(object: object, key: string, value: unknown): boolean;
-
-/**
- * A helper function which searches through an object to delete a value by a string key.
- * The string key supports the notation a.b.c which would delete object[a][b][c]
- * @param object The object to traverse
- * @param key An object property with notation a.b.c
- * @returns Was the property deleted?
- */
-export function deleteProperty(object: object, key: string): boolean;
 
 /**
  * Encode a url-like string by replacing any characters which need encoding
