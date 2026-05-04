@@ -44,6 +44,7 @@ type HookParamsGetChatLogEntryContext = HookParameters<"getChatLogEntryContext",
 type HookParamsGetSceneControlButtons = HookParameters<"getSceneControlButtons", [Record<string, SceneControl>]>;
 type HookParamsHotbarDrop = HookParameters<"hotbarDrop", [Hotbar<Macro>, DropCanvasData, string]>;
 type HookParamsLightingRefresh = HookParameters<"lightingRefresh", [LightingLayer]>;
+type HookParamsOpenDetachedWindow = HookParameters<"openDetachedWindow", [string, Window]>;
 type HookParamsPreCreateItem = HookParameters<"preCreateItem", [PreCreate<foundry.documents.ItemSource>, DatabaseCreateOperation<Actor | null>, string]>;
 type HooksParamsPreUpdateCombat = HookParameters<"preUpdateCombat", [Combat, object, { diff: boolean; advanceTime: number; [key: string]: unknown }, string]>;
 type HookParamsPreUpdateToken = HookParameters<
@@ -85,6 +86,7 @@ export default class Hooks {
     static on(...args: HookParamsGetSceneControlButtons): number;
     static on(...args: HookParamsHotbarDrop): number;
     static on(...args: HookParamsLightingRefresh): number;
+    static on(...args: HookParamsOpenDetachedWindow): number;
     static on(...args: HookParamsPreCreateItem): number;
     static on(...args: HooksParamsPreUpdateCombat): number;
     static on(...args: HookParamsPreUpdateToken): number;
