@@ -667,9 +667,9 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
 
     protected override _canDrag(user: User, event?: PIXI.FederatedEvent): boolean;
 
-    protected override _onHoverIn(event: PIXI.FederatedPointerEvent, { hoverOutOthers }?: { hoverOutOthers?: boolean }): boolean | void;
+    protected override _onHoverIn(event: PointerEvent, options?: { hoverOutOthers?: boolean; updateLegend?: boolean }): boolean | void;
 
-    protected override _onHoverOut(event: PIXI.FederatedPointerEvent): boolean | void;
+    protected override _onHoverOut(event: PointerEvent, options?: { updateLegend?: boolean }): boolean | void;
 
     protected override _onClickLeft(event: TokenPointerEvent<this>): void;
 

@@ -32,6 +32,12 @@ export default abstract class PlaceableObject<TDocument extends CanvasDocument =
     /** A mouse interaction manager instance which handles mouse workflows related to this object. */
     mouseInteractionManager: MouseInteractionManager;
 
+    /** @internal */
+    _preview?: this;
+
+    /** @internal */
+    _previewType?: string;
+
     /* -------------------------------------------- */
     /* Properties                                   */
     /* -------------------------------------------- */
@@ -302,11 +308,24 @@ export default abstract class PlaceableObject<TDocument extends CanvasDocument =
     /** Does the User have permission to delete the underlying Embedded Entity? */
     protected _canDelete(user: User, event?: PIXI.FederatedEvent): boolean;
 
-    /** Actions that should be taken for this Placeable Object when a mouseover event occurs */
-    protected _onHoverIn(event: PIXI.FederatedPointerEvent, { hoverOutOthers }?: { hoverOutOthers?: boolean }): boolean | void;
+    /**
+     * Actions that should be taken for this Placeable Object when a mouseover event occurs.
+     * Hover events on PlaceableObject instances allow event propagation by default.
+     * @param event The triggering canvas or DOM interaction event
+     * @param options Options which customize event handling
+     * @param options.hoverOutOthers Trigger hover-out behavior on sibling objects
+     * @param options.updateLegend Highlight corresponding entry in the sidebar legend.
+     */
+    protected _onHoverIn(event: PointerEvent, options?: { hoverOutOthers?: boolean; updateLegend?: boolean }): boolean | void;
 
-    /** Actions that should be taken for this Placeable Object when a mouseout event occurs */
-    protected _onHoverOut(event: PIXI.FederatedPointerEvent): boolean | void;
+    /**
+     * Actions that should be taken for this Placeable Object when a mouseout event occurs
+     * @param event The triggering canvas or DOM interaction event
+     * @param options Options which customize event handling
+     * @param options.updateLegend Highlight corresponding entry in the sidebar legend.
+     * @protected
+     */
+    protected _onHoverOut(event: PointerEvent): boolean | void;
 
     /** Should the placeable propagate left click downstream? */
     protected _propagateLeftClick(event: PIXI.FederatedPointerEvent): boolean;

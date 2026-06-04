@@ -78,13 +78,14 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
-        "@eslint/json": "^1.2.0",
+        "@eslint/json": "^2.0.0",
         "eslint": "^10.2.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.5",
         "glob": "^13.0.6",
         "husky": "^9.1.7",
-        "lint-staged": "^16.4.0",
+        "lint-staged": "^17.0.7",
+        "prettier": "^3.8.3",
         "prettier-plugin-organize-imports": "^4.3.0",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.58.2"
@@ -93,5 +94,5 @@
         "node": ">=24"
     },
     "sideEffects": false,
-    "packageManager": "pnpm@10.33.1"
+    "packageManager": "pnpm@11.5.1+sha512.93f7b57422ea7068257235b4c16eb60762eb68e1dc23723199cc739043ea9be2c4143274a399d8c6defa2b1176226d9ca1c4b63482d6200c1a8fbaa78c1d1485"
 }
